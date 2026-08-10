@@ -1,0 +1,584 @@
+<app-loader *ngIf="loader"></app-loader>
+
+<c-container fluid>
+
+    <form cForm [formGroup]="doctorForm" (ngSubmit)="updateDoctor()">
+
+
+        <!-- ===================================================== -->
+        <!-- PAGE HEADER -->
+        <!-- ===================================================== -->
+
+        <div class="page-header">
+
+            <div>
+
+                <button cButton color="secondary" class="back-btn" type="button" (click)="cancel()">
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    Back
+
+                </button>
+
+
+                <h2 class="mt-3">
+
+                    Edit Doctor
+
+                </h2>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ===================================================== -->
+        <!-- DOCTOR INFORMATION -->
+        <!-- ===================================================== -->
+
+        <c-card class="section-card">
+
+
+            <!-- ===================================================== -->
+            <!-- PERSONAL INFORMATION -->
+            <!-- ===================================================== -->
+
+            <c-card-body>
+
+                <div class="section-title">
+
+                    <i class="bi bi-person-badge"></i>
+
+                    Personal Information
+
+                </div>
+
+
+                <c-row>
+
+
+                    <!-- Doctor Name -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Doctor Name <span>*</span>
+
+                        </label>
+
+                        <input cFormControl class="form-control" formControlName="name" placeholder="Enter Doctor Name">
+
+
+                        @if(f['name'].touched && f['name'].invalid){
+
+                        <div class="text-danger small mt-1">
+
+                            Doctor Name is required.
+
+                        </div>
+
+                        }
+
+                    </c-col>
+
+
+
+                    <!-- Mobile Number -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Mobile Number <span>*</span>
+
+                        </label>
+
+                        <input cFormControl maxlength="10" class="form-control" formControlName="mobile_no"
+                            placeholder="Enter Mobile Number">
+
+
+                        @if(
+                        f['mobile_no'].touched &&
+                        f['mobile_no'].invalid
+                        ){
+
+                        <div class="text-danger small mt-1">
+
+                            Enter a valid 10 digit mobile number.
+
+                        </div>
+
+                        }
+
+                    </c-col>
+
+
+
+                    <!-- Email -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Email
+
+                        </label>
+
+                        <input cFormControl class="form-control" formControlName="email" placeholder="Email Address">
+
+
+                        @if(
+                        f['email'].touched &&
+                        f['email'].invalid
+                        ){
+
+                        <div class="text-danger small mt-1">
+
+                            Enter a valid email address.
+
+                        </div>
+
+                        }
+
+                    </c-col>
+
+                </c-row>
+
+
+
+                <c-row>
+
+
+                    <!-- Gender -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Gender
+
+                        </label>
+
+                        <select class="form-select" formControlName="gender">
+
+                            <option value="">
+
+                                Select Gender
+
+                            </option>
+
+
+                            @for(gender of genders; track gender.id){
+
+                            <option [value]="gender.id">
+
+                                {{gender.name}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </c-col>
+
+
+
+                    <!-- Qualification -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Qualification
+
+                        </label>
+
+                        <input cFormControl class="form-control" formControlName="qualification"
+                            placeholder="MBBS, MS etc">
+
+                    </c-col>
+
+
+                </c-row>
+
+            </c-card-body>
+
+
+
+            <!-- ===================================================== -->
+            <!-- PROFESSIONAL INFORMATION -->
+            <!-- ===================================================== -->
+
+            <c-card-body>
+
+                <div class="section-title">
+
+                    <i class="bi bi-hospital"></i>
+
+                    Professional Information
+
+                </div>
+
+
+                <c-row>
+
+
+                    <!-- Hospital Name -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Hospital Name <span>*</span>
+
+                        </label>
+
+                        <input cFormControl class="form-control" formControlName="hospital_name"
+                            placeholder="Enter Hospital Name">
+
+
+                        @if(
+                        f['hospital_name'].touched &&
+                        f['hospital_name'].invalid
+                        ){
+
+                        <div class="text-danger small mt-1">
+
+                            Hospital Name is required.
+
+                        </div>
+
+                        }
+
+                    </c-col>
+
+
+
+                    <!-- Specialization -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Specialization <span>*</span>
+
+                        </label>
+
+                        <input cFormControl class="form-control" formControlName="specialization"
+                            placeholder="ENT, Audiologist, Speech Therapist">
+
+
+                        @if(
+                        f['specialization'].touched &&
+                        f['specialization'].invalid
+                        ){
+
+                        <div class="text-danger small mt-1">
+
+                            Specialization is required.
+
+                        </div>
+
+                        }
+
+                    </c-col>
+
+
+
+                    <!-- ================================================= -->
+                    <!-- DOCTOR SIGNATURE -->
+                    <!-- ================================================= -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Doctor Signature
+
+                            <span class="text-muted fw-normal">
+                                (Optional)
+                            </span>
+
+                        </label>
+
+
+                        <input type="file" class="form-control"
+                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                            (change)="onSignatureSelected($event)" #signatureInput>
+
+
+                        <small class="text-muted d-block mt-2">
+
+                            Allowed: JPG, JPEG, PNG, WEBP
+
+                            <span class="mx-1">|</span>
+
+                            Maximum size: 5 MB
+
+                        </small>
+
+
+                        <!-- Validation Error -->
+
+                        @if(signatureError){
+
+                        <div class="signature-error mt-2">
+
+                            <i class="bi bi-exclamation-circle me-1"></i>
+
+                            {{ signatureError }}
+
+                        </div>
+
+                        }
+
+
+                        <!-- ================================================= -->
+                        <!-- EXISTING / NEW SIGNATURE PREVIEW -->
+                        <!-- ================================================= -->
+
+                        @if(signaturePreview){
+
+                        <div class="signature-preview mt-3">
+
+
+                            <div class="signature-preview-header">
+
+                                <span>
+
+                                    <i class="bi bi-pen me-1"></i>
+
+                                    {{ signatureFile ? 'New Signature Preview' : 'Current Signature' }}
+
+                                </span>
+
+
+                                <button type="button" class="remove-signature"
+                                    (click)="removeSignature(signatureInput)">
+
+                                    <i class="bi bi-x-circle me-1"></i>
+
+                                    {{ signatureFile ? 'Remove New' : 'Remove' }}
+
+                                </button>
+
+                            </div>
+
+
+                            <div class="signature-image-wrapper">
+
+                                <img [src]="signaturePreview" alt="Doctor Signature" class="signature-image">
+
+                            </div>
+
+                        </div>
+
+                        }
+
+                    </c-col>
+
+                </c-row>
+
+
+
+                <c-row>
+
+
+                    <!-- Remarks -->
+
+                    <c-col md="12" class="mb-3">
+
+                        <label class="form-label">
+
+                            Remarks
+
+                        </label>
+
+                        <textarea class="form-control" rows="3" formControlName="remarks"
+                            placeholder="Enter Remarks"></textarea>
+
+                    </c-col>
+
+                </c-row>
+
+            </c-card-body>
+
+
+
+            <!-- ===================================================== -->
+            <!-- ADDRESS INFORMATION -->
+            <!-- ===================================================== -->
+
+            <c-card-body>
+
+                <div class="section-title">
+
+                    <i class="bi bi-geo-alt"></i>
+
+                    Address Information
+
+                </div>
+
+
+                <c-row>
+
+
+                    <!-- State -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            State
+
+                        </label>
+
+
+                        <select class="form-select" formControlName="state_id" (change)="onStateChange()">
+
+                            <option value="">
+
+                                Select State
+
+                            </option>
+
+
+                            @for(state of states; track state.id){
+
+                            <option [value]="state.id">
+
+                                {{ state.name }}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </c-col>
+
+
+
+                    <!-- City -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            City
+
+                        </label>
+
+
+                        <select class="form-select" formControlName="city_id" (change)="onCityChange()">
+
+                            <option value="">
+
+                                Select City
+
+                            </option>
+
+
+                            @for(city of cities; track city.id){
+
+                            <option [value]="city.id">
+
+                                {{ city.name }}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </c-col>
+
+
+
+                    <!-- Pincode -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Pincode
+
+                        </label>
+
+                        <input cFormControl class="form-control" formControlName="pincode">
+
+                    </c-col>
+
+                </c-row>
+
+
+
+                <c-row>
+
+                    <c-col md="12">
+
+                        <label class="form-label">
+
+                            Address
+
+                        </label>
+
+                        <textarea class="form-control" rows="3" formControlName="address"
+                            placeholder="Enter Complete Address"></textarea>
+
+                    </c-col>
+
+                </c-row>
+
+            </c-card-body>
+
+
+        </c-card>
+
+
+
+        <!-- ===================================================== -->
+        <!-- ACTION FOOTER -->
+        <!-- ===================================================== -->
+
+        <div class="action-footer">
+
+            <button cButton color="secondary" type="button" (click)="cancel()">
+
+                <i class="bi bi-arrow-left me-2"></i>
+
+                Cancel
+
+            </button>
+
+
+            <button cButton color="primary" type="submit" [disabled]="doctorForm.invalid || isSubmitting">
+
+                @if(!isSubmitting){
+
+                <i class="bi bi-pencil-square me-2"></i>
+
+                Update Doctor
+
+                }
+                @else {
+
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true">
+                </span>
+
+                Updating...
+
+                }
+
+            </button>
+
+        </div>
+
+
+    </form>
+
+</c-container>

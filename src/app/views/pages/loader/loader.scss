@@ -1,0 +1,205 @@
+/*=========================================
+Overlay
+=========================================*/
+
+.loader-overlay {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(255, 255, 255, .96);
+
+    z-index: 999999;
+
+    pointer-events: all;
+
+    cursor: default;
+
+    user-select: none;
+
+    touch-action: none;
+
+}
+
+/*=========================================
+Container
+=========================================*/
+
+.audiogram-loader {
+
+    text-align: center;
+
+}
+
+/*=========================================
+SVG
+=========================================*/
+
+.audiogram-svg {
+
+    width: 230px;
+    height: auto;
+
+}
+
+/*=========================================
+Grid
+=========================================*/
+
+.grid line {
+
+    stroke: #E5E7EB;
+    stroke-width: 1;
+
+}
+
+/*=========================================
+Audiogram Line
+=========================================*/
+
+.graph-line {
+
+    fill: none;
+
+    stroke: #3C8ED9;
+
+    stroke-width: 2.2;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+    stroke-dasharray: 700;
+
+    stroke-dashoffset: 700;
+
+    animation: drawLine 2.3s ease-in-out infinite;
+
+}
+
+/*=========================================
+Points
+=========================================*/
+
+.point {
+
+    fill: #3C8ED9;
+
+    opacity: 0;
+
+    transform-origin: center;
+
+}
+
+.p1 {
+    animation: showPoint 2.3s infinite .15s;
+}
+
+.p2 {
+    animation: showPoint 2.3s infinite .35s;
+}
+
+.p3 {
+    animation: showPoint 2.3s infinite .55s;
+}
+
+.p4 {
+    animation: showPoint 2.3s infinite .75s;
+}
+
+.p5 {
+    animation: showPoint 2.3s infinite .95s;
+}
+
+.p6 {
+    animation: showPoint 2.3s infinite 1.15s;
+}
+
+.p7 {
+    animation: showPoint 2.3s infinite 1.35s;
+}
+
+/*=========================================
+Loading Text
+=========================================*/
+
+.loading-text {
+
+    margin-top: 12px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #23406B;
+
+    letter-spacing: .4px;
+
+}
+
+/*=========================================
+Animations
+=========================================*/
+
+@keyframes drawLine {
+
+    0% {
+
+        stroke-dashoffset: 700;
+
+    }
+
+    70% {
+
+        stroke-dashoffset: 0;
+
+    }
+
+    100% {
+
+        stroke-dashoffset: 0;
+
+    }
+
+}
+
+@keyframes showPoint {
+
+    0%,
+    20% {
+
+        opacity: 0;
+
+        transform: scale(0);
+
+    }
+
+    40% {
+
+        opacity: 1;
+
+        transform: scale(1.4);
+
+    }
+
+    60%,
+    100% {
+
+        opacity: 1;
+
+        transform: scale(1);
+
+    }
+
+}

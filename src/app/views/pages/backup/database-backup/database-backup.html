@@ -1,0 +1,95 @@
+<app-loader *ngIf="loader"></app-loader>
+
+<!-- =====================================================
+     PAGE HEADER
+===================================================== -->
+
+<div class="page-header">
+
+    <div>
+
+        <h2>
+            Database Backup
+        </h2>
+
+        <p>
+            Create a manual backup of the AudiSpeech database.
+        </p>
+
+    </div>
+
+
+    <!-- BACK BUTTON -->
+
+    <button cButton color="secondary" class="back-button" type="button" (click)="backToDashboard()">
+
+        <i class="bi bi-arrow-left me-2"></i>
+
+        Back
+
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     BACKUP CARD
+===================================================== -->
+
+<c-card class="backup-card">
+
+    <c-card-body>
+
+        <div class="backup-content">
+
+            <!-- =====================================================
+                 ICON
+            ===================================================== -->
+
+            <div class="backup-icon">
+
+                <i class="bi bi-database-fill-check"></i>
+
+            </div>
+
+
+            <!-- =====================================================
+                 TITLE
+            ===================================================== -->
+
+            <h3>
+                Manual Database Backup
+            </h3>
+
+
+            <!-- =====================================================
+                 DESCRIPTION
+            ===================================================== -->
+
+            <p class="backup-description">
+
+                Take a complete backup of the AudiSpeech database.
+                The backup will be securely saved on the configured
+                server location.
+
+            </p>
+
+
+            <!-- =====================================================
+                 BACKUP BUTTON
+            ===================================================== -->
+
+            <button cButton color="primary" size="lg" class="backup-button" type="button" [disabled]="loader"
+                (click)="takeBackup()">
+
+                <i class="bi bi-database-fill-down me-2"></i>
+
+                Take Database Backup
+
+            </button>
+
+        </div>
+
+    </c-card-body>
+
+</c-card>

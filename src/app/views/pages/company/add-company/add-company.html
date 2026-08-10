@@ -1,0 +1,548 @@
+<app-loader *ngIf="loader"></app-loader>
+<c-container fluid>
+
+    <form [formGroup]="companyForm" (ngSubmit)="saveCompany()">
+
+        <!-- ==============================================
+         PAGE HEADER
+    =============================================== -->
+
+        <div class="page-header">
+
+            <div>
+
+                <button cButton color="secondary" class="back-btn" type="button" (click)="back()">
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    Back
+
+                </button>
+
+                <h2 class="mt-3">
+                    Add Company
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================================
+         COMPANY INFORMATION
+    =============================================== -->
+
+        <c-card class="section-card">
+
+            <c-card-body>
+
+                <div class="section-title">
+
+                    <i class="bi bi-building-fill"></i>
+
+                    Company Information
+
+                </div>
+
+
+                <c-row class="g-4">
+
+
+                    <!-- Company Name -->
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+
+                            Company Name
+
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input type="text" class="form-control" formControlName="companyName"
+                            placeholder="Enter company name">
+
+
+                        <small class="text-danger" *ngIf="
+              companyForm.get('companyName')?.touched &&
+              companyForm.get('companyName')?.invalid">
+
+                            Company name is required.
+
+                        </small>
+
+                    </c-col>
+
+
+
+                    <!-- Tagline -->
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+
+                            Tag Line / Slogan
+
+                        </label>
+
+                        <input type="text" class="form-control" formControlName="tagLine"
+                            placeholder="Enter company slogan">
+
+                    </c-col>
+
+
+
+                    <!-- Contact Number -->
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+
+                            Contact Number
+
+                            <span class="required">*</span>
+
+                        </label>
+
+
+                        <input type="text" maxlength="10" class="form-control" formControlName="contactNumber"
+                            placeholder="Enter contact number">
+
+
+                        <small class="text-danger" *ngIf="
+              companyForm.get('contactNumber')?.touched &&
+              companyForm.get('contactNumber')?.invalid">
+
+                            Enter valid 10 digit contact number.
+
+                        </small>
+
+
+                    </c-col>
+
+
+
+
+                    <!-- Alternate Contact -->
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+
+                            Alternate Contact Number
+
+                        </label>
+
+
+                        <input type="text" maxlength="10" class="form-control" formControlName="alternateContactNumber"
+                            placeholder="Enter alternate contact number">
+
+                    </c-col>
+
+
+
+                    <!-- Email -->
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+
+                            Email Address
+
+                            <span class="required">*</span>
+
+                        </label>
+
+
+                        <input type="email" class="form-control" formControlName="email"
+                            placeholder="Enter email address">
+
+                    </c-col>
+
+
+
+
+                    <!-- Website -->
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+
+                            Website
+
+                        </label>
+
+
+                        <input type="text" class="form-control" formControlName="website"
+                            placeholder="https://example.com">
+
+                    </c-col>
+
+
+                </c-row>
+
+
+            </c-card-body>
+
+
+            <!-- ==============================================
+           ADDRESS INFORMATION
+      =============================================== -->
+
+
+            <c-card-body>
+
+
+                <div class="section-title">
+
+                    <i class="bi bi-geo-alt-fill"></i>
+
+                    Address Information
+
+                </div>
+
+
+
+                <c-row class="g-4">
+
+
+                    <!-- Address -->
+
+                    <c-col lg="12">
+
+
+                        <label class="form-label">
+
+                            Address
+
+                            <span class="required">*</span>
+
+                        </label>
+
+
+                        <textarea rows="4" class="form-control" formControlName="address"
+                            placeholder="Enter complete address"></textarea>
+
+
+
+                        <small class="text-danger" *ngIf="
+              companyForm.get('address')?.touched &&
+              companyForm.get('address')?.invalid">
+
+                            Address is required.
+
+                        </small>
+
+
+                    </c-col>
+
+
+
+
+                    <!-- Country -->
+
+
+                    <c-col lg="3" md="6">
+
+
+                        <label class="form-label">
+
+                            Country
+
+                            <span class="required">*</span>
+
+                        </label>
+
+
+                        <input type="text" class="form-control" formControlName="country" readonly>
+
+
+                    </c-col>
+
+
+
+
+                    <!-- State -->
+
+
+                    <c-col lg="3" md="6">
+
+
+                        <label class="form-label">
+
+                            State
+
+                            <span class="required">*</span>
+
+                        </label>
+
+
+                        <select class="form-select" formControlName="state" (change)="onStateChange()">
+
+
+                            <option value="">
+                                Select State
+                            </option>
+
+
+                            <option *ngFor="let state of states" [value]="state.id">
+
+                                {{state.name}}
+
+                            </option>
+
+
+                        </select>
+
+
+                    </c-col>
+
+
+
+
+
+                    <!-- City -->
+
+
+                    <c-col lg="3" md="6">
+
+
+                        <label class="form-label">
+
+                            City
+
+                            <span class="required">*</span>
+
+                        </label>
+
+
+                        <select class="form-select" formControlName="city">
+
+
+                            <option value="">
+                                Select City
+                            </option>
+
+
+                            <option *ngFor="let city of cities" [value]="city.id">
+
+                                {{city.name}}
+
+                            </option>
+
+
+                        </select>
+
+
+                    </c-col>
+
+
+
+
+
+                    <!-- Pincode -->
+
+
+                    <c-col lg="3" md="6">
+
+
+                        <label class="form-label">
+
+                            Pincode
+
+                            <span class="required">*</span>
+
+                        </label>
+
+
+                        <input type="text" maxlength="6" class="form-control" formControlName="pincode"
+                            placeholder="Enter pincode">
+
+
+                        <small class="text-danger" *ngIf="
+              companyForm.get('pincode')?.touched &&
+              companyForm.get('pincode')?.invalid">
+
+                            Enter valid 6 digit pincode.
+
+                        </small>
+
+
+                    </c-col>
+
+
+                </c-row>
+
+
+            </c-card-body>
+
+
+
+
+
+            <!-- ==============================================
+           COMPANY LOGO
+      =============================================== -->
+
+
+            <c-card-body>
+
+
+                <div class="section-title">
+
+
+                    <i class="bi bi-image-fill"></i>
+
+
+                    Company Branding
+
+
+                </div>
+
+
+
+                <c-row class="g-4 align-items-center">
+
+
+                    <c-col lg="4">
+
+
+                        <div class="logo-preview">
+
+
+                            <img *ngIf="logoPreview" [src]="logoPreview" alt="Company Logo">
+
+
+                            <div *ngIf="!logoPreview" class="logo-placeholder">
+
+
+                                <i class="bi bi-building"></i>
+
+
+                                <span>
+                                    No Logo Selected
+                                </span>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </c-col>
+
+
+
+
+
+                    <c-col lg="8">
+
+
+                        <label class="form-label">
+
+                            Company Logo
+
+                        </label>
+
+
+
+                        <input #logoInput type="file" hidden accept=".png,.jpg,.jpeg,.webp"
+                            (change)="onLogoSelected($event)">
+
+                        <button cButton color="secondary" type="button" (click)="logoInput.click()">
+
+
+
+                            <i class="bi bi-upload me-2"></i>
+
+
+                            Choose Logo
+
+
+
+                        </button>
+
+
+
+
+                        <button *ngIf="logoPreview" cButton color="danger" class="ms-2" type="button"
+                            (click)="removeLogo()">
+
+
+
+                            <i class="bi bi-trash me-2"></i>
+
+
+                            Remove
+
+
+
+                        </button>
+
+
+
+                        <small class="text-muted d-block mt-2">
+                            Supported formats: JPG, JPEG, PNG, WEBP (Maximum 5MB)
+                        </small>
+
+                    </c-col>
+
+
+                </c-row>
+
+
+            </c-card-body>
+
+
+
+        </c-card>
+
+
+
+
+
+        <!-- ==============================================
+         ACTION BUTTONS
+    =============================================== -->
+
+
+        <div class="action-footer">
+
+
+            <button cButton color="secondary" type="button" (click)="cancel()">
+
+
+                <i class="bi bi-x-circle me-2"></i>
+
+
+                Cancel
+
+
+            </button>
+
+
+
+
+            <button cButton color="primary" type="submit" [disabled]="isLoading">
+
+
+                <i class="bi bi-check-circle me-2"></i>
+
+
+                {{isLoading ? 'Saving...' : 'Save Company'}}
+
+
+            </button>
+
+
+
+        </div>
+
+
+
+    </form>
+
+
+</c-container>

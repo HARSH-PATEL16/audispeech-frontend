@@ -1,0 +1,424 @@
+<app-loader *ngIf="loader"></app-loader>
+<c-container fluid>
+
+    <form cForm [formGroup]="patientForm" (ngSubmit)="savePatient()">
+
+        <!-- ================= Header ================= -->
+
+        <div class="page-header">
+
+            <div>
+
+                <button cButton color="secondary" class="back-btn" type="button" (click)="back()">
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    Back
+
+                </button>
+
+                <h2 class="mt-3">
+
+                    Add New Patient
+
+                </h2>
+
+            </div>
+
+        </div>
+
+        <!-- ================= Personal Information ================= -->
+
+        <c-card class="section-card">
+
+            <c-card-body>
+
+                <div class="section-title">
+
+                    <i class="bi bi-person-circle"></i>
+
+                    Personal Information
+
+                </div>
+
+                <c-row>
+
+                    <c-col lg="5" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Patient Name <span>*</span>
+
+                        </label>
+
+                        <input cFormControl class="form-control" formControlName="patientName"
+                            placeholder="Enter Patient Name">
+
+                    </c-col>
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Mobile Number <span>*</span>
+
+                        </label>
+
+                        <input cFormControl maxlength="10" class="form-control" formControlName="mobileNo"
+                            placeholder="Enter Mobile Number">
+
+                    </c-col>
+
+                    <c-col lg="3" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Gender <span>*</span>
+
+                        </label>
+
+                        <select class="form-select" formControlName="gender">
+
+                            <option value="">Select Gender</option>
+
+                            @for(gender of genders; track gender.id){
+
+                            <option [value]="gender.id">
+
+                                {{gender.name}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </c-col>
+
+                </c-row>
+
+                <c-row>
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Date of Birth
+
+                        </label>
+
+                        <input type="date" class="form-control" formControlName="dob">
+
+                    </c-col>
+
+                    <c-col lg="3" md="3" class="mb-3">
+
+                        <label class="form-label">
+
+                            Blood Group
+
+                        </label>
+
+                        <select class="form-select" formControlName="bloodGroup">
+
+                            <option value="">Select</option>
+
+                            @for(group of bloodGroups; track group){
+
+                            <option [value]="group">
+
+                                {{group}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </c-col>
+
+                    <c-col lg="3" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Email
+
+                        </label>
+
+                        <input cFormControl class="form-control" formControlName="email" placeholder="Email">
+
+                    </c-col>
+
+                </c-row>
+
+                <c-row>
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            State
+
+                        </label>
+
+                        <select class="form-select" formControlName="state" (change)="onStateChange()">
+
+                            <option value="">Select State</option>
+
+                            @for(state of states; track state.id){
+
+                            <option [value]="state.id">
+
+                                {{state.name}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </c-col>
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            City
+
+                        </label>
+
+                        <select class="form-select" formControlName="city">
+
+                            <option value="">Select City</option>
+
+                            @for(city of cities; track city.id){
+
+                            <option [value]="city.id">
+
+                                {{city.name}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </c-col>
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Pincode
+
+                        </label>
+
+                        <input cFormControl class="form-control" formControlName="pincode">
+
+                    </c-col>
+
+                </c-row>
+
+                <c-row>
+
+                    <c-col md="12">
+
+                        <label class="form-label">
+
+                            Address
+
+                        </label>
+
+                        <textarea class="form-control" rows="3" formControlName="address">
+
+                    </textarea>
+
+                    </c-col>
+
+                </c-row>
+
+            </c-card-body>
+
+            <!-- ================= Visit Information ================= -->
+            <c-card-body>
+
+                <div class="section-title">
+
+                    <i class="bi bi-calendar-check"></i>
+
+                    Visit Information
+
+                </div>
+
+                <c-row>
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Visit Date <span>*</span>
+
+                        </label>
+
+                        <input type="date" class="form-control" formControlName="visitDate">
+
+                    </c-col>
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Reference Doctor <span>*</span>
+
+                        </label>
+
+                        <select class="form-select" formControlName="referenceBy">
+
+                            <option value="">
+
+                                Select Doctor
+
+                            </option>
+
+                            @for(doctor of doctors; track doctor.id){
+
+                            <option [value]="doctor.id">
+
+                                {{doctor.name}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </c-col>
+
+                    <!-- <c-col lg="4" md="6" class="mb-3">
+    
+                        <label class="form-label">
+    
+                            Visit Type
+    
+                        </label>
+    
+                        <select class="form-select" formControlName="visitType">
+    
+                            @for(type of visitTypes; track type){
+    
+                            <option [value]="type">
+    
+                                {{type}}
+    
+                            </option>
+    
+                            }
+    
+                        </select>
+    
+                    </c-col> -->
+
+                </c-row>
+
+                <c-row>
+
+                    <c-col md="12">
+
+                        <label class="form-label">
+
+                            Purpose of Visit
+
+                        </label>
+
+                        <textarea class="form-control" rows="3" formControlName="purposeForVisit"
+                            placeholder="Purpose of visit">
+
+                </textarea>
+
+                    </c-col>
+
+                </c-row>
+
+            </c-card-body>
+
+            <!-- ================= Clinical Information ================= -->
+            <c-card-body>
+
+                <div class="section-title">
+
+                    <i class="bi bi-heart-pulse"></i>
+
+                    Clinical Information
+
+                </div>
+
+                <c-row>
+
+                    <c-col md="12" class="mb-3">
+
+                        <label class="form-label">
+
+                            Chief Complaint
+
+                        </label>
+
+                        <textarea class="form-control" rows="4" formControlName="chiefComplaints"
+                            placeholder="Enter chief complaint">
+
+                </textarea>
+
+                    </c-col>
+
+                </c-row>
+
+                <c-row>
+
+
+                    <c-col md="12" class="mb-3">
+
+                        <label class="form-label">
+
+                            Remarks
+
+                        </label>
+
+                        <textarea class="form-control" rows="3" formControlName="remarks"
+                            placeholder="Additional remarks">
+
+                </textarea>
+
+                    </c-col>
+
+                </c-row>
+
+            </c-card-body>
+
+        </c-card>
+
+
+        <!-- ================= Bottom Buttons ================= -->
+
+        <div class="action-footer">
+
+            <button cButton color="secondary" type="button" (click)="back()">
+
+                <i class="bi bi-arrow-left"></i>
+
+                Cancel
+
+            </button>
+
+            <button cButton color="primary" type="submit">
+
+                <i class="bi bi-check-circle"></i>
+
+                Save Patient
+
+            </button>
+
+        </div>
+
+
+    </form>
+
+</c-container>

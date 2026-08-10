@@ -1,0 +1,291 @@
+/*==========================================================
+PAGE
+==========================================================*/
+
+:host {
+    display: block;
+    padding: 24px;
+    background: #f4f7fb;
+    min-height: 100vh;
+}
+
+/*==========================================================
+HEADER
+==========================================================*/
+
+.page-header {
+
+    margin-bottom: 25px;
+
+}
+
+.page-header h2 {
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    color: #23406b;
+
+    margin: 0;
+
+}
+
+.page-header p {
+
+    margin-top: 5px;
+
+    color: #7c8798;
+
+    font-size: 15px;
+
+}
+
+/*==========================================================
+CARDS
+==========================================================*/
+
+.section-card {
+
+    border: none;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 6px 25px rgba(0, 0, 0, .06);
+
+    transition: .3s;
+
+    margin-bottom: 25px;
+
+}
+
+.section-card:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, .08);
+
+}
+
+/*==========================================================
+SECTION HEADER
+==========================================================*/
+
+.section-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    color: #23406b;
+
+    padding-bottom: 15px;
+
+    margin-bottom: 25px;
+
+    border-bottom: 1px solid #edf2f7;
+
+}
+
+.section-title i {
+
+    color: #0d6efd;
+
+    font-size: 22px;
+
+}
+
+/*==========================================================
+LABELS
+==========================================================*/
+
+.form-label {
+
+    font-weight: 600;
+
+    color: #495057;
+
+    margin-bottom: 8px;
+
+}
+
+.form-label span {
+
+    color: red;
+
+}
+
+/*==========================================================
+INPUTS
+==========================================================*/
+
+.form-control,
+.form-select {
+
+    height: 48px;
+
+    border-radius: 10px;
+
+    border: 1px solid #d6dce5;
+
+    transition: .25s;
+
+    font-size: 15px;
+
+}
+
+textarea.form-control {
+
+    min-height: 120px;
+
+    height: auto;
+
+    padding-top: 12px;
+
+    resize: vertical;
+
+}
+
+.form-control:focus,
+.form-select:focus {
+
+    border-color: #0d6efd;
+
+    box-shadow: 0 0 0 .18rem rgba(13, 110, 253, .12);
+
+}
+
+.form-control::placeholder {
+
+    color: #adb5bd;
+
+}
+
+/*==========================================================
+BUTTONS
+==========================================================*/
+
+.action-footer {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 15px;
+
+    padding: 20px 0;
+
+    border-top: 1px solid #dee2e6;
+
+}
+
+.action-footer button {
+
+    min-width: 170px;
+
+    height: 48px;
+
+    border-radius: 10px;
+
+    font-weight: 600;
+
+}
+
+.action-footer i {
+
+    margin-right: 8px;
+
+}
+
+.btn-primary {
+
+    background: #0d6efd;
+
+    border: none;
+
+}
+
+.btn-primary:hover {
+
+    background: #0b5ed7;
+
+}
+
+.btn-secondary {
+
+    border: none;
+
+}
+
+/*==========================================================
+RESPONSIVE
+==========================================================*/
+
+@media(max-width:992px) {
+
+    .section-card {
+
+        margin-bottom: 20px;
+
+    }
+
+}
+
+@media(max-width:768px) {
+
+    :host {
+
+        padding: 15px;
+
+    }
+
+    .page-header h2 {
+
+        font-size: 24px;
+
+    }
+
+    .action-footer {
+
+        flex-direction: column;
+
+    }
+
+    .action-footer button {
+
+        width: 100%;
+
+    }
+
+}
+
+/*==========================================================
+SMALL ANIMATION
+==========================================================*/
+
+.form-control,
+.form-select {
+
+    transition:
+        transform .2s,
+        border-color .2s,
+        box-shadow .2s;
+
+}
+
+.form-control:focus,
+.form-select:focus {
+
+    transform: translateY(-1px);
+
+}

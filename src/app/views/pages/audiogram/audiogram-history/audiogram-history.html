@@ -1,0 +1,301 @@
+<app-loader *ngIf="loader"></app-loader>
+<c-card class="section-card">
+
+    <c-card-body>
+
+        <!-- ===========================================================
+            PAGE HEADER
+        ============================================================ -->
+
+        <div class="page-header">
+
+            <div>
+
+                <button cButton color="secondary" class="back-btn" (click)="goBack()">
+
+                    <i class="bi bi-arrow-left me-2"></i>
+
+                    Back
+
+                </button>
+
+                <h2>
+
+                    Audiogram History
+
+                </h2>
+
+            </div>
+
+        </div>
+
+        <!-- ===========================================================
+            PATIENT INFORMATION
+        ============================================================ -->
+
+        <div class="patient-card">
+
+            <h5 class="section-title">
+
+                Patient Information
+
+            </h5>
+
+            <c-row class="g-3">
+
+                <c-col lg="4" md="6">
+
+                    <label class="info-label">
+
+                        Patient Name
+
+                    </label>
+
+                    <div class="info-value">
+
+                        {{ patient.patientName }}
+
+                    </div>
+
+                </c-col>
+
+                <c-col lg="4" md="6">
+
+                    <label class="info-label">
+
+                        Mobile No.
+
+                    </label>
+
+                    <div class="info-value">
+
+                        {{ patient.mobileNo }}
+
+                    </div>
+
+                </c-col>
+
+                <c-col lg="4" md="6">
+
+                    <label class="info-label">
+
+                        Visit Date
+
+                    </label>
+
+                    <div class="info-value">
+
+                        {{ patient.visitDate | date:'dd MMM yyyy' }}
+
+                    </div>
+
+                </c-col>
+
+                <c-col lg="4" md="6">
+
+                    <label class="info-label">
+
+                        Age
+
+                    </label>
+
+                    <div class="info-value">
+
+                        {{ patient.age }}
+
+                    </div>
+
+                </c-col>
+
+                <c-col lg="4" md="6">
+
+                    <label class="info-label">
+
+                        Gender
+
+                    </label>
+
+                    <div class="info-value">
+
+                        {{
+                        patient.gender == 0
+                        ? 'Male'
+                        : patient.gender == 1
+                        ? 'Female'
+                        : 'Other'
+                        }}
+
+                    </div>
+
+                </c-col>
+
+            </c-row>
+
+        </div>
+
+        <!-- ===========================================================
+            FILTER
+        ============================================================ -->
+
+        <!-- <div class="filter-section">
+
+            <c-row>
+
+                <c-col lg="4" md="6">
+
+                    <label class="form-label">
+
+                        Search
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Search by Date"
+                        [(ngModel)]="searchText"
+                        (input)="search()">
+
+                </c-col>
+
+            </c-row>
+
+        </div> -->
+
+        <!-- ===========================================================
+            TABLE
+        ============================================================ -->
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle text-center">
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Sr No</th>
+                        <th style="width: 60%;">Audiogram Date</th>
+                        <th style="width: 20%;">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (pagedHistory.length > 0) {
+                    @for (item of pagedHistory; track item.id; let i = $index) {
+                    <tr>
+                        <td>
+                            {{ startRecord + i }}
+                        </td>
+
+                        <td>
+                            {{ item.modifiedDate | date:'dd MMM yyyy' }}
+                        </td>
+
+                        <td>
+                            <button cButton color="primary" size="sm" title="View History" (click)="viewHistory(item)">
+                                <i class="bi bi-eye-fill"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                    } @else {
+                    <tr>
+                        <td colspan="3" class="text-center py-5">
+                            <i class="bi bi-clock-history" style="font-size:40px;color:#adb5bd;"></i>
+                            <div class="mt-2">No history available.</div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+        <!-- ===========================================================
+            PAGINATION
+        ============================================================ -->
+
+        <div class="pagination-wrapper">
+
+            <div class="pagination-left">
+
+                <span>
+
+                    Showing
+
+                    <strong>{{ startRecord }}</strong>
+
+                    to
+
+                    <strong>{{ endRecord }}</strong>
+
+                    of
+
+                    <strong>{{ filteredHistory.length }}</strong>
+
+                    entries
+
+                </span>
+
+            </div>
+
+            <div class="pagination-center">
+
+                <label>
+
+                    Show
+
+                </label>
+
+                <select class="form-select form-select-sm" [(ngModel)]="pageSize" (change)="pageSizeChanged()">
+
+                    <option [ngValue]="5">5</option>
+
+                    <option [ngValue]="10">10</option>
+
+                    <option [ngValue]="25">25</option>
+
+                    <option [ngValue]="50">50</option>
+
+                </select>
+
+                <label>
+
+                    entries
+
+                </label>
+
+            </div>
+
+            <div class="pagination-right">
+
+                <button cButton color="secondary" size="sm" [disabled]="currentPage === 1" (click)="previousPage()">
+
+                    Previous
+
+                </button>
+
+                <span class="page-info">
+
+                    Page
+
+                    {{ currentPage }}
+
+                    of
+
+                    {{ totalPages }}
+
+                </span>
+
+                <button cButton color="secondary" size="sm" [disabled]="currentPage === totalPages"
+                    (click)="nextPage()">
+
+                    Next
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </c-card-body>
+
+</c-card>

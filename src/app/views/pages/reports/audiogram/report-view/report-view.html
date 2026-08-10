@@ -1,0 +1,365 @@
+<app-loader *ngIf="loader"></app-loader>
+<c-container fluid>
+
+    <!-- Keep this -->
+    <div class="action-bar no-print">
+
+        <button cButton color="secondary" (click)="back()">
+            <i class="bi bi-arrow-left"></i>
+            Back
+        </button>
+
+        <div class="right-actions">
+            <!-- 
+            <button cButton color="primary" (click)="printReport()">
+                <i class="bi bi-printer"></i>
+                Print
+            </button> -->
+
+            <button cButton color="danger" (click)="downloadPdf()">
+                <i class="bi bi-file-earmark-pdf"></i>
+                Download PDF
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Report -->
+    <div class="report-page" id="reportContent">
+
+        <!-- ========================================================= -->
+        <!-- HEADER -->
+        <!-- ========================================================= -->
+
+        <div class="report-header">
+
+            <div class="logo-area">
+                <img *ngIf="company.logo" [src]="company.logo" alt="Company Logo">
+            </div>
+
+            <div class="company-area">
+
+                <div class="company-name">
+                    <span class="company-blue">{{company.name}}</span>
+                </div>
+
+                <div class="company-strip">
+                    {{company.slogan}}
+                </div>
+
+                <div class="company-address-line">
+                    <span>{{company.address}}</span>
+                    <span class="dot-sep">&nbsp;</span>
+                    <span class="contact-mo">Mo. : {{company.phone}}</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- PATIENT DETAILS -->
+        <!-- ========================================================= -->
+
+        <table class="patient-info">
+
+            <tr>
+                <td class="title"><b>Patient's Name :</b></td>
+                <td class="value">{{report.patient.patientName}}</td>
+                <td class="title small"><b>Age :</b></td>
+                <td class="value small">{{report.patient.age}} Y</td>
+                <td class="title small"><b>Sex :</b></td>
+                <td class="value small">{{report.patient.gender}}</td>
+                <td class="title small"><b>Date :</b></td>
+                <td class="value">{{report.patient.visitDate | date:'dd MMM yyyy'}}</td>
+            </tr>
+
+            <tr>
+                <td class="title"><b>Address : </b></td>
+                <td colspan="3" class="value">{{report.patient.address}}</td>
+                <td class="title"><b>Reference By :</b></td>
+                <td colspan="3" class="value">{{report.patient.doctor}}</td>
+            </tr>
+
+            <tr>
+                <td class="title"><b>Chief Complaints &amp; History :</b></td>
+                <td colspan="7" class="value">{{report.patient.purpose}}</td>
+            </tr>
+
+        </table>
+
+        <!-- ========================================================= -->
+        <!-- AUDIOGRAM SECTION STARTS -->
+        <!-- ========================================================= -->
+
+        <div class="report-middle">
+
+            <!-- LEFT PANEL -->
+
+            <div class="audiogram-panel">
+
+                <div class="section-label">Audiogram</div>
+
+                <div class="chart-area">
+                    <app-audiogram-chart [readings]="report.readings"></app-audiogram-chart>
+                </div>
+
+            </div>
+
+            <!-- RIGHT PANEL -->
+
+            <div class="side-panel">
+
+                <!-- ========================================================= -->
+                <!-- SYMBOLS -->
+                <!-- ========================================================= -->
+
+                <table class="side-table symbols-table">
+
+                    <thead>
+                        <tr>
+                            <th colspan="3">SYMBOLS</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr class="group-head-row">
+                            <td class="group-title"><b>AIR CONDUCTION</b></td>
+                            <td class="right-head">RIGHT</td>
+                            <td class="left-head">LEFT</td>
+                        </tr>
+
+                        <tr>
+                            <td class="sub-label">Unmasked</td>
+                            <td class="right-symbol">○</td>
+                            <td class="left-symbol">✕</td>
+                        </tr>
+
+                        <tr>
+                            <td class="sub-label">Masked</td>
+                            <td class="right-symbol">△</td>
+                            <td class="left-symbol">□</td>
+                        </tr>
+
+                        <tr>
+                            <td class="sub-label">Unmasked NR</td>
+                            <td class="right-symbol">○↙</td>
+                            <td class="left-symbol">✕↙</td>
+                        </tr>
+
+                        <tr>
+                            <td class="sub-label">Masked NR</td>
+                            <td class="right-symbol">△↙</td>
+                            <td class="left-symbol">□↙</td>
+                        </tr>
+
+                        <tr class="group-head-row">
+                            <td class="group-title"><b>BONE CONDUCTION</b></td>
+                            <td class="right-head">RIGHT</td>
+                            <td class="left-head">LEFT</td>
+                        </tr>
+
+                        <tr>
+                            <td class="sub-label">Unmasked</td>
+                            <td class="right-symbol">&lt;</td>
+                            <td class="left-symbol">&gt;</td>
+                        </tr>
+
+                        <tr>
+                            <td class="sub-label">Masked</td>
+                            <td class="right-symbol">[</td>
+                            <td class="left-symbol">]</td>
+                        </tr>
+
+                        <tr>
+                            <td class="sub-label">Unmasked NR</td>
+                            <td class="right-symbol">&lt;↙</td>
+                            <td class="left-symbol">&gt;↙</td>
+                        </tr>
+
+                        <tr>
+                            <td class="sub-label">Masked NR</td>
+                            <td class="right-symbol">[↙</td>
+                            <td class="left-symbol">]↙</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+                <!-- ========================================================= -->
+                <!-- OTOSCOPY -->
+                <!-- ========================================================= -->
+
+                <table class="side-table">
+
+                    <thead>
+                        <tr>
+                            <th colspan="2">OTOSCOPY</th>
+                        </tr>
+                        <tr class="head-row">
+                            <th class="right-head">RIGHT</th>
+                            <th class="left-head">LEFT</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>{{report.otoscopy.right}}</td>
+                            <td>{{report.otoscopy.left}}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+                <!-- ========================================================= -->
+                <!-- TFT TEST + PTA AVERAGE -->
+                <!-- ========================================================= -->
+
+                <table class="side-table tft-pta-table">
+
+                    <thead>
+                        <tr>
+                            <th colspan="3">T.F.T. TEST</th>
+                        </tr>
+                        <tr class="head-row">
+                            <th></th>
+                            <th class="right-head">RIGHT</th>
+                            <th class="left-head">LEFT</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td class="sub-label">T.F.T. Rinne</td>
+                            <td>{{report.tft.rinneRight}}</td>
+                            <td>{{report.tft.rinneLeft}}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="sub-label">T.F.T. Webber</td>
+                            <td colspan="2" class="weber-value">{{report.tft.weber}}</td>
+                        </tr>
+
+                        <tr class="head-row sub-head-row">
+                            <td></td>
+                            <td class="right-head">RIGHT</td>
+                            <td class="left-head">LEFT</td>
+                        </tr>
+
+                        <tr>
+                            <td class="sub-label">PTA Average in dB :</td>
+                            <td class="pta-value">{{report.ptaAverage.right}}</td>
+                            <td class="pta-value">{{report.ptaAverage.left}}</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- RELIABILITY & AUDIOMETER -->
+        <!-- ========================================================= -->
+
+        <div class="bottom-section">
+
+            <div class="reliability-section">
+                <span class="inline-label">Reliability :</span>
+                <span class="check-group">
+                    <label *ngFor="let item of report.reliability">
+                        <input type="checkbox" [checked]="item.selected" disabled>
+                        <span>{{item.name}}</span>
+                    </label>
+                </span>
+            </div>
+
+            <div class="audiometer-section">
+                <span class="inline-label">Audiometer Used :</span>
+                <span class="check-group">
+                    <label *ngFor="let item of report.audiometerUsed">
+                        <input type="checkbox" [checked]="item.selected" disabled>
+                        <span>{{item.name}}</span>
+                    </label>
+                </span>
+            </div>
+
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- AUDIOLOGICAL INTERPRETATION -->
+        <!-- ========================================================= -->
+
+        <div class="interpretation-section">
+
+            <div class="inline-label underline-label">Audiological Interpretation :</div>
+
+            <div class="interpretation-row">
+                <span class="ear-label right-ear">RIGHT EAR :</span>
+                <span class="ear-value">{{rightInterpretation}}</span>
+            </div>
+
+            <div class="interpretation-row">
+                <span class="ear-label left-ear">LEFT EAR :</span>
+                <span class="ear-value">{{leftInterpretation}}</span>
+            </div>
+
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- RECOMMENDATION -->
+        <!-- ========================================================= -->
+
+        <div class="recommendation-section">
+            <span class="inline-label">Recommendation :</span>
+        </div>
+        <span class="check-group recommendation-group">
+            <label *ngFor="let item of report.recommendations">
+                <input type="checkbox" [checked]="item.selected" disabled>
+                <span>{{item.name}}</span>
+            </label>
+        </span>
+
+        <!-- ========================================================= -->
+        <!-- SIGNATURE -->
+        <!-- ========================================================= -->
+
+        <div class="signature-section">
+
+            <div class="signature-box">
+
+                <!-- Doctor Signature -->
+                <div class="doctor-signature" *ngIf="report.doctorSignature">
+
+                    <img [src]="report.doctorSignature" alt="Doctor Signature" class="doctor-signature-image">
+
+                </div>
+
+                <!-- Audiologist -->
+                <div class="signature-name">
+                    Audiologist
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- FOOTER -->
+        <!-- ========================================================= -->
+
+        <div class="report-footer">
+            Generated by Audispeech – Speech and Hearing Clinic Management Software.
+        </div>
+
+    </div>
+
+
+
+</c-container>

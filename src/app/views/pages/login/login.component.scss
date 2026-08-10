@@ -1,0 +1,228 @@
+:host {
+
+    display: block;
+    height: 100vh;
+
+}
+
+.login-page {
+
+    display: flex;
+    height: 100%;
+    background: #212631;
+
+}
+
+/* LEFT */
+
+.left-side {
+
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background: #212631;
+
+}
+
+.login-card {
+
+    width: 100%;
+    max-width: 420px;
+
+}
+
+.logo {
+    display: block;
+    width: 120px;
+    margin: 0 auto 20px;
+}
+
+h3 {
+
+    color: #fff;
+    font-weight: 600;
+
+}
+
+.subtitle {
+
+    color: #AAB2C0;
+    margin-bottom: 30px;
+
+}
+
+label {
+
+    color: white;
+    margin-bottom: 8px;
+
+}
+
+.form-control {
+
+    background: #fafafa;
+    border: 1px solid #4B5565;
+    color: black;
+    height: 48px;
+
+}
+
+.form-control:focus {
+
+    background: #f3f4f5;
+    color: black;
+    border-color: #4F46E5;
+    box-shadow: none;
+
+}
+
+.password-box {
+
+    position: relative;
+
+}
+
+.eye {
+
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    background: none;
+    border: none;
+    color: black;
+
+}
+
+.options {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+
+}
+
+.options a {
+
+    color: #7C83FF;
+    text-decoration: none;
+
+}
+
+.btn-login {
+
+    width: 100%;
+    height: 48px;
+    background: #4F46E5;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    transition: .3s;
+
+}
+
+.btn-login:hover {
+
+    background: #6366F1;
+
+}
+
+.divider {
+
+    display: flex;
+    align-items: center;
+    margin: 30px 0;
+
+}
+
+.divider::before,
+.divider::after {
+
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #444;
+
+}
+
+.divider span {
+
+    padding: 0 15px;
+    color: #aaa;
+
+}
+
+.register {
+
+    text-align: center;
+    color: #ccc;
+
+}
+
+.register a {
+
+    color: #7C83FF;
+
+}
+
+/* RIGHT */
+
+.right-side {
+
+    width: 60%;
+    overflow: hidden;
+
+}
+
+.right-side img {
+
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+/* Responsive */
+
+@media(max-width:992px) {
+
+    .login-page {
+
+        flex-direction: column-reverse;
+
+    }
+
+    .left-side {
+
+        width: 100%;
+        padding: 30px;
+
+    }
+
+    .right-side {
+
+        width: 100%;
+        height: 300px;
+
+    }
+
+}
+
+@media(max-width:576px) {
+
+    .login-card {
+
+        max-width: 100%;
+
+    }
+
+    .logo {
+
+        width: 150px;
+
+    }
+
+}

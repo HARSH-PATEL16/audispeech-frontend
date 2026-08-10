@@ -1,0 +1,550 @@
+/*====================================================
+GLOBAL
+====================================================*/
+
+:host {
+    display: block;
+    background: #ececec;
+    padding: 20px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Times New Roman", serif;
+    background: #ececec;
+}
+
+/*====================================================
+ACTION BAR
+====================================================*/
+
+.action-bar {
+    max-width: 210mm;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.right-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/*====================================================
+REPORT PAGE
+====================================================*/
+
+.report-page {
+    width: 210mm;
+    min-height: 297mm;
+    background: #fff;
+    margin: auto;
+    padding: 8mm 10mm;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .18);
+    color: #000;
+    font-size: 12px;
+    line-height: 1.3;
+    display: flex;
+    flex-direction: column;
+}
+
+/*====================================================
+HEADER
+====================================================*/
+
+.report-header {
+    display: flex;
+    align-items: center;
+    border: 2px solid #000;
+    margin-bottom: 6px;
+}
+
+.logo-area {
+    width: 90px;
+    min-width: 90px;
+    border-right: 2px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+}
+
+.logo-area img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+}
+
+.company-area {
+    flex: 1;
+    text-align: center;
+}
+
+.company-name {
+    padding: 6px 0 3px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.company-blue {
+    color: #0b3d91;
+}
+
+.company-strip {
+    background: #1b5eaa;
+    color: #fff;
+    padding: 4px 6px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .5px;
+}
+
+.company-address-line {
+    padding: 4px 9px 5px;
+    font-size: 11px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.contact-mo {
+    font-weight: 400;
+}
+
+/*====================================================
+PATIENT TABLE
+====================================================*/
+
+.patient-info {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 5px;
+    border: 2px solid #000;
+}
+
+.patient-info td {
+    border: 1px solid #000;
+    padding: 4px 7px;
+    vertical-align: middle;
+}
+
+.patient-info .title {
+    width: 80px;
+    font-weight: 500;
+    white-space: nowrap;
+    background: #fafafa;
+}
+
+.patient-info .small {
+    width: 55px;
+}
+
+.patient-info .value {
+    font-weight: 500;
+}
+
+/*====================================================
+REPORT MIDDLE
+====================================================*/
+
+.report-middle {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.audiogram-panel {
+    width: 66%;
+    border: 2px solid #000;
+}
+
+.section-label {
+    text-align: center;
+    font-weight: bold;
+    padding: 4px;
+    border-bottom: 2px solid #000;
+    background: #f5f5f5;
+    letter-spacing: .5px;
+    font-size: 13px;
+}
+
+.chart-area {
+    height: 104mm;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-area app-audiogram-chart {
+    width: 85%;
+    display: block;
+}
+
+.side-panel {
+    width: 34%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/*====================================================
+COMMON SIDE TABLE
+====================================================*/
+
+.side-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #000;
+    table-layout: fixed;
+    background: #fff;
+}
+
+.side-table th,
+.side-table td {
+    border: 1px solid #000;
+    padding: 3px 5px;
+    font-size: 10px;
+    line-height: 1.16;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.side-table th {
+    background: #efefef;
+    font-weight: bold;
+}
+
+/*====================================================
+HEADER ROW
+====================================================*/
+
+.head-row th,
+.head-row td {
+    background: #fafafa;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.right-head {
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+.left-head {
+    color: #1565c0;
+    font-weight: bold;
+}
+
+/*====================================================
+SYMBOLS TABLE
+====================================================*/
+
+.symbols-table td:first-child {
+    text-align: left;
+    font-weight: 500;
+}
+
+.group-head-row td {
+    background: #e4e4e4;
+    font-weight: 700;
+    font-size: 10px;
+}
+
+.group-title {
+    letter-spacing: .3px;
+}
+
+.symbols-table .sub-label {
+    width: 46%;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.right-symbol,
+.left-symbol {
+    font-size: 17px;
+    font-weight: bold;
+    font-family: "Segoe UI Symbol", "Arial Unicode MS", sans-serif;
+    height: 20px;
+}
+
+.right-symbol {
+    color: #d32f2f;
+}
+
+.left-symbol {
+    color: #1565c0;
+}
+
+/*====================================================
+TFT / PTA TABLE
+====================================================*/
+
+.tft-pta-table td:first-child {
+    text-align: left;
+    font-weight: 600;
+    font-size: 10.5px;
+}
+
+.weber-value {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.pta-value {
+    font-weight: 700;
+    font-size: 10px;
+}
+
+.sub-head-row td {
+    padding: 2px 5px;
+}
+
+/*====================================================
+OTOSCOPY MIN HEIGHT
+====================================================*/
+
+.side-table tbody td {
+    height: 18px;
+}
+
+/*====================================================
+SECTION SPACING
+====================================================*/
+
+.side-table+.side-table {
+    margin-top: 0;
+}
+
+/*====================================================
+BOTTOM SECTION (RELIABILITY / AUDIOMETER)
+====================================================*/
+
+.bottom-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    padding: 20px 4px;
+    // border-top: 1px solid #000;
+    // border-bottom: 1px solid #000;
+}
+
+.reliability-section,
+.audiometer-section {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: nowrap;
+}
+
+.inline-label {
+    font-weight: 700;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.check-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.check-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12.5px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.check-group input {
+    width: 14px;
+    height: 14px;
+}
+
+/*====================================================
+INTERPRETATION
+====================================================*/
+
+.interpretation-section {
+    margin-top: 25px;
+}
+
+.underline-label {
+    margin-bottom: 12px;
+    font-size: 13px;
+}
+
+.interpretation-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 20px 0 10px 8px;
+    border-bottom: 1px solid #999;
+    font-size: 13px;
+}
+
+.ear-label {
+    font-weight: 700;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+.right-ear {
+    color: #d32f2f;
+}
+
+.left-ear {
+    color: #00897b;
+}
+
+.ear-value {
+    font-weight: 500;
+}
+
+/*====================================================
+RECOMMENDATION
+====================================================*/
+
+.recommendation-section {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: nowrap;
+    font-size: 13px;
+}
+
+.recommendation-group {
+    margin-top: 15px;
+    gap: 20px;
+}
+
+/*====================================================
+SIGNATURE
+====================================================*/
+
+.signature-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+    padding-top: 40px;
+}
+
+.signature-box {
+    width: 200px;
+    text-align: center;
+}
+
+.signature-name {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.doctor-signature {
+    width: 100%;
+    height: 55px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    margin-bottom: 4px;
+}
+
+.doctor-signature-image {
+    max-width: 180px;
+    max-height: 50px;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+    display: block;
+}
+
+/*====================================================
+PRINT LOOK
+====================================================*/
+
+.side-table,
+.patient-info,
+.report-header {
+    page-break-inside: avoid;
+}
+
+/*====================================================
+PRINT
+====================================================*/
+
+@media print {
+
+    body {
+        background: #fff;
+        margin: 0;
+        padding: 0;
+    }
+
+    .action-bar,
+    .no-print {
+        display: none !important;
+    }
+
+    .report-page {
+        width: 210mm;
+        height: 297mm;
+        margin: 0;
+        padding: 8mm 10mm;
+        box-shadow: none;
+        border: none;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .report-header,
+    .patient-info,
+    .side-table,
+    .bottom-section,
+    .interpretation-section,
+    .recommendation-section {
+        page-break-inside: avoid;
+    }
+}
+
+/*====================================================
+PDF OPTIMIZATION
+====================================================*/
+
+.report-page img {
+    max-width: 100%;
+    image-rendering: high-quality;
+}
+
+table {
+    border-spacing: 0;
+}
+
+img {
+    user-select: none;
+}
+
+svg {
+    overflow: visible;
+}
+
+.report-footer {
+    margin-top: 30px;
+    padding-top: 8px;
+    border-top: 1px solid #ccc;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
+}

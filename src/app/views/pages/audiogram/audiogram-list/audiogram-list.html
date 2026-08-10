@@ -1,0 +1,342 @@
+<app-loader *ngIf="loader"></app-loader>
+<c-container fluid>
+
+    <c-card class="section-card">
+
+        <c-card-body>
+
+            <!-- ===========================================================
+           PAGE HEADER
+      ============================================================ -->
+
+            <div class="page-header">
+
+                <div>
+                    <h2>Audiogram List</h2>
+                </div>
+
+                <button cButton color="primary" (click)="addAudiogram()">
+
+                    <i class="bi bi-plus-circle me-2"></i>
+
+                    Create Audiogram
+
+                </button>
+
+            </div>
+
+            <!-- ===========================================================
+           FILTERS
+      ============================================================ -->
+
+            <div class="filter-section">
+
+                <c-row class="g-3">
+
+                    <!-- Search -->
+
+                    <c-col lg="4" md="6">
+
+                        <label class="form-label">
+
+                            Search
+
+                        </label>
+
+                        <input type="text" class="form-control" placeholder="Patient Name"
+                            [(ngModel)]="searchText" (input)="search()">
+
+                    </c-col>
+
+                    <!-- From Date -->
+
+                    <c-col lg="3" md="6">
+
+                        <label class="form-label">
+
+                            From Date
+
+                        </label>
+
+                        <input type="date" class="form-control" [(ngModel)]="fromDate" (change)="search()">
+
+                    </c-col>
+
+                    <!-- To Date -->
+
+                    <c-col lg="3" md="6">
+
+                        <label class="form-label">
+
+                            To Date
+
+                        </label>
+
+                        <input type="date" class="form-control" [(ngModel)]="toDate" (change)="search()">
+
+                    </c-col>
+
+                    <!-- Reset -->
+
+                    <c-col lg="2" md="3" class="d-flex align-items-end">
+
+                        <button cButton color="secondary" class="w-100" (click)="resetFilters()">
+
+                            <i class="bi bi-arrow-clockwise me-2"></i>
+
+                            Reset
+
+                        </button>
+
+                    </c-col>
+
+                </c-row>
+
+            </div>
+
+            <!-- ===========================================================
+           TABLE
+      ============================================================ -->
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th width="70">
+
+                                Sr No
+
+                            </th>
+
+                            <th class="sortable" (click)="sort('patientName')">
+
+                                Patient Name
+
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+
+                            </th>
+
+                            <th class="sortable" (click)="sort('age')">
+
+                                Age
+
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+
+                            </th>
+
+                            <th class="sortable" (click)="sort('gender')">
+
+                                Gender
+
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+
+                            </th>
+
+                            <th class="sortable" (click)="sort('visitDate')">
+
+                                Visit Date
+
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+
+                            </th>
+
+                            <th width="100" class="text-center">
+
+                                Action
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @if (pagedAudiograms.length > 0) {
+
+                        @for (item of pagedAudiograms; track item.id; let i = $index) {
+
+                        <tr>
+
+                            <td>
+
+                                {{ startRecord + i }}
+
+                            </td>
+
+                            <td>
+
+                                {{ item.patientName }}
+
+                            </td>
+
+                            <td>
+
+                                {{ item.age }}
+
+                            </td>
+
+                            <td>
+
+                                {{
+                                item.gender == 0
+                                ? 'Male'
+                                : item.gender == 1
+                                ? 'Female'
+                                : 'Other'
+                                }}
+
+                            </td>
+
+                            <td>
+
+                                {{ item.visitDate | date:'dd MMM yyyy' }}
+
+                            </td>
+
+                            <td class="text-center">
+
+                                <div class="d-flex justify-content-center gap-2">
+
+                                    <!-- Edit -->
+
+                                    <button cButton color="warning" size="sm" title="Edit Audiogram"
+                                        (click)="editAudiogram(item)">
+
+                                        <i class="bi bi-pencil-square"></i>
+
+                                    </button>
+
+                                    <!-- History -->
+
+                                    <button cButton color="primary" size="sm" title="View History"
+                                        (click)="viewHistory(item)">
+
+                                        <i class="bi bi-clock-history"></i>
+
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        }
+
+                        } @else {
+
+                        <tr>
+
+                            <td colspan="6" class="text-center py-4">
+
+                                No audiogram records found.
+
+                            </td>
+
+                        </tr>
+
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- ===========================================================
+           PAGINATION
+      ============================================================ -->
+
+            <div class="pagination-wrapper">
+
+                <div class="pagination-left">
+
+                    <span>
+
+                        Showing
+
+                        <strong>{{ startRecord }}</strong>
+
+                        to
+
+                        <strong>{{ endRecord }}</strong>
+
+                        of
+
+                        <strong>{{ filteredAudiograms.length }}</strong>
+
+                        entries
+
+                    </span>
+
+                </div>
+
+                <div class="pagination-center">
+
+                    <label>
+
+                        Show
+
+                    </label>
+
+                    <select class="form-select form-select-sm" [(ngModel)]="pageSize" (change)="pageSizeChanged()">
+
+                        <option [ngValue]="5">5</option>
+
+                        <option [ngValue]="10">10</option>
+
+                        <option [ngValue]="25">25</option>
+
+                        <option [ngValue]="50">50</option>
+
+                    </select>
+
+                    <label>
+
+                        entries
+
+                    </label>
+
+                </div>
+
+                <div class="pagination-right">
+
+                    <button cButton color="secondary" size="sm" [disabled]="currentPage === 1" (click)="previousPage()">
+
+                        Previous
+
+                    </button>
+
+                    <span class="page-info">
+
+                        Page
+
+                        {{ currentPage }}
+
+                        of
+
+                        {{ totalPages }}
+
+                    </span>
+
+                    <button cButton color="secondary" size="sm" [disabled]="currentPage === totalPages"
+                        (click)="nextPage()">
+
+                        Next
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </c-card-body>
+
+    </c-card>
+
+</c-container>

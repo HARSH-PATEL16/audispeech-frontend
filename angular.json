@@ -1,0 +1,116 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": false
+  },
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "audispeech-frontend": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": "dist/audispeech-frontend",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": [
+              "@angular/localize/init",
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "preserveSymlinks": true,
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "src/scss/styles.scss"
+            ],
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "html2canvas",
+              "crypto-js",
+              "secure-web-storage",
+              "canvg",
+              "rgbcolor",
+              "raf"
+            ],
+            "stylePreprocessorOptions": {
+              "sass": {
+                "silenceDeprecations": []
+              }
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "7mb",
+                  "maximumError": "8mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "10kb",
+                  "maximumError": "20kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "audispeech-frontend:build:production"
+            },
+            "development": {
+              "buildTarget": "audispeech-frontend:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n",
+          "options": {
+            "buildTarget": "audispeech-frontend:build"
+          }
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "tsconfig.spec.json",
+            "browsers": [
+              "ChromiumHeadless"
+            ],
+            "runnerConfig": true
+          }
+        }
+      }
+    }
+  }
+}

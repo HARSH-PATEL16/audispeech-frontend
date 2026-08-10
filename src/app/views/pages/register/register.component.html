@@ -1,0 +1,88 @@
+<div class="bg-light dark:bg-transparent min-vh-100 d-flex flex-row align-items-center">
+  <c-container>
+    <c-row class="justify-content-center">
+      <c-col lg="7" md="9" xl="6">
+
+        <c-card class="mx-4">
+
+          <c-card-body class="p-4">
+
+            <!-- Back Button -->
+            <div class="mb-3">
+              <a routerLink="/login" class="back-link">
+                ← Back to Login
+              </a>
+            </div>
+
+            <form cForm>
+
+              <h1>Register</h1>
+
+              <p class="text-body-secondary">
+                Create your account
+              </p>
+
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilUser"></svg>
+                </span>
+                <input
+                  cFormControl
+                  placeholder="Username"
+                  autocomplete="name">
+              </c-input-group>
+
+              <c-input-group class="mb-3">
+                <span cInputGroupText>@</span>
+                <input
+                  cFormControl
+                  placeholder="Email"
+                  autocomplete="email">
+              </c-input-group>
+
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilLockLocked"></svg>
+                </span>
+                <input
+                  cFormControl
+                  type="password"
+                  placeholder="Password"
+                  autocomplete="new-password">
+              </c-input-group>
+
+              <c-input-group class="mb-4">
+                <span cInputGroupText>
+                  <svg cIcon name="cilLockLocked"></svg>
+                </span>
+                <input
+                  cFormControl
+                  type="password"
+                  placeholder="Confirm Password"
+                  autocomplete="new-password">
+              </c-input-group>
+
+              <div class="d-grid mb-3">
+                <button cButton color="success">
+                  Create Account
+                </button>
+              </div>
+
+            </form>
+
+            <!-- Bottom Link -->
+            <div class="text-center">
+              Already have an account?
+              <a routerLink="/login" class="login-link">
+                Sign In
+              </a>
+            </div>
+
+          </c-card-body>
+
+        </c-card>
+
+      </c-col>
+    </c-row>
+  </c-container>
+</div>  

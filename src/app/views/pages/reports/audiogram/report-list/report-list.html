@@ -1,0 +1,500 @@
+<app-loader *ngIf="loader"></app-loader>
+<c-container fluid>
+
+    <c-card class="shadow-sm border-0">
+
+        <c-card-body>
+
+
+            <!-- ===================================================== -->
+            <!-- PAGE HEADER -->
+            <!-- ===================================================== -->
+
+            <div class="header">
+
+                <div>
+
+                    <h3 class="mb-0">
+
+                        Audiogram Report
+
+                    </h3>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ===================================================== -->
+            <!-- FILTER SECTION -->
+            <!-- ===================================================== -->
+
+
+            <div class="filter-section">
+
+                <c-row class="g-3 align-items-end">
+
+                    <!-- SEARCH -->
+                    <c-col lg="3" md="6">
+                        <label class="form-label">Search Patient</label>
+                        <input type="text" class="form-control" placeholder="Patient Name / Mobile"
+                            [(ngModel)]="searchText" (ngModelChange)="search()">
+                    </c-col>
+
+                    <!-- FROM DATE -->
+                    <c-col lg="2" md="6">
+                        <label class="form-label">From Date</label>
+                        <input type="date" class="form-control" [(ngModel)]="fromDate" (ngModelChange)="search()">
+                    </c-col>
+
+                    <!-- TO DATE -->
+                    <c-col lg="2" md="6">
+                        <label class="form-label">To Date</label>
+                        <input type="date" class="form-control" [(ngModel)]="toDate" (ngModelChange)="search()">
+                    </c-col>
+
+                    <!-- RESET BUTTON -->
+                    <c-col lg="2" md="12" class="d-flex align-items-end">
+                        <button cButton color="secondary" type="button" class="w-100" (click)="resetFilters()">
+                            <i class="bi bi-arrow-clockwise me-2"></i>
+                            Reset
+                        </button>
+                    </c-col>
+
+                </c-row>
+
+            </div>
+
+
+
+
+
+
+            <!-- ===================================================== -->
+            <!-- REPORT TABLE -->
+            <!-- ===================================================== -->
+
+
+            <div class="table-responsive">
+
+
+                <table class="table table-hover align-middle">
+
+
+
+                    <thead>
+
+
+                        <tr>
+
+                            <th width="70">
+
+                                Sr No
+
+                            </th>
+
+
+                            <th class="sortable" (click)="sort('patientName')">
+
+
+                                Patient Name
+
+
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+
+
+                            </th>
+
+
+
+
+
+                            <th class="sortable" (click)="sort('visitDate')">
+
+
+                                Visit Date
+
+
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+
+
+                            </th>
+
+
+                            <th>
+
+
+                                Mobile
+
+
+                            </th>
+
+
+                            <th width="150" class="text-center">
+
+
+                                Action
+
+
+                            </th>
+
+
+
+                        </tr>
+
+
+                    </thead>
+
+
+
+
+
+
+
+                    <tbody>
+
+
+
+
+                        <tr *ngFor="let report of pagedReports; let i = index">
+
+
+                            <td>
+
+                                {{ startRecord + i }}
+
+                            </td>
+
+
+
+                            <td>
+
+
+                                <div class="fw-semibold">
+
+
+                                    {{report.patientName}}
+
+
+                                </div>
+
+
+                            </td>
+
+
+
+
+
+                            <td>
+
+
+                                {{report.visitDate | date:'dd MMM yyyy' }}
+
+
+                            </td>
+
+
+
+                            <td>
+
+
+                                {{report.mobileNo}}
+
+
+                            </td>
+
+
+                            <td class="text-center">
+
+
+
+                                <button cButton color="info" size="sm" class="action-btn me-1" title="Preview"
+                                    (click)="preview(report)">
+
+
+
+                                    <i class="bi bi-eye"></i>
+
+
+
+                                </button>
+
+
+
+
+<!-- 
+                                <button cButton color="danger" size="sm" class="action-btn me-1" title="Download PDF"
+                                    (click)="downloadPdf(report)">
+
+
+
+                                    <i class="bi bi-file-earmark-pdf"></i>
+
+
+
+                                </button>
+
+
+
+
+
+
+                                <button cButton color="secondary" size="sm" class="action-btn" title="Print"
+                                    (click)="print(report)">
+
+
+
+                                    <i class="bi bi-printer"></i>
+
+
+
+                                </button> -->
+
+
+
+
+
+                            </td>
+
+
+
+
+                        </tr>
+
+
+
+
+
+
+
+                        <tr *ngIf="pagedReports.length === 0">
+
+
+                            <td colspan="6" class="text-center py-5">
+
+
+                                <i class="bi bi-file-earmark-text" style="font-size:48px;">
+                                </i>
+
+
+
+                                <br><br>
+
+
+
+                                No Audiogram Reports Found.
+
+
+
+                            </td>
+
+
+                        </tr>
+
+
+
+
+
+                    </tbody>
+
+
+
+
+                </table>
+
+
+
+            </div>
+
+
+
+
+
+
+
+            <!-- ===================================================== -->
+            <!-- PAGINATION -->
+            <!-- ===================================================== -->
+
+
+            <div class="pagination-wrapper">
+
+
+
+                <div class="pagination-left">
+
+
+                    Showing
+
+
+                    <strong>
+
+                        {{startRecord}}
+
+                    </strong>
+
+
+                    to
+
+
+                    <strong>
+
+                        {{endRecord}}
+
+                    </strong>
+
+
+                    of
+
+
+                    <strong>
+
+                        {{filteredReports.length}}
+
+                    </strong>
+
+
+                    entries
+
+
+
+                </div>
+
+
+
+
+
+
+
+                <div class="pagination-center">
+
+
+
+                    <label>
+
+                        Show
+
+                    </label>
+
+
+
+
+                    <select class="form-select form-select-sm" [(ngModel)]="pageSize" (change)="pageSizeChanged()">
+
+
+
+                        <option [value]="10">
+
+                            10
+
+                        </option>
+
+
+                        <option [value]="25">
+
+                            25
+
+                        </option>
+
+
+                        <option [value]="50">
+
+                            50
+
+                        </option>
+
+
+
+                    </select>
+
+
+
+
+
+                    <label>
+
+                        entries
+
+                    </label>
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+                <div class="pagination-right">
+
+
+
+                    <button cButton color="secondary" size="sm" [disabled]="currentPage===1" (click)="previousPage()">
+
+
+
+                        Previous
+
+
+
+                    </button>
+
+
+
+
+
+                    <span class="page-info">
+
+
+                        Page
+
+                        {{currentPage}}
+
+                        of
+
+                        {{totalPages}}
+
+
+
+                    </span>
+
+
+
+
+
+                    <button cButton color="secondary" size="sm" [disabled]="currentPage===totalPages"
+                        (click)="nextPage()">
+
+
+
+                        Next
+
+
+
+                    </button>
+
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+        </c-card-body>
+
+
+    </c-card>
+
+
+</c-container>

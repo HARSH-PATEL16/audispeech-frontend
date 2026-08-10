@@ -1,0 +1,281 @@
+<app-loader *ngIf="loader"></app-loader>
+<c-container fluid>
+
+    <form [formGroup]="userForm">
+
+        <!-- ===================================================== -->
+        <!-- PAGE HEADER -->
+        <!-- ===================================================== -->
+
+        <div class="page-header">
+
+            <div>
+
+                <button cButton color="secondary" class="back-btn" type="button" (click)="back()">
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    Back
+
+                </button>
+
+                <h2 class="mt-3">
+
+                    Edit User
+
+                </h2>
+
+            </div>
+
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- USER INFORMATION -->
+        <!-- ===================================================== -->
+
+        <c-card class="section-card">
+
+            <c-card-body>
+
+                <div class="section-title">
+
+                    <i class="bi bi-person-fill-gear"></i>
+
+                    User Information
+
+                </div>
+
+                <c-row class="g-4">
+
+                    <!-- Username -->
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+
+                            Username
+
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input type="text" class="form-control" formControlName="username" placeholder="Enter username">
+
+                        <small class="text-danger" *ngIf="
+                                userForm.get('username')?.touched &&
+                                userForm.get('username')?.invalid
+                            ">
+
+                            Username is required
+
+                        </small>
+
+                    </c-col>
+
+                    <!-- Full Name -->
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+
+                            Full Name
+
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input type="text" class="form-control" formControlName="fullName"
+                            placeholder="Enter full name">
+
+                        <small class="text-danger" *ngIf="
+                                userForm.get('fullName')?.touched &&
+                                userForm.get('fullName')?.invalid
+                            ">
+
+                            Full name is required
+
+                        </small>
+
+                    </c-col>
+
+                    <!-- Email -->
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+
+                            Email Address
+
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input type="email" class="form-control" formControlName="email" placeholder="Enter email">
+
+                        <small class="text-danger" *ngIf="
+                                userForm.get('email')?.touched &&
+                                userForm.get('email')?.invalid
+                            ">
+
+                            Enter valid email address
+
+                        </small>
+
+                    </c-col>
+
+                    <!-- Mobile -->
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+
+                            Mobile Number
+
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input type="text" maxlength="10" class="form-control" formControlName="mobileNo"
+                            placeholder="Enter mobile number">
+
+                        <small class="text-danger" *ngIf="
+                                userForm.get('mobileNo')?.touched &&
+                                userForm.get('mobileNo')?.invalid
+                            ">
+
+                            Enter valid 10 digit mobile number
+
+                        </small>
+
+                    </c-col>
+                    <!-- ====================================== -->
+                    <!-- Password (Optional) -->
+                    <!-- ====================================== -->
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+
+                            New Password
+
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input [type]="showPassword ? 'text' : 'password'" class="form-control"
+                                formControlName="password" placeholder="Leave blank to keep existing password">
+
+                            <button type="button" class="password-toggle" (click)="showPassword = !showPassword">
+
+                                <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'">
+                                </i>
+
+                            </button>
+
+                        </div>
+
+                        <small class="text-muted">
+
+                            Leave blank if you don't want to change the password.
+
+                        </small>
+
+                        <small class="text-danger d-block" *ngIf="
+                                userForm.get('password')?.touched &&
+                                userForm.get('password')?.hasError('minlength')
+                            ">
+
+                            Password must be at least 8 characters.
+
+                        </small>
+
+                    </c-col>
+
+                    <!-- ====================================== -->
+                    <!-- Confirm Password -->
+                    <!-- ====================================== -->
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+
+                            Confirm Password
+
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control"
+                                formControlName="confirmPassword" placeholder="Confirm new password">
+
+                            <button type="button" class="password-toggle"
+                                (click)="showConfirmPassword = !showConfirmPassword">
+
+                                <i class="bi" [ngClass]="showConfirmPassword ? 'bi-eye-slash' : 'bi-eye'">
+                                </i>
+
+                            </button>
+
+                        </div>
+
+                        <small class="text-danger" *ngIf="
+                                userForm.hasError('passwordMismatch') &&
+                                userForm.get('confirmPassword')?.touched
+                            ">
+
+                            Passwords do not match.
+
+                        </small>
+
+                    </c-col>
+
+                    <!-- ====================================== -->
+                    <!-- Address -->
+                    <!-- ====================================== -->
+
+                    <c-col lg="12">
+
+                        <label class="form-label">
+
+                            Address
+
+                        </label>
+
+                        <textarea rows="4" class="form-control" formControlName="address" placeholder="Enter address">
+
+                        </textarea>
+
+                    </c-col>
+
+                </c-row>
+
+            </c-card-body>
+
+        </c-card>
+        <!-- ===================================================== -->
+        <!-- ACTION BUTTONS -->
+        <!-- ===================================================== -->
+
+        <div class="action-footer">
+
+            <button cButton color="secondary" type="button" (click)="back()">
+
+                <i class="bi bi-x-circle me-2"></i>
+
+                Cancel
+
+            </button>
+
+            <button cButton color="primary" type="submit" (click)="updateUser()">
+
+                <i class="bi bi-check-circle me-2"></i>
+
+                Update User
+
+            </button>
+
+        </div>
+
+    </form>
+
+</c-container>

@@ -1,0 +1,275 @@
+:host {
+    display: block;
+    background: #f5f7fb;
+    min-height: 100vh;
+}
+
+/* =======================================================
+   PAGE HEADER
+======================================================= */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.header h3 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    color: #23406b;
+}
+
+.header small {
+    display: block;
+    margin-top: 5px;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* =======================================================
+   CARD
+======================================================= */
+
+c-card {
+    border: none !important;
+    border-radius: 14px !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .05);
+    overflow: hidden;
+}
+
+/* =======================================================
+   TABLE
+======================================================= */
+
+.table-responsive {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background: #f1f4f9;
+    color: #23406b;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+    padding: 14px 12px;
+    white-space: nowrap;
+}
+
+.table tbody td {
+    padding: 14px 12px;
+    vertical-align: middle;
+}
+
+.table tbody tr:hover {
+    background: #f8fbff;
+}
+
+/* =======================================================
+   BADGE
+======================================================= */
+
+c-badge {
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* =======================================================
+   BUTTONS
+======================================================= */
+
+.btn-primary {
+    border: none;
+}
+
+.btn-warning {
+    color: white;
+}
+
+button[cButton] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button[cButton] svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* =======================================================
+   ACTION BUTTON
+======================================================= */
+
+.action-btn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: 8px;
+}
+
+/* =======================================================
+   MOBILE
+======================================================= */
+
+@media (max-width: 768px) {
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header button {
+        width: 100%;
+    }
+
+}
+
+
+
+/* =======================================================
+   FILTER SECTION
+======================================================= */
+
+.filter-section {
+
+    margin-bottom: 24px;
+
+    padding: 20px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e9ecef;
+
+    border-radius: 12px;
+
+}
+
+.form-label {
+
+    font-weight: 600;
+
+    color: #23406b;
+
+    margin-bottom: 6px;
+
+}
+
+/* =======================================================
+   SORTING
+======================================================= */
+
+.sortable {
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition: .2s;
+
+}
+
+.sortable:hover {
+
+    color: #0d6efd;
+
+}
+
+/* =======================================================
+   PAGINATION
+======================================================= */
+
+.pagination-wrapper {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 20px;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+
+}
+
+.pagination-left {
+
+    font-size: 14px;
+
+}
+
+.pagination-center {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+.pagination-center select {
+
+    width: 80px;
+
+}
+
+.pagination-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+.page-info {
+
+    font-weight: 600;
+
+    color: #23406b;
+
+}
+
+/* =======================================================
+   MOBILE
+======================================================= */
+
+@media (max-width: 768px) {
+
+    .pagination-wrapper {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+    .pagination-center {
+
+        width: 100%;
+
+    }
+
+    .pagination-right {
+
+        width: 100%;
+
+        justify-content: space-between;
+
+    }
+
+}

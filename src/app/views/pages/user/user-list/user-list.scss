@@ -1,0 +1,520 @@
+:host {
+    display: block;
+    background: #f5f7fb;
+    min-height: 100vh;
+}
+
+/*==================================================
+PAGE HEADER
+==================================================*/
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.header h3 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    color: #23406b;
+}
+
+.header small {
+    display: block;
+    margin-top: 5px;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+
+/*==================================================
+CARD
+==================================================*/
+
+c-card {
+    border: none !important;
+    border-radius: 14px !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .05);
+    overflow: hidden;
+}
+
+
+/*==================================================
+FILTER SECTION
+==================================================*/
+
+.filter-section {
+
+    margin-bottom: 24px;
+
+    padding: 20px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e9ecef;
+
+    border-radius: 12px;
+
+}
+
+
+.form-label {
+
+    font-weight: 600;
+
+    color: #23406b;
+
+    margin-bottom: 8px;
+
+}
+
+
+.form-control,
+.form-select {
+
+    border-radius: 8px;
+
+    border: 1px solid #d7dee8;
+
+}
+
+
+.form-control:focus,
+.form-select:focus {
+
+    border-color: #0d6efd;
+
+    box-shadow: 0 0 0 .15rem rgba(13, 110, 253, .15);
+
+}
+
+
+
+/*==================================================
+TABLE
+==================================================*/
+
+
+.table-responsive {
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+}
+
+
+.table {
+
+    margin-bottom: 0;
+
+}
+
+
+
+.table thead th {
+
+    background: #f1f4f9;
+
+    color: #23406b;
+
+    font-weight: 600;
+
+    border-bottom: 2px solid #dee2e6;
+
+    padding: 14px 12px;
+
+    white-space: nowrap;
+
+    vertical-align: middle;
+
+}
+
+
+
+.table tbody td {
+
+    padding: 14px 12px;
+
+    vertical-align: middle;
+
+}
+
+
+
+.table tbody tr:hover {
+
+    background: #f8fbff;
+
+}
+
+
+
+/*==================================================
+SORTABLE HEADER
+==================================================*/
+
+
+.sortable {
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition: .2s;
+
+}
+
+
+
+.sortable:hover {
+
+    color: #0d6efd;
+
+}
+
+
+
+.sortable i {
+
+    font-size: 12px;
+
+}
+
+
+
+/*==================================================
+BUTTONS
+==================================================*/
+
+
+button[cButton] {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+
+.btn-primary {
+
+    border: none;
+
+}
+
+
+
+.btn-warning {
+
+    color: #fff;
+
+}
+
+
+
+/*==================================================
+ACTION BUTTON
+==================================================*/
+
+
+.action-btn {
+
+    width: 34px;
+
+    height: 34px;
+
+    padding: 0;
+
+    border-radius: 8px;
+
+}
+
+
+
+.action-btn i {
+
+    font-size: 15px;
+
+}
+
+
+
+/*==================================================
+EMPTY STATE
+==================================================*/
+
+
+.text-muted i {
+
+    color: #b5bcc6;
+
+}
+
+
+
+.text-muted div {
+
+    font-size: 15px;
+
+}
+
+
+
+/*==================================================
+PAGINATION
+==================================================*/
+.pagination-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+.pagination-center label {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.pagination-center select {
+    width: 80px;
+    min-width: 80px;
+}
+
+
+.pagination-wrapper {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 24px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #edf1f5;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+
+}
+
+
+
+.pagination-info {
+
+    font-size: 14px;
+
+    color: #6c757d;
+
+}
+
+
+
+.pagination-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+
+}
+
+
+
+.page-size {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+
+.page-size span {
+
+    color: #6c757d;
+
+    font-size: 14px;
+
+}
+
+
+
+.page-size select {
+
+    width: 80px;
+
+}
+
+
+
+/*==================================================
+PAGINATION BUTTONS
+==================================================*/
+
+
+.pagination-buttons {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+
+}
+
+
+
+.page-btn {
+
+    min-width: 38px;
+
+    height: 38px;
+
+    border-radius: 8px;
+
+    padding: 0;
+
+    font-weight: 600;
+
+}
+
+
+
+.pagination-buttons .btn {
+
+    height: 38px;
+
+    min-width: 38px;
+
+    border-radius: 8px;
+
+}
+
+
+
+/*==================================================
+ADD BUTTON
+==================================================*/
+
+
+.header .btn {
+
+    border-radius: 10px;
+
+    font-weight: 600;
+
+    padding: 10px 20px;
+
+}
+
+
+
+/*==================================================
+RESPONSIVE
+==================================================*/
+
+
+@media(max-width:768px) {
+
+
+    .header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+
+    .header button {
+
+        width: 100%;
+
+    }
+
+
+
+    .pagination-wrapper {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+
+    .pagination-right {
+
+        width: 100%;
+
+        justify-content: space-between;
+
+    }
+
+
+
+}
+
+
+
+@media(max-width:576px) {
+
+
+    .header h3 {
+
+        font-size: 24px;
+
+    }
+
+
+
+    .table {
+
+        font-size: 14px;
+
+    }
+
+
+
+    .pagination-right {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+
+    .pagination-buttons {
+
+        width: 100%;
+
+        justify-content: center;
+
+    }
+
+}

@@ -1,0 +1,498 @@
+<app-loader *ngIf="loader"></app-loader>
+<c-container fluid>
+
+    <form [formGroup]="companyForm" (ngSubmit)="updateCompany()">
+
+
+        <!-- HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <button cButton color="secondary" type="button" class="back-btn" (click)="back()">
+
+                    <i class="bi bi-arrow-left"></i>
+                    Back
+
+                </button>
+
+
+                <h2 class="mt-3">
+                    Edit Company
+                </h2>
+
+            </div>
+
+        </div>
+
+
+
+
+
+        <c-card class="section-card">
+
+
+            <!-- COMPANY INFORMATION -->
+
+            <c-card-body>
+
+
+                <div class="section-title">
+
+                    <i class="bi bi-building-fill"></i>
+                    Company Information
+
+                </div>
+
+
+
+                <c-row class="g-4">
+
+
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+                            Company Name
+                            <span class="required">*</span>
+                        </label>
+
+
+                        <input type="text" class="form-control" formControlName="companyName"
+                            placeholder="Enter company name">
+
+
+                    </c-col>
+
+
+
+
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+                            Tag Line / Slogan
+                        </label>
+
+
+                        <input type="text" class="form-control" formControlName="tagLine" placeholder="Enter slogan">
+
+
+                    </c-col>
+
+
+
+
+
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+                            Contact Number
+                            <span class="required">*</span>
+                        </label>
+
+
+                        <input type="text" maxlength="10" class="form-control" formControlName="contactNumber"
+                            placeholder="Enter contact number">
+
+
+                    </c-col>
+
+
+
+
+
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+                            Alternate Contact Number
+                        </label>
+
+
+                        <input type="text" maxlength="10" class="form-control" formControlName="alternateContactNumber"
+                            placeholder="Enter alternate number">
+
+
+                    </c-col>
+
+
+
+
+
+
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+                            Email Address
+                            <span class="required">*</span>
+                        </label>
+
+
+                        <input type="email" class="form-control" formControlName="email" placeholder="Enter email">
+
+
+                    </c-col>
+
+
+
+
+
+
+
+                    <c-col lg="6">
+
+                        <label class="form-label">
+                            Website
+                        </label>
+
+
+                        <input type="text" class="form-control" formControlName="website"
+                            placeholder="https://example.com">
+
+
+                    </c-col>
+
+
+
+                </c-row>
+
+
+            </c-card-body>
+
+
+
+
+
+
+            <!-- ADDRESS -->
+
+
+            <c-card-body>
+
+
+                <div class="section-title">
+
+                    <i class="bi bi-geo-alt-fill"></i>
+                    Address Information
+
+                </div>
+
+
+
+
+
+                <c-row class="g-4">
+
+
+
+                    <c-col lg="12">
+
+
+                        <label class="form-label">
+                            Address
+                            <span class="required">*</span>
+                        </label>
+
+
+                        <textarea rows="4" class="form-control" formControlName="address"
+                            placeholder="Enter complete address">
+                        </textarea>
+
+
+                    </c-col>
+
+
+
+
+
+
+
+
+                    <c-col lg="3" md="6">
+
+
+                        <label class="form-label">
+                            Country
+                        </label>
+
+
+                        <input type="text" class="form-control" formControlName="country" readonly>
+
+
+                    </c-col>
+
+
+
+
+
+
+
+
+                    <c-col lg="3" md="6">
+
+
+                        <label class="form-label">
+                            State
+                            <span class="required">*</span>
+                        </label>
+
+
+                        <select class="form-select" formControlName="state" (change)="onStateChange()">
+
+
+
+                            <option value="">
+                                Select State
+                            </option>
+
+
+
+                            <option *ngFor="let state of states" [value]="state.id">
+
+                                {{state.name}}
+
+                            </option>
+
+
+                        </select>
+
+
+                    </c-col>
+
+
+
+
+
+
+
+
+                    <c-col lg="3" md="6">
+
+
+                        <label class="form-label">
+                            City
+                            <span class="required">*</span>
+                        </label>
+
+
+
+                        <select class="form-select" formControlName="city">
+
+
+                            <option value="">
+                                Select City
+                            </option>
+
+
+                            <option *ngFor="let city of cities" [value]="city.id">
+
+                                {{city.name}}
+
+                            </option>
+
+
+                        </select>
+
+
+                    </c-col>
+
+
+
+
+
+
+
+
+                    <c-col lg="3" md="6">
+
+
+                        <label class="form-label">
+                            Pincode
+                            <span class="required">*</span>
+                        </label>
+
+
+                        <input type="text" maxlength="6" class="form-control" formControlName="pincode"
+                            placeholder="Enter pincode">
+
+
+                    </c-col>
+
+
+
+                </c-row>
+
+
+            </c-card-body>
+
+
+
+
+
+
+
+
+
+            <!-- LOGO -->
+
+
+            <c-card-body>
+
+
+                <div class="section-title">
+
+                    <i class="bi bi-image-fill"></i>
+                    Company Branding
+
+                </div>
+
+
+
+
+
+                <c-row class="g-4 align-items-center">
+
+
+
+                    <c-col lg="4">
+
+
+                        <div class="logo-preview">
+
+
+                            <img *ngIf="logoPreview" [src]="logoPreview" alt="Company Logo">
+
+
+
+                            <div *ngIf="!logoPreview" class="logo-placeholder">
+
+
+                                <i class="bi bi-building"></i>
+
+
+                                <span>
+                                    No Logo Available
+                                </span>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </c-col>
+
+
+
+
+
+
+
+
+                    <c-col lg="8">
+
+
+                        <label class="form-label">
+                            Company Logo
+                        </label>
+
+
+
+                        <!-- <input #logoInput hidden type="file" accept=".png,.jpg,.jpeg" (change)="onLogoSelected($event)"> -->
+                        <input #logoInput type="file" hidden accept=".png,.jpg,.jpeg,.webp"
+                            (change)="onLogoSelected($event)">
+
+
+
+
+
+
+                        <button cButton color="secondary" type="button" (click)="logoInput.click()">
+
+                            <i class="bi bi-upload me-2"></i>
+
+                            Change Logo
+
+                        </button>
+
+                        <button *ngIf="logoPreview" cButton color="danger" type="button" class="ms-2"
+                            (click)="removeLogo()">
+
+                            <i class="bi bi-trash me-2"></i>
+
+                            Remove
+
+
+                        </button>
+
+                        <small class="text-muted d-block mt-2">
+                            Supported formats: JPG, JPEG, PNG (Maximum 5MB)
+                        </small>
+
+                    </c-col>
+
+
+
+                </c-row>
+
+
+            </c-card-body>
+
+
+
+        </c-card>
+
+
+
+
+
+
+
+        <!-- ACTION BUTTONS -->
+
+
+        <div class="action-footer">
+
+
+            <button cButton color="secondary" type="button" (click)="cancel()">
+
+
+
+                <i class="bi bi-x-circle me-2"></i>
+
+                Cancel
+
+
+            </button>
+
+
+
+
+
+
+            <button cButton color="primary" type="submit">
+
+
+
+                <i class="bi bi-check-circle me-2"></i>
+
+                Update Company
+
+
+            </button>
+
+
+
+        </div>
+
+
+
+    </form>
+
+
+</c-container>

@@ -1,0 +1,653 @@
+<app-loader *ngIf="loader"></app-loader>
+<c-container fluid>
+
+  <c-card class="shadow-sm border-0">
+
+    <c-card-body>
+
+
+      <!-- ==========================================================
+           PAGE HEADER
+      =========================================================== -->
+
+      <div class="header">
+
+        <div>
+          <h3>
+            Patient List
+          </h3>
+        </div>
+
+
+        <button cButton color="primary" (click)="addPatient()">
+
+          <i class="bi bi-plus-circle me-2"></i>
+
+          Add Patient
+
+        </button>
+
+      </div>
+
+
+
+      <!-- ==========================================================
+           FILTERS
+      =========================================================== -->
+
+
+      <div class="filter-section">
+
+        <c-row class="g-3">
+
+
+          <!-- Search -->
+
+          <c-col lg="3" md="6">
+
+            <label class="form-label">
+              Search
+            </label>
+
+
+            <input type="text" class="form-control" placeholder="Name / Mobile" [(ngModel)]="searchText"
+              (input)="search()">
+
+
+          </c-col>
+
+
+
+
+          <!-- Gender -->
+
+          <c-col lg="2" md="6">
+
+            <label class="form-label">
+              Gender
+            </label>
+
+
+            <select class="form-select" [(ngModel)]="selectedGender" (change)="search()">
+
+
+              <option value="">
+                All
+              </option>
+
+
+              @for(gender of genders; track gender){
+
+              <option [value]="gender">
+
+                {{gender}}
+
+              </option>
+
+              }
+
+
+            </select>
+
+
+          </c-col>
+
+
+
+
+
+          <!-- Status -->
+
+          <!-- <c-col lg="2" md="6">
+
+
+            <label class="form-label">
+              Status
+            </label>
+
+
+            <select class="form-select" [(ngModel)]="selectedStatus" (change)="search()">
+
+
+
+              <option value="">
+                All
+              </option>
+
+
+
+              @for(status of statuses; track status){
+
+              <option [value]="status">
+
+                {{status}}
+
+              </option>
+
+              }
+
+
+
+            </select>
+
+
+          </c-col> -->
+
+
+
+
+
+          <!-- From Date -->
+
+          <c-col lg="2" md="6">
+
+            <label class="form-label">
+              From Date
+            </label>
+
+
+            <input type="date" class="form-control" [(ngModel)]="fromDate" (change)="search()">
+
+
+
+          </c-col>
+
+
+
+
+
+          <!-- To Date -->
+
+          <c-col lg="2" md="6">
+
+            <label class="form-label">
+              To Date
+            </label>
+
+
+            <input type="date" class="form-control" [(ngModel)]="toDate" (change)="search()">
+
+
+
+          </c-col>
+
+
+
+
+
+          <!-- Reset -->
+
+          <c-col lg="2" md="3" class="d-flex align-items-end">
+
+            <button cButton color="secondary" class="w-100" (click)="resetFilters()">
+
+              <i class="bi bi-arrow-clockwise me-2"></i>
+
+              Reset
+
+            </button>
+
+          </c-col>
+
+
+        </c-row>
+
+
+      </div>
+
+
+
+
+
+      <!-- ==========================================================
+           TABLE
+      =========================================================== -->
+
+
+      <div class="table-responsive mt-4">
+
+
+        <table cTable hover class="table align-middle">
+
+
+          <thead>
+
+
+            <tr>
+
+
+              <th width="70">
+                #
+              </th>
+
+
+
+              <th class="sortable" (click)="sort('name')">
+
+
+                Patient Name
+
+
+                <i class="bi bi-arrow-down-up ms-1"></i>
+
+
+              </th>
+
+
+
+
+              <th class="sortable" (click)="sort('age')">
+
+
+                Age
+
+
+                <i class="bi bi-arrow-down-up ms-1"></i>
+
+
+              </th>
+
+
+
+
+
+              <th class="sortable" (click)="sort('gender')">
+
+
+                Gender
+
+
+                <i class="bi bi-arrow-down-up ms-1"></i>
+
+
+              </th>
+
+
+
+
+
+              <th class="sortable" (click)="sort('mobile_no')">
+
+
+                Mobile
+
+
+                <i class="bi bi-arrow-down-up ms-1"></i>
+
+
+              </th>
+
+
+
+
+
+              <th class="sortable" (click)="sort('visit_date')">
+
+
+                Visit Date
+
+
+                <i class="bi bi-arrow-down-up ms-1"></i>
+
+
+              </th>
+
+
+
+
+
+              <!-- <th class="sortable" (click)="sort('status')">
+
+
+                Status
+
+
+                <i class="bi bi-arrow-down-up ms-1"></i>
+
+
+              </th> -->
+
+
+
+
+
+              <th width="100" class="text-center">
+
+                Action
+
+              </th>
+
+
+
+            </tr>
+
+
+          </thead>
+
+
+
+
+
+
+          <tbody>
+
+
+
+            @for(patient of pagedPatients; track patient.id; let i = $index){
+
+
+
+            <tr>
+
+
+
+              <td>
+
+                {{startRecord + i}}
+
+              </td>
+
+
+
+
+
+              <td>
+
+                {{patient.name}}
+
+              </td>
+
+
+
+
+
+              <td>
+
+                {{patient.age}}
+
+              </td>
+
+
+
+
+
+              <td>
+
+                {{getGender(patient.gender)}}
+
+              </td>
+
+
+
+
+
+              <td>
+
+                {{patient.mobile_no}}
+
+              </td>
+
+
+
+
+
+              <td>
+
+                {{patient.visit_date | date:'dd-MM-yyyy'}}
+
+              </td>
+
+
+
+
+
+              <!-- <td> -->
+
+
+
+              <!-- <c-badge [color]="patient.status ? 'success' : 'danger'">
+
+
+                  {{getStatus(patient.status)}}
+
+
+
+                </c-badge> -->
+
+
+
+              <!-- </td> -->
+
+
+              <td class="text-center">
+
+                <button cButton color="warning" size="sm" class="action-btn" type="button"
+                  (click)="editPatient(patient.id)">
+
+                  <i class="bi bi-pencil-square"></i>
+
+                </button>
+
+              </td>
+
+            </tr>
+
+
+
+            }
+
+
+
+            @empty {
+
+
+
+            <tr>
+
+
+              <td colspan="8" class="text-center py-5 text-body-secondary">
+
+
+                No patients found.
+
+
+
+              </td>
+
+
+            </tr>
+
+
+            }
+
+
+
+          </tbody>
+
+
+
+        </table>
+
+
+
+      </div>
+
+
+
+
+
+
+      <!-- ==========================================================
+           PAGINATION
+      =========================================================== -->
+
+
+
+      <div class="pagination-wrapper">
+
+
+
+        <div class="pagination-left">
+
+
+          <span>
+
+
+            Showing
+
+
+            <strong>
+              {{startRecord}}
+            </strong>
+
+
+            to
+
+
+            <strong>
+              {{endRecord}}
+            </strong>
+
+
+            of
+
+
+            <strong>
+              {{filteredPatients.length}}
+            </strong>
+
+
+            entries
+
+
+          </span>
+
+
+        </div>
+
+
+
+
+
+        <div class="pagination-center">
+
+
+          <label>
+
+            Show
+
+          </label>
+
+
+
+          <select class="form-select form-select-sm" [(ngModel)]="pageSize" (change)="pageSizeChanged()">
+
+
+
+            <option [ngValue]="5">
+              5
+            </option>
+
+
+            <option [ngValue]="10">
+              10
+            </option>
+
+
+            <option [ngValue]="25">
+              25
+            </option>
+
+
+            <option [ngValue]="50">
+              50
+            </option>
+
+
+
+          </select>
+
+
+
+          <label>
+
+            entries
+
+          </label>
+
+
+
+        </div>
+
+
+
+
+
+
+        <div class="pagination-right">
+
+
+          <button cButton color="secondary" size="sm" [disabled]="currentPage === 1" (click)="previousPage()">
+
+
+
+            Previous
+
+
+
+          </button>
+
+
+
+
+
+
+          <span class="page-info">
+
+
+            Page
+
+            {{currentPage}}
+
+            of
+
+            {{totalPages}}
+
+
+
+          </span>
+
+
+
+
+
+
+          <button cButton color="secondary" size="sm" [disabled]="currentPage === totalPages" (click)="nextPage()">
+
+
+
+            Next
+
+
+
+          </button>
+
+
+
+
+        </div>
+
+
+
+
+      </div>
+
+
+
+    </c-card-body>
+
+
+  </c-card>
+
+
+</c-container>

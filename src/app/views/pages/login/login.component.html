@@ -1,0 +1,102 @@
+<app-loader *ngIf="loader"></app-loader>
+<div class="login-page">
+
+  <!-- Left -->
+
+  <div class="left-side">
+
+    <div class="login-card">
+        <img [src]="'assets/images/logo-text-bg.png'" class="logo" alt="Logo">
+      <h3>Welcome Back</h3>
+
+      <p class="subtitle">
+        Sign in to your AudiSpeech account
+      </p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+        <div class="mb-3">
+          <label>Username</label>
+          <input type="text" class="form-control" formControlName="username" placeholder="Enter your username">
+        </div>
+
+
+        <div class="mb-3">
+
+          <label>Password</label>
+
+          <div class="password-box">
+
+            <input [type]="hidePassword ? 'password':'text'" class="form-control" formControlName="password"
+              placeholder="Enter your password">
+
+            <button type="button" class="eye" (click)="hidePassword=!hidePassword">
+
+              <i class="bi" [class.bi-eye]="hidePassword" [class.bi-eye-slash]="!hidePassword">
+              </i>
+
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="options">
+
+          <!-- <label>
+
+            <input type="checkbox" formControlName="remember">
+
+            Remember me
+
+          </label> -->
+
+          <!-- <a routerLink="/forgot-password"> -->
+
+          <!-- Forgot Password? -->
+
+          <!-- </a> -->
+
+        </div>
+
+        <button class="btn-login" type="submit">
+
+          Sign In
+
+        </button>
+
+      </form>
+
+      <!-- <div class="divider">
+
+        <span>OR</span>
+
+      </div>
+
+      <p class="register">
+
+        Don't have an account?
+
+        <a routerLink="/register">
+
+          Register Now
+
+        </a>
+
+      </p> -->
+
+      
+      <p style="color: white; margin-top: 40px; text-align: center;">Version 1.0.0</p>
+    </div>
+
+  </div>
+
+  <!-- Right -->
+
+  <div class="right-side">
+
+    <img src="assets/images/login-cover.jpg" alt="Login Cover">
+
+  </div>
+
+</div>

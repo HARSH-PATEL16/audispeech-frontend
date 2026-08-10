@@ -1,0 +1,336 @@
+<app-loader *ngIf="loader"></app-loader>
+<c-container fluid>
+
+    <c-card class="shadow-sm border-0">
+
+        <c-card-body>
+
+            <!-- ==========================================================
+                 PAGE HEADER
+            =========================================================== -->
+
+            <div class="header">
+
+                <div>
+
+                    <h3 class="mb-0">
+
+                        Doctor List
+
+                    </h3>
+
+                </div>
+
+                <button cButton color="primary" (click)="addDoctor()">
+
+                    <i class="bi bi-plus-circle me-2"></i>
+
+                    Add Doctor
+
+                </button>
+
+            </div>
+
+            <!-- ==========================================================
+                 FILTER SECTION
+            =========================================================== -->
+
+            <div class="filter-section">
+
+                <c-row class="g-3">
+
+                    <!-- Search -->
+
+                    <c-col lg="5" md="6">
+
+                        <label class="form-label">
+
+                            Search
+
+                        </label>
+
+                        <input type="text" class="form-control" placeholder="Name / Mobile"
+                            [(ngModel)]="searchText" (input)="search()">
+
+                    </c-col>
+
+                    <!-- Specialization -->
+
+                    <c-col lg="3" md="6">
+
+                        <label class="form-label">
+
+                            Specialization
+
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="selectedSpecialization" (change)="search()">
+
+                            <option value="">
+
+                                All Specializations
+
+                            </option>
+
+                            @for(item of specializations; track item){
+
+                            <option [value]="item">
+
+                                {{item}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </c-col>
+
+                    <!-- Reset -->
+
+                    <c-col lg="2" md="3" class="d-flex align-items-end">
+
+                        <button cButton color="secondary" class="w-100" (click)="resetFilters()">
+
+                            <i class="bi bi-arrow-clockwise me-2"></i>
+
+                            Reset
+
+                        </button>
+
+                    </c-col>
+
+                </c-row>
+
+            </div>
+
+            <!-- ==========================================================
+                 TABLE
+            =========================================================== -->
+
+            <div class="table-responsive mt-4">
+
+                <table cTable hover class="table align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th width="70">
+
+                                #
+
+                            </th>
+
+                            <th class="sortable" (click)="sort('name')">
+
+                                Doctor Name
+
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+
+                            </th>
+
+                            <th class="sortable" (click)="sort('specialization')">
+
+                                Specialization
+
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+
+                            </th>
+
+                            <th class="sortable" (click)="sort('mobile_no')">
+
+                                Mobile No
+
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+
+                            </th>
+
+                            <th width="100" class="text-center">
+
+                                Action
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @for(doctor of pagedDoctors; track doctor.id; let i = $index){
+
+                        <tr>
+
+                            <td>
+
+                                {{startRecord + i}}
+
+                            </td>
+
+                            <td>
+
+                                {{doctor.name}}
+
+                            </td>
+
+                            <td>
+
+                                {{doctor.specialization}}
+
+                            </td>
+
+                            <td>
+
+                                {{doctor.mobile_no}}
+
+                            </td>
+
+                            <td class="text-center">
+
+                                <button cButton color="warning" size="sm" class="action-btn" type="button"
+                                    (click)="editDoctor(doctor.id)">
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                        }
+                        @empty {
+
+                        <tr>
+
+                            <td colspan="6" class="text-center py-5 text-body-secondary">
+
+                                No doctors found.
+
+                            </td>
+
+                        </tr>
+
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- ==========================================================
+                 PAGINATION
+            =========================================================== -->
+
+            <div class="pagination-wrapper">
+
+                <!-- Left -->
+
+                <div class="pagination-left">
+
+                    <span>
+
+                        Showing
+
+                        <strong>{{startRecord}}</strong>
+
+                        to
+
+                        <strong>{{endRecord}}</strong>
+
+                        of
+
+                        <strong>{{filteredDoctors.length}}</strong>
+
+                        entries
+
+                    </span>
+
+                </div>
+
+                <!-- Center -->
+
+                <div class="pagination-center">
+
+                    <label>
+
+                        Show
+
+                    </label>
+
+                    <select class="form-select form-select-sm" [(ngModel)]="pageSize" (change)="pageSizeChanged()">
+
+                        <option [ngValue]="5">
+
+                            5
+
+                        </option>
+
+                        <option [ngValue]="10">
+
+                            10
+
+                        </option>
+
+                        <option [ngValue]="25">
+
+                            25
+
+                        </option>
+
+                        <option [ngValue]="50">
+
+                            50
+
+                        </option>
+
+                    </select>
+
+                    <label>
+
+                        entries
+
+                    </label>
+
+                </div>
+
+                <!-- Right -->
+
+                <div class="pagination-right">
+
+                    <button cButton color="secondary" size="sm" [disabled]="currentPage === 1" (click)="previousPage()">
+
+                        Previous
+
+                    </button>
+
+                    <span class="page-info">
+
+                        Page
+
+                        {{currentPage}}
+
+                        of
+
+                        {{totalPages}}
+
+                    </span>
+
+                    <button cButton color="secondary" size="sm" [disabled]="currentPage === totalPages"
+                        (click)="nextPage()">
+
+                        Next
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </c-card-body>
+
+    </c-card>
+
+</c-container>

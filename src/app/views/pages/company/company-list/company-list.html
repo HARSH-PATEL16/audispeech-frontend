@@ -1,0 +1,330 @@
+<app-loader *ngIf="loader"></app-loader>
+<c-container fluid>
+
+    <c-card class="shadow-sm border-0">
+
+        <c-card-body>
+
+            <!-- =======================================================
+           PAGE HEADER
+      ======================================================= -->
+
+            <div class="header">
+
+                <div>
+
+                    <h3 class="mb-0">
+                        Company List
+                    </h3>
+
+                </div>
+
+                <!-- <button cButton color="primary" (click)="addCompany()">
+
+                    <i class="bi bi-plus-circle me-2"></i>
+
+                    Add Company
+
+                </button> -->
+
+            </div>
+
+            <!-- =======================================================
+           SEARCH
+      ======================================================= -->
+
+            <div class="filter-section">
+
+                <c-row class="g-3">
+
+                    <c-col lg="10" md="9">
+
+                        <label class="form-label">
+                            Search
+                        </label>
+
+                        <input type="text" class="form-control"
+                            placeholder="Search Company Name, Contact Number or Email" [(ngModel)]="searchText"
+                            (input)="search()">
+
+                    </c-col>
+
+                    <c-col lg="2" md="3" class="d-flex align-items-end">
+
+                        <button cButton color="secondary" class="w-100" (click)="resetFilters()">
+
+                            <i class="bi bi-arrow-clockwise me-2"></i>
+
+                            Reset
+
+                        </button>
+
+                    </c-col>
+
+                </c-row>
+
+            </div>
+
+            <!-- =======================================================
+           TABLE
+      ======================================================= -->
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th width="60">
+                                #
+                            </th>
+
+                            <th width="90">
+                                Logo
+                            </th>
+
+                            <th class="sortable" (click)="sort('companyName')">
+
+                                Company Name
+
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+
+                            </th>
+
+                            <th class="sortable" (click)="sort('contactNumber')">
+
+                                Contact Number
+
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+
+                            </th>
+
+                            <th class="sortable" (click)="sort('email')">
+
+                                Email
+
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+
+                            </th>
+
+                            <th class="sortable" (click)="sort('address')">
+
+                                Address
+
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+
+                            </th>
+
+                            <th width="120" class="text-center">
+
+                                Action
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @for(company of pagedCompanies; track company.id; let i = $index){
+
+                        <tr>
+
+                            <td>
+
+                                {{ ((currentPage - 1) * pageSize) + i + 1 }}
+
+                            </td>
+
+                            <td>
+
+                                @if(company.logo){
+
+                                <img [src]="company.logo" width="45" height="45" class="rounded border object-fit-cover"
+                                    alt="Company Logo">
+
+                                }
+                                @else {
+
+                                <div class="bg-light border rounded d-flex justify-content-center align-items-center"
+                                    style="width:45px;height:45px;">
+
+                                    <i class="bi bi-building"></i>
+
+                                </div>
+
+                                }
+
+                            </td>
+
+                            <td>
+
+                                {{ company.companyName }}
+
+                            </td>
+
+                            <td>
+
+                                {{ company.contactNumber }}
+
+                            </td>
+
+                            <td>
+
+                                {{ company.email }}
+
+                            </td>
+
+                            <td>
+
+                                {{ company.address }}
+
+                            </td>
+
+                            <td class="text-center">
+
+                                <button cButton color="warning" size="sm" class="action-btn" (click)="edit(company)">
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                        } @empty {
+
+                        <tr>
+
+                            <td colspan="7" class="text-center py-5">
+
+                                <i class="bi bi-building" style="font-size:50px;"></i>
+
+                                <br><br>
+
+                                <strong>No company found.</strong>
+
+                            </td>
+
+                        </tr>
+
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- =======================================================
+           PAGINATION
+      ======================================================= -->
+
+            <div class="pagination-wrapper">
+
+                <div class="pagination-left">
+
+                    Showing
+
+                    <strong>
+
+                        {{ startRecord }}
+
+                    </strong>
+
+                    to
+
+                    <strong>
+
+                        {{ endRecord }}
+
+                    </strong>
+
+                    of
+
+                    <strong>
+
+                        {{ filteredCompanies.length }}
+
+                    </strong>
+
+                    entries
+
+                </div>
+
+                <div class="pagination-center">
+
+                    <label>
+
+                        Show
+
+                    </label>
+
+                    <select class="form-select form-select-sm" [(ngModel)]="pageSize" (change)="pageSizeChanged()">
+
+                        <option [ngValue]="5">
+                            5
+                        </option>
+
+                        <option [ngValue]="10">
+                            10
+                        </option>
+
+                        <option [ngValue]="25">
+                            25
+                        </option>
+
+                        <option [ngValue]="50">
+                            50
+                        </option>
+
+                    </select>
+
+                    <label>
+
+                        entries
+
+                    </label>
+
+                </div>
+
+                <div class="pagination-right">
+
+                    <button cButton color="secondary" size="sm" [disabled]="currentPage === 1" (click)="previousPage()">
+
+                        Previous
+
+                    </button>
+
+                    <span class="page-info">
+
+                        Page
+
+                        {{ currentPage }}
+
+                        of
+
+                        {{ totalPages }}
+
+                    </span>
+
+                    <button cButton color="secondary" size="sm" [disabled]="currentPage === totalPages"
+                        (click)="nextPage()">
+
+                        Next
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </c-card-body>
+
+    </c-card>
+
+</c-container>

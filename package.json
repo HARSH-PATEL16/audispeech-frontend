@@ -1,0 +1,97 @@
+{
+  "name": "audi-speech",
+  "version": "5.6.23",
+  "license": "MIT",
+  "main": "electron/main.js",
+  "author": "",
+  "config": {
+    "theme": "default",
+    "coreui_library_short_version": "5.6",
+    "coreui_library_docs_url": "https://coreui.io/angular/docs/"
+  },
+  "scripts": {
+    "start": "ng serve",
+    "electron": "electron .",
+    "electron-dev": "concurrently \"ng serve\" \"wait-on http://localhost:4200 && electron .\"",
+    "electron-build": "ng build --base-href ./ && electron-builder",
+    "build": "ng build",
+    "electron-pack": "ng build && electron-builder"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^21.2.18",
+    "@angular/cdk": "^21.2.10",
+    "@angular/common": "^21.2.12",
+    "@angular/compiler": "^21.2.12",
+    "@angular/core": "^21.2.12",
+    "@angular/forms": "^21.2.12",
+    "@angular/language-service": "^21.2.12",
+    "@angular/localize": "^21.2.12",
+    "@angular/platform-browser": "^21.2.12",
+    "@angular/platform-browser-dynamic": "^21.2.12",
+    "@angular/router": "^21.2.12",
+    "@coreui/angular": "~5.6.23",
+    "@coreui/coreui": "~5.6.1",
+    "@coreui/icons": "^3.1.0",
+    "@coreui/icons-angular": "~5.6.23",
+    "@coreui/utils": "^2.0.2",
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "crypto-js": "^4.2.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1",
+    "ngx-scrollbar": "^13.0.3",
+    "ngx-toastr": "^20.0.5",
+    "rxjs": "~7.8.2",
+    "secure-web-storage": "^1.0.2",
+    "tslib": "^2.8.1",
+    "zone.js": "~0.16.2"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.2.10",
+    "@angular/cli": "^21.2.10",
+    "@angular/compiler-cli": "^21.2.12",
+    "@types/crypto-js": "^4.2.2",
+    "@types/node": "^24.12.3",
+    "@vitest/browser-playwright": "^4.1.6",
+    "concurrently": "^9.2.1",
+    "electron": "^41.6.1",
+    "electron-builder": "^26.8.1",
+    "jsdom": "^29.1.1",
+    "playwright": "^1.59.1",
+    "typescript": "~5.9.3",
+    "vitest": "^4.1.6",
+    "wait-on": "^9.0.10"
+  },
+  "engines": {
+    "node": "^20.19.0 || ^22.12.0 || ^24.0.0",
+    "npm": ">=10"
+  },
+  "bugs": {
+    "url": "https://github.com/coreui/coreui-free-angular-admin-template/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coreui/coreui-free-angular-admin-template.git"
+  },
+  "build": {
+    "appId": "com.company.dashboard",
+    "productName": "TransportCRM",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  }
+}

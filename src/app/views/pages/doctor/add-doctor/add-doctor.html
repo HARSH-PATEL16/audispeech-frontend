@@ -1,0 +1,606 @@
+<app-loader *ngIf="loader"></app-loader>
+<c-container fluid>
+
+    <form cForm [formGroup]="doctorForm" (ngSubmit)="saveDoctor()">
+
+
+        <!-- Header -->
+
+        <div class="page-header">
+
+            <div>
+
+                <button cButton color="secondary" class="back-btn" type="button" (click)="cancel()">
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    Back
+
+                </button>
+
+
+                <h2 class="mt-3">
+
+                    Add Doctor
+
+                </h2>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- Personal Information -->
+
+
+        <c-card class="section-card">
+
+
+            <c-card-body>
+
+
+                <div class="section-title">
+
+                    <i class="bi bi-person-badge"></i>
+
+                    Personal Information
+
+                </div>
+
+
+
+                <c-row>
+
+
+
+                    <!-- Doctor Name -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+
+                        <label class="form-label">
+
+                            Doctor Name <span>*</span>
+
+                        </label>
+
+
+                        <input cFormControl class="form-control" formControlName="name" placeholder="Enter Doctor Name">
+
+
+                    </c-col>
+
+
+
+
+                    <!-- Mobile -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+
+                        <label class="form-label">
+
+                            Mobile Number <span>*</span>
+
+                        </label>
+
+
+                        <input cFormControl maxlength="10" class="form-control" formControlName="mobile_no"
+                            placeholder="Enter Mobile Number">
+
+
+                    </c-col>
+
+
+
+
+                    <!-- Email -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+
+                        <label class="form-label">
+
+                            Email
+
+                        </label>
+
+
+                        <input cFormControl class="form-control" formControlName="email" placeholder="Email Address">
+
+
+                    </c-col>
+
+
+                </c-row>
+
+
+
+
+                <c-row>
+
+
+
+                    <!-- Gender -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+
+                        <label class="form-label">
+
+                            Gender
+
+                        </label>
+
+
+                        <select class="form-select" formControlName="gender">
+
+
+                            <option value="">
+
+                                Select Gender
+
+                            </option>
+
+
+                            @for(gender of genders; track gender.id){
+
+
+                            <option [value]="gender.id">
+
+                                {{gender.name}}
+
+                            </option>
+
+
+                            }
+
+
+                        </select>
+
+
+                    </c-col>
+
+
+
+
+                    <!-- Qualification -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+
+                        <label class="form-label">
+
+                            Qualification
+
+                        </label>
+
+
+                        <input cFormControl class="form-control" formControlName="qualification"
+                            placeholder="MBBS, MS etc">
+
+
+                    </c-col>
+
+
+
+                </c-row>
+
+
+            </c-card-body>
+
+
+            <!-- Professional Information -->
+
+            <c-card-body>
+
+                <div class="section-title">
+
+                    <i class="bi bi-hospital"></i>
+
+                    Professional Information
+
+                </div>
+
+
+                <c-row>
+
+                    <!-- Hospital Name -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Hospital Name <span>*</span>
+
+                        </label>
+
+                        <input cFormControl class="form-control" formControlName="hospital_name"
+                            placeholder="Enter Hospital Name">
+
+                    </c-col>
+
+
+                    <!-- Specialization -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Specialization <span>*</span>
+
+                        </label>
+
+                        <input cFormControl class="form-control" formControlName="specialization"
+                            placeholder="Enter Specialization">
+
+                    </c-col>
+
+
+                    <!-- Doctor Signature -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Doctor Signature
+
+                        </label>
+
+                        <input type="file" class="form-control"
+                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                            (change)="onSignatureSelected($event)" #signatureInput>
+
+                        <small class="text-muted d-block mt-2">
+
+                            Allowed: JPG, JPEG, PNG, WEBP | Maximum size: 5 MB
+
+                        </small>
+
+
+                        <div *ngIf="signatureError" class="signature-error mt-2">
+
+                            <i class="bi bi-exclamation-circle me-1"></i>
+
+                            {{ signatureError }}
+
+                        </div>
+
+
+                        <div *ngIf="signaturePreview" class="signature-preview mt-3">
+
+                            <div class="signature-preview-header">
+
+                                <span>
+
+                                    <i class="bi bi-pen me-1"></i>
+
+                                    Signature Preview
+
+                                </span>
+
+                                <button type="button" class="remove-signature"
+                                    (click)="removeSignature(signatureInput)">
+
+                                    <i class="bi bi-x-circle"></i>
+
+                                    Remove
+
+                                </button>
+
+                            </div>
+
+
+                            <div class="signature-image-wrapper">
+
+                                <img [src]="signaturePreview" alt="Doctor Signature Preview" class="signature-image">
+
+                            </div>
+
+                        </div>
+
+                    </c-col>
+
+                </c-row>
+
+
+                <c-row>
+
+                    <c-col md="12" class="mb-3">
+
+                        <label class="form-label">
+
+                            Remarks
+
+                        </label>
+
+                        <textarea class="form-control" rows="3" formControlName="remarks"
+                            placeholder="Additional remarks"></textarea>
+
+                    </c-col>
+
+                </c-row>
+
+            </c-card-body>
+
+
+
+
+
+            <!-- Address Information -->
+
+
+            <c-card-body>
+
+
+
+                <div class="section-title">
+
+
+                    <i class="bi bi-geo-alt"></i>
+
+
+                    Address Information
+
+
+
+                </div>
+
+
+
+
+
+                <c-row>
+
+
+
+                    <!-- State -->
+
+
+                    <c-col lg="4">
+
+
+
+                        <label class="form-label">
+
+
+                            State
+
+
+                        </label>
+
+
+
+
+                        <select class="form-select" formControlName="state_id" (change)="onStateChange()">
+
+
+
+                            <option value="">
+
+
+                                Select State
+
+
+                            </option>
+
+
+
+
+                            @for(state of states; track state.id){
+
+
+
+                            <option [value]="state.id">
+
+
+                                {{state.name}}
+
+
+                            </option>
+
+
+
+                            }
+
+
+
+                        </select>
+
+
+
+                    </c-col>
+
+
+
+
+
+                    <!-- City -->
+
+
+                    <c-col lg="4">
+
+
+
+                        <label class="form-label">
+
+
+                            City
+
+
+                        </label>
+
+
+
+
+
+                        <select class="form-select" formControlName="city_id" (change)="onCityChange()">
+
+
+
+                            <option value="">
+
+
+                                Select City
+
+
+                            </option>
+
+
+
+
+
+                            @for(city of cities; track city.id){
+
+
+
+                            <option [value]="city.id">
+
+
+                                {{city.name}}
+
+
+                            </option>
+
+
+
+                            }
+
+
+
+                        </select>
+
+
+
+                    </c-col>
+
+
+
+
+
+                    <!-- Pincode -->
+
+
+                    <c-col lg="4">
+
+
+
+                        <label class="form-label">
+
+
+                            Pincode
+
+
+                        </label>
+
+
+
+
+
+                        <input class="form-control" formControlName="pincode">
+
+
+
+                    </c-col>
+
+
+
+
+                </c-row>
+
+                <c-row class="mt-3">
+
+
+                    <!-- Address -->
+
+
+                    <c-col md="12">
+
+
+                        <label class="form-label">
+
+
+                            Address
+
+
+                        </label>
+
+
+
+                        <textarea class="form-control" rows="3" formControlName="address" placeholder="Enter Address">
+
+                        </textarea>
+
+
+
+                    </c-col>
+
+
+
+                </c-row>
+
+
+
+            </c-card-body>
+
+
+
+        </c-card>
+
+
+
+
+
+        <!-- Footer -->
+
+
+        <div class="action-footer">
+
+
+
+            <button cButton color="secondary" type="button" (click)="cancel()">
+
+
+
+                <i class="bi bi-arrow-left"></i>
+
+
+
+                Cancel
+
+
+
+            </button>
+
+
+
+
+
+            <button cButton color="primary" type="submit">
+
+
+
+                <i class="bi bi-check-circle"></i>
+
+
+
+                Save Doctor
+
+
+
+            </button>
+
+
+
+        </div>
+
+
+
+    </form>
+
+
+
+</c-container>

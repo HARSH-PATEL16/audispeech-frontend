@@ -1,0 +1,579 @@
+<app-loader *ngIf="loader"></app-loader>
+<c-container fluid>
+
+    <form cForm [formGroup]="patientForm" (ngSubmit)="updatePatient()">
+
+        <!-- ===================================================== -->
+        <!-- PAGE HEADER -->
+        <!-- ===================================================== -->
+
+        <div class="page-header">
+
+            <div>
+
+                <button cButton color="secondary" class="back-btn" type="button" (click)="back()">
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    Back
+
+                </button>
+
+                <h2 class="mt-3">
+
+                    Edit Patient
+
+                </h2>
+
+                <p class="text-muted mb-0">
+
+                    Update patient personal and visit information
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- PERSONAL INFORMATION -->
+        <!-- ===================================================== -->
+
+        <c-card class="section-card">
+
+            <c-card-body>
+
+                <div class="section-title">
+
+                    <i class="bi bi-person-circle"></i>
+
+                    Personal Information
+
+                </div>
+
+                <c-row>
+
+                    <!-- Patient Name -->
+
+                    <c-col lg="5" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Patient Name <span>*</span>
+
+                        </label>
+
+                        <input cFormControl class="form-control" formControlName="patientName"
+                            placeholder="Enter Patient Name">
+
+                        @if (f['patientName'].touched && f['patientName'].invalid) {
+
+                        <small class="text-danger">
+
+                            Patient Name is required.
+
+                        </small>
+
+                        }
+
+                    </c-col>
+
+                    <!-- Mobile -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Mobile Number <span>*</span>
+
+                        </label>
+
+                        <input cFormControl class="form-control" type="tel" maxlength="10" inputmode="numeric"
+                            formControlName="mobileNo" placeholder="Enter Mobile Number" (keypress)="onlyNumber($event)"
+                            (input)="onMobileInput($event)">
+
+                        @if (f['mobileNo'].touched && f['mobileNo'].invalid) {
+
+                        <small class="text-danger">
+
+                            Enter a valid 10 digit mobile number.
+
+                        </small>
+
+                        }
+
+                    </c-col>
+
+                    <!-- Gender -->
+
+                    <c-col lg="3" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Gender <span>*</span>
+
+                        </label>
+
+                        <select class="form-select" formControlName="gender">
+
+                            <option value="">
+
+                                Select Gender
+
+                            </option>
+
+                            @for (gender of genders; track gender.id) {
+
+                            <option [value]="gender.id">
+
+                                {{ gender.name }}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                        @if (f['gender'].touched && f['gender'].invalid) {
+
+                        <small class="text-danger">
+
+                            Gender is required.
+
+                        </small>
+
+                        }
+
+                    </c-col>
+
+                </c-row>
+
+                <c-row>
+
+                    <!-- Date of Birth -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Date of Birth
+
+                        </label>
+
+                        <input type="date" class="form-control" formControlName="dob">
+
+                    </c-col>
+
+                    <!-- Blood Group -->
+
+                    <c-col lg="3" md="3" class="mb-3">
+
+                        <label class="form-label">
+
+                            Blood Group
+
+                        </label>
+
+                        <select class="form-select" formControlName="bloodGroup">
+
+                            <option value="">
+
+                                Select Blood Group
+
+                            </option>
+
+                            @for (group of bloodGroups; track group) {
+
+                            <option [value]="group">
+
+                                {{ group }}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </c-col>
+
+                    <!-- Email -->
+
+                    <c-col lg="3" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Email
+
+                        </label>
+
+                        <input cFormControl class="form-control" type="email" maxlength="100" placeholder="Enter Email"
+                            formControlName="email">
+
+                        @if (f['email'].touched && f['email'].invalid) {
+
+                        <small class="text-danger">
+
+                            Enter a valid email address.
+
+                        </small>
+
+                        }
+
+                    </c-col>
+
+                </c-row>
+
+                <c-row>
+
+                    <!-- State -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            State <span>*</span>
+
+                        </label>
+
+                        <select class="form-select" formControlName="state" (change)="onStateChange()">
+
+                            <option value="">
+
+                                Select State
+
+                            </option>
+
+                            @for (state of states; track state.id) {
+
+                            <option [value]="state.id">
+
+                                {{ state.name }}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                        @if (f['state'].touched && f['state'].invalid) {
+
+                        <small class="text-danger">
+
+                            State is required.
+
+                        </small>
+
+                        }
+
+                    </c-col>
+
+                    <!-- City -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            City <span>*</span>
+
+                        </label>
+
+                        <select class="form-select" formControlName="city">
+
+                            <option value="">
+
+                                Select City
+
+                            </option>
+
+                            @for (city of cities; track city.id) {
+
+                            <option [value]="city.id">
+
+                                {{ city.name }}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                        @if (f['city'].touched && f['city'].invalid) {
+
+                        <small class="text-danger">
+
+                            City is required.
+
+                        </small>
+
+                        }
+
+                    </c-col>
+
+                    <!-- Pincode -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Pincode
+
+                        </label>
+
+                        <input cFormControl class="form-control" formControlName="pincode">
+
+                    </c-col>
+
+                </c-row>
+
+                <c-row>
+
+                    <c-col md="12">
+
+                        <label class="form-label">
+
+                            Address <span>*</span>
+
+                        </label>
+
+                        <textarea class="form-control" rows="3" maxlength="500" formControlName="address"
+                            placeholder="Enter Complete Address"></textarea>
+
+                        @if (f['address'].touched && f['address'].invalid) {
+
+                        <small class="text-danger">
+
+                            Address is required.
+
+                        </small>
+
+                        }
+
+                    </c-col>
+
+                </c-row>
+
+            </c-card-body>
+
+            <!-- ===================================================== -->
+            <!-- VISIT INFORMATION -->
+            <!-- ===================================================== -->
+
+            <c-card-body>
+
+                <div class="section-title">
+
+                    <i class="bi bi-calendar-check"></i>
+
+                    Visit Information
+
+                </div>
+
+                <c-row>
+
+                    <!-- Visit Date -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Visit Date <span>*</span>
+
+                        </label>
+
+                        <input type="date" class="form-control" formControlName="visitDate">
+
+                        @if (f['visitDate'].touched && f['visitDate'].invalid) {
+
+                        <small class="text-danger">
+
+                            Visit Date is required.
+
+                        </small>
+
+                        }
+
+                    </c-col>
+
+                    <!-- Reference Doctor -->
+
+                    <c-col lg="4" md="6" class="mb-3">
+
+                        <label class="form-label">
+
+                            Reference Doctor <span>*</span>
+
+                        </label>
+
+                        <select class="form-select" formControlName="referenceBy">
+
+                            <option value="">
+
+                                Select Doctor
+
+                            </option>
+
+                            @for (doctor of doctors; track doctor.id) {
+
+                            <option [value]="doctor.id">
+
+                                {{ doctor.name }}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                        @if (f['referenceBy'].touched && f['referenceBy'].invalid) {
+
+                        <small class="text-danger">
+
+                            Please select a doctor.
+
+                        </small>
+
+                        }
+
+                    </c-col>
+
+                </c-row>
+
+                <c-row>
+
+                    <c-col md="12">
+
+                        <label class="form-label">
+
+                            Purpose of Visit
+
+                        </label>
+
+                        <textarea class="form-control" rows="3" maxlength="1000" formControlName="purposeForVisit"
+                            placeholder="Describe the purpose of visit"></textarea>
+
+                        <div class="text-end mt-1">
+
+                            <small class="text-muted">
+
+                                {{ f['purposeForVisit'].value?.length || 0 }}/1000
+
+                            </small>
+
+                        </div>
+
+                    </c-col>
+
+                </c-row>
+
+            </c-card-body>
+
+            <!-- ===================================================== -->
+            <!-- CLINICAL INFORMATION -->
+            <!-- ===================================================== -->
+
+            <c-card-body>
+
+                <div class="section-title">
+
+                    <i class="bi bi-heart-pulse"></i>
+
+                    Clinical Information
+
+                </div>
+
+                <c-row>
+
+                    <c-col md="12" class="mb-3">
+
+                        <label class="form-label">
+
+                            Chief Complaint
+
+                        </label>
+
+                        <textarea class="form-control" rows="4" maxlength="2000" formControlName="chiefComplaints"
+                            placeholder="Enter patient's chief complaint"></textarea>
+
+                        <div class="text-end mt-1">
+
+                            <small class="text-muted">
+
+                                {{ f['chiefComplaints'].value?.length || 0 }}/2000
+
+                            </small>
+
+                        </div>
+
+                    </c-col>
+
+                </c-row>
+
+                <c-row>
+
+                    <c-col md="12">
+
+                        <label class="form-label">
+
+                            Remarks
+
+                        </label>
+
+                        <textarea class="form-control" rows="3" maxlength="2000" formControlName="remarks"
+                            placeholder="Additional remarks (if any)"></textarea>
+
+                        <div class="text-end mt-1">
+
+                            <small class="text-muted">
+
+                                {{ f['remarks'].value?.length || 0 }}/2000
+
+                            </small>
+
+                        </div>
+
+                    </c-col>
+
+                </c-row>
+
+            </c-card-body>
+
+            
+        </c-card>
+        <!-- ===================================================== -->
+        <!-- ACTION FOOTER -->
+        <!-- ===================================================== -->
+
+        <div class="action-footer">
+
+            <button cButton color="secondary" type="button" (click)="back()" [disabled]="isSubmitting">
+
+                <i class="bi bi-arrow-left me-2"></i>
+
+                Cancel
+
+            </button>
+
+            <button cButton color="primary" type="submit" [disabled]="patientForm.invalid || isSubmitting">
+
+                @if (!isSubmitting) {
+
+                <i class="bi bi-pencil-square me-2"></i>
+
+                Update Patient
+
+                } @else {
+
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true">
+                </span>
+
+                Updating...
+
+                }
+
+            </button>
+
+        </div>
+
+    </form>
+
+</c-container>
