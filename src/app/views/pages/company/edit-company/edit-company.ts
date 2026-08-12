@@ -753,6 +753,196 @@ export class EditCompanyComponent implements OnInit {
 
 
   // =====================================================
+  // GET FIRST VALIDATION MESSAGE
+  // =====================================================
+
+  private getFirstValidationMessage(): string {
+
+    const fieldNames: Record<string, string> = {
+
+      companyName: 'Company Name',
+
+      tagLine: 'Tag Line',
+
+      contactNumber: 'Contact Number',
+
+      alternateContactNumber: 'Alternate Contact Number',
+
+      email: 'Email',
+
+      website: 'Website',
+
+      address: 'Address',
+
+      country: 'Country',
+
+      state: 'State',
+
+      city: 'City',
+
+      pincode: 'Pincode'
+
+    };
+
+
+    // ===================================================
+    // CHECK CONTROLS IN FORM ORDER
+    // ===================================================
+
+    for (
+      const field of Object.keys(
+        this.companyForm.controls
+      )
+    ) {
+
+      const control =
+        this.companyForm.get(field);
+
+
+      if (!control) {
+
+        continue;
+
+      }
+
+
+      const name =
+        fieldNames[field] || field;
+
+
+      // =================================================
+      // REQUIRED
+      // =================================================
+
+      if (control.hasError('required')) {
+
+        return `${name} is required.`;
+
+      }
+
+
+      // =================================================
+      // MIN LENGTH
+      // =================================================
+
+      if (control.hasError('minlength')) {
+
+        return (
+          `${name} must be at least ` +
+          `${control.errors?.['minlength']?.requiredLength} ` +
+          `characters.`
+        );
+
+      }
+
+
+      // =================================================
+      // MAX LENGTH
+      // =================================================
+
+      if (control.hasError('maxlength')) {
+
+        return (
+          `${name} cannot exceed ` +
+          `${control.errors?.['maxlength']?.requiredLength} ` +
+          `characters.`
+        );
+
+      }
+
+
+      // =================================================
+      // EMAIL
+      // =================================================
+
+      if (control.hasError('email')) {
+
+        return 'Please enter a valid email address.';
+
+      }
+
+
+      // =================================================
+      // PATTERN
+      // =================================================
+
+      if (control.hasError('pattern')) {
+
+        if (
+          field === 'contactNumber' ||
+          field === 'alternateContactNumber'
+        ) {
+
+          return (
+            `Please enter a valid 10-digit ` +
+            `${name.toLowerCase()}.`
+          );
+
+        }
+
+
+        if (field === 'pincode') {
+
+          return 'Please enter a valid 6-digit pincode.';
+
+        }
+
+
+        return `Please enter a valid ${name}.`;
+
+      }
+
+    }
+
+
+    return (
+      'Please check the form and correct the invalid fields.'
+    );
+
+  }
+
+
+  // =====================================================
+  // SCROLL TO FIRST INVALID CONTROL
+  // =====================================================
+
+  private scrollToFirstInvalidControl(): void {
+
+    setTimeout(() => {
+
+      const firstInvalid =
+        document.querySelector(
+          'input.ng-invalid, ' +
+          'select.ng-invalid, ' +
+          'textarea.ng-invalid'
+        ) as HTMLElement;
+
+
+      if (!firstInvalid) {
+
+        return;
+
+      }
+
+
+      firstInvalid.scrollIntoView({
+
+        behavior: 'smooth',
+
+        block: 'center'
+
+      });
+
+
+      firstInvalid.focus();
+
+    });
+
+  }
+
+
+
+  // =====================================================
   // UPDATE COMPANY
   // =====================================================
 
@@ -763,50 +953,18 @@ export class EditCompanyComponent implements OnInit {
     // VALIDATE FORM
     // ===================================================
 
-    if (
-      this.companyForm.invalid
-    ) {
+    if (this.companyForm.invalid) {
 
       this.companyForm.markAllAsTouched();
 
-
-      console.log(
-        'Company Form is Invalid'
+      this.toastr.error(
+        this.getFirstValidationMessage(),
+        'Validation Error'
       );
 
+      this.scrollToFirstInvalidControl();
 
-      Object.keys(
-        this.companyForm.controls
-      ).forEach(key => {
-
-        const control =
-          this.companyForm.get(key);
-
-
-        if (
-          control?.invalid
-        ) {
-
-          console.log(
-
-            'Invalid Field:',
-
-            key,
-
-            'Value:',
-
-            control.value,
-
-            'Errors:',
-
-            control.errors
-
-          );
-
-        }
-
-      });
-
+      this.cdr.detectChanges();
 
       return;
 

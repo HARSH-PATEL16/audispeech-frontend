@@ -404,26 +404,22 @@ export class AudiogramChartComponent {
 
 
   yForDb(
-
     value: number
-
   ): number {
 
-
-    return (
-
-      this.topPadding +
-
-      (
-
-        value / 130
-
-      ) *
-
-      this.graphHeight
-
+    // Never allow chart values outside 0–130 dB
+    const safeValue = Math.max(
+      0,
+      Math.min(130, value)
     );
 
+    return (
+      this.topPadding +
+      (
+        safeValue / 130
+      ) *
+      this.graphHeight
+    );
 
   }
 

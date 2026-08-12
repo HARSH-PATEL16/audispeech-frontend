@@ -340,7 +340,7 @@
 
                                             <td *ngFor="let freq of frequencies">
 
-                                                <input type="number" class="form-control db-input" min="0" max="130"
+                                                <input type="number" class="form-control db-input" min="0" max="130" step="10"
                                                     [style.background-color]="row.label === 'AC WITHOUT MASKING' ? 'yellow' : 'white'"
                                                     step="10" [value]="getReading('right', row.key, freq)?.dB" (input)="updateReading(
                                                     'right',row.key,freq,$any($event.target).value)" placeholder="-">

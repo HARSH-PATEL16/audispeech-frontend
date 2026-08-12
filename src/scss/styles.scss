@@ -13,3 +13,40 @@
 
 // If you want to add custom CSS you can put it here.
 @use "custom";
+
+/* =====================================================
+   TOASTR - FIXED TO VIEWPORT
+   ===================================================== */
+
+.toast-container.toast-top-right {
+    position: fixed !important;
+
+    top: 80px !important;
+
+    right: 20px !important;
+
+    left: auto !important;
+
+    bottom: auto !important;
+
+    width: auto !important;
+
+    max-width: calc(100vw - 40px) !important;
+
+    z-index: 2147483647 !important;
+
+    transform: none !important;
+
+    pointer-events: none !important;
+}
+
+
+.toast-container.toast-top-right .ngx-toastr {
+    position: relative !important;
+
+    pointer-events: auto !important;
+
+    z-index: 2147483647 !important;
+
+    margin-bottom: 10px !important;
+}

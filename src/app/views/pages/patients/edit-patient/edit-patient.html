@@ -1,4 +1,5 @@
 <app-loader *ngIf="loader"></app-loader>
+
 <c-container fluid>
 
     <form cForm [formGroup]="patientForm" (ngSubmit)="updatePatient()">
@@ -35,6 +36,7 @@
 
         </div>
 
+
         <!-- ===================================================== -->
         <!-- PERSONAL INFORMATION -->
         <!-- ===================================================== -->
@@ -51,6 +53,7 @@
 
                 </div>
 
+
                 <c-row>
 
                     <!-- Patient Name -->
@@ -66,17 +69,32 @@
                         <input cFormControl class="form-control" formControlName="patientName"
                             placeholder="Enter Patient Name">
 
-                        @if (f['patientName'].touched && f['patientName'].invalid) {
 
-                        <small class="text-danger">
+                        <div *ngIf="f['patientName'].touched && f['patientName'].hasError('required')"
+                            class="invalid-feedback d-block">
 
                             Patient Name is required.
 
-                        </small>
+                        </div>
 
-                        }
+
+                        <div *ngIf="f['patientName'].touched && f['patientName'].hasError('minlength')"
+                            class="invalid-feedback d-block">
+
+                            Patient Name must be at least 2 characters.
+
+                        </div>
+
+
+                        <div *ngIf="f['patientName'].touched && f['patientName'].hasError('maxlength')"
+                            class="invalid-feedback d-block">
+
+                            Patient Name must not exceed 100 characters.
+
+                        </div>
 
                     </c-col>
+
 
                     <!-- Mobile -->
 
@@ -92,17 +110,24 @@
                             formControlName="mobileNo" placeholder="Enter Mobile Number" (keypress)="onlyNumber($event)"
                             (input)="onMobileInput($event)">
 
-                        @if (f['mobileNo'].touched && f['mobileNo'].invalid) {
 
-                        <small class="text-danger">
+                        <div *ngIf="f['mobileNo'].touched && f['mobileNo'].hasError('required')"
+                            class="invalid-feedback d-block">
 
-                            Enter a valid 10 digit mobile number.
+                            Mobile Number is required.
 
-                        </small>
+                        </div>
 
-                        }
+
+                        <div *ngIf="f['mobileNo'].touched && f['mobileNo'].hasError('pattern')"
+                            class="invalid-feedback d-block">
+
+                            Enter a valid 10-digit mobile number starting with 6, 7, 8 or 9.
+
+                        </div>
 
                     </c-col>
+
 
                     <!-- Gender -->
 
@@ -134,19 +159,18 @@
 
                         </select>
 
-                        @if (f['gender'].touched && f['gender'].invalid) {
 
-                        <small class="text-danger">
+                        <div *ngIf="f['gender'].touched && f['gender'].hasError('required')"
+                            class="invalid-feedback d-block">
 
                             Gender is required.
 
-                        </small>
-
-                        }
+                        </div>
 
                     </c-col>
 
                 </c-row>
+
 
                 <c-row>
 
@@ -163,6 +187,7 @@
                         <input type="date" class="form-control" formControlName="dob">
 
                     </c-col>
+
 
                     <!-- Blood Group -->
 
@@ -196,6 +221,7 @@
 
                     </c-col>
 
+
                     <!-- Email -->
 
                     <c-col lg="3" md="6" class="mb-3">
@@ -209,19 +235,18 @@
                         <input cFormControl class="form-control" type="email" maxlength="100" placeholder="Enter Email"
                             formControlName="email">
 
-                        @if (f['email'].touched && f['email'].invalid) {
 
-                        <small class="text-danger">
+                        <div *ngIf="f['email'].touched && f['email'].hasError('email')"
+                            class="invalid-feedback d-block">
 
-                            Enter a valid email address.
+                            Please enter a valid email address.
 
-                        </small>
-
-                        }
+                        </div>
 
                     </c-col>
 
                 </c-row>
+
 
                 <c-row>
 
@@ -255,17 +280,16 @@
 
                         </select>
 
-                        @if (f['state'].touched && f['state'].invalid) {
 
-                        <small class="text-danger">
+                        <div *ngIf="f['state'].touched && f['state'].hasError('required')"
+                            class="invalid-feedback d-block">
 
                             State is required.
 
-                        </small>
-
-                        }
+                        </div>
 
                     </c-col>
+
 
                     <!-- City -->
 
@@ -297,17 +321,16 @@
 
                         </select>
 
-                        @if (f['city'].touched && f['city'].invalid) {
 
-                        <small class="text-danger">
+                        <div *ngIf="f['city'].touched && f['city'].hasError('required')"
+                            class="invalid-feedback d-block">
 
                             City is required.
 
-                        </small>
-
-                        }
+                        </div>
 
                     </c-col>
+
 
                     <!-- Pincode -->
 
@@ -321,9 +344,18 @@
 
                         <input cFormControl class="form-control" formControlName="pincode">
 
+
+                        <div *ngIf="f['pincode'].touched && f['pincode'].hasError('pattern')"
+                            class="invalid-feedback d-block">
+
+                            Enter a valid 6-digit pincode.
+
+                        </div>
+
                     </c-col>
 
                 </c-row>
+
 
                 <c-row>
 
@@ -338,21 +370,28 @@
                         <textarea class="form-control" rows="3" maxlength="500" formControlName="address"
                             placeholder="Enter Complete Address"></textarea>
 
-                        @if (f['address'].touched && f['address'].invalid) {
 
-                        <small class="text-danger">
+                        <div *ngIf="f['address'].touched && f['address'].hasError('required')"
+                            class="invalid-feedback d-block">
 
                             Address is required.
 
-                        </small>
+                        </div>
 
-                        }
+
+                        <div *ngIf="f['address'].touched && f['address'].hasError('maxlength')"
+                            class="invalid-feedback d-block">
+
+                            Address must not exceed 500 characters.
+
+                        </div>
 
                     </c-col>
 
                 </c-row>
 
             </c-card-body>
+
 
             <!-- ===================================================== -->
             <!-- VISIT INFORMATION -->
@@ -368,6 +407,7 @@
 
                 </div>
 
+
                 <c-row>
 
                     <!-- Visit Date -->
@@ -382,17 +422,16 @@
 
                         <input type="date" class="form-control" formControlName="visitDate">
 
-                        @if (f['visitDate'].touched && f['visitDate'].invalid) {
 
-                        <small class="text-danger">
+                        <div *ngIf="f['visitDate'].touched && f['visitDate'].hasError('required')"
+                            class="invalid-feedback d-block">
 
                             Visit Date is required.
 
-                        </small>
-
-                        }
+                        </div>
 
                     </c-col>
+
 
                     <!-- Reference Doctor -->
 
@@ -424,19 +463,18 @@
 
                         </select>
 
-                        @if (f['referenceBy'].touched && f['referenceBy'].invalid) {
 
-                        <small class="text-danger">
+                        <div *ngIf="f['referenceBy'].touched && f['referenceBy'].hasError('required')"
+                            class="invalid-feedback d-block">
 
                             Please select a doctor.
 
-                        </small>
-
-                        }
+                        </div>
 
                     </c-col>
 
                 </c-row>
+
 
                 <c-row>
 
@@ -450,6 +488,15 @@
 
                         <textarea class="form-control" rows="3" maxlength="1000" formControlName="purposeForVisit"
                             placeholder="Describe the purpose of visit"></textarea>
+
+
+                        <div *ngIf="f['purposeForVisit'].touched && f['purposeForVisit'].hasError('maxlength')"
+                            class="invalid-feedback d-block">
+
+                            Purpose of Visit must not exceed 1000 characters.
+
+                        </div>
+
 
                         <div class="text-end mt-1">
 
@@ -467,6 +514,7 @@
 
             </c-card-body>
 
+
             <!-- ===================================================== -->
             <!-- CLINICAL INFORMATION -->
             <!-- ===================================================== -->
@@ -481,6 +529,7 @@
 
                 </div>
 
+
                 <c-row>
 
                     <c-col md="12" class="mb-3">
@@ -493,6 +542,15 @@
 
                         <textarea class="form-control" rows="4" maxlength="2000" formControlName="chiefComplaints"
                             placeholder="Enter patient's chief complaint"></textarea>
+
+
+                        <div *ngIf="f['chiefComplaints'].touched && f['chiefComplaints'].hasError('maxlength')"
+                            class="invalid-feedback d-block">
+
+                            Chief Complaint must not exceed 2000 characters.
+
+                        </div>
+
 
                         <div class="text-end mt-1">
 
@@ -508,6 +566,7 @@
 
                 </c-row>
 
+
                 <c-row>
 
                     <c-col md="12">
@@ -520,6 +579,15 @@
 
                         <textarea class="form-control" rows="3" maxlength="2000" formControlName="remarks"
                             placeholder="Additional remarks (if any)"></textarea>
+
+
+                        <div *ngIf="f['remarks'].touched && f['remarks'].hasError('maxlength')"
+                            class="invalid-feedback d-block">
+
+                            Remarks must not exceed 2000 characters.
+
+                        </div>
+
 
                         <div class="text-end mt-1">
 
@@ -537,8 +605,9 @@
 
             </c-card-body>
 
-            
         </c-card>
+
+
         <!-- ===================================================== -->
         <!-- ACTION FOOTER -->
         <!-- ===================================================== -->
@@ -552,6 +621,7 @@
                 Cancel
 
             </button>
+
 
             <button cButton color="primary" type="submit" [disabled]="patientForm.invalid || isSubmitting">
 

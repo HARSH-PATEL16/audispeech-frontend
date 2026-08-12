@@ -68,7 +68,14 @@
                         </label>
 
 
-                        <input cFormControl class="form-control" formControlName="name" placeholder="Enter Doctor Name">
+                        <input cFormControl class="form-control"
+                            [class.is-invalid]="f['name'].touched && f['name'].invalid" formControlName="name"
+                            placeholder="Enter Doctor Name">
+
+                        <div *ngIf="f['name'].touched && f['name'].hasError('required')"
+                            class="invalid-feedback d-block">
+                            Doctor Name is required.
+                        </div>
 
 
                     </c-col>
@@ -88,8 +95,19 @@
                         </label>
 
 
-                        <input cFormControl maxlength="10" class="form-control" formControlName="mobile_no"
-                            placeholder="Enter Mobile Number">
+                        <input cFormControl maxlength="10" class="form-control"
+                            [class.is-invalid]="f['mobile_no'].touched && f['mobile_no'].invalid"
+                            formControlName="mobile_no" placeholder="Enter Mobile Number">
+
+                        <div *ngIf="f['mobile_no'].touched && f['mobile_no'].hasError('required')"
+                            class="invalid-feedback d-block">
+                            Mobile Number is required.
+                        </div>
+
+                        <div *ngIf="f['mobile_no'].touched && f['mobile_no'].hasError('pattern')"
+                            class="invalid-feedback d-block">
+                            Enter a valid 10-digit mobile number starting with 6, 7, 8 or 9.
+                        </div>
 
 
                     </c-col>
@@ -109,7 +127,14 @@
                         </label>
 
 
-                        <input cFormControl class="form-control" formControlName="email" placeholder="Email Address">
+                        <input cFormControl class="form-control"
+                            [class.is-invalid]="f['email'].touched && f['email'].invalid" formControlName="email"
+                            placeholder="Email Address">
+
+                        <div *ngIf="f['email'].touched && f['email'].hasError('email')"
+                            class="invalid-feedback d-block">
+                            Please enter a valid email address.
+                        </div>
 
 
                     </c-col>
@@ -218,8 +243,14 @@
 
                         </label>
 
-                        <input cFormControl class="form-control" formControlName="hospital_name"
-                            placeholder="Enter Hospital Name">
+                        <input cFormControl class="form-control"
+                            [class.is-invalid]="f['hospital_name'].touched && f['hospital_name'].invalid"
+                            formControlName="hospital_name" placeholder="Enter Hospital Name">
+
+                        <div *ngIf="f['hospital_name'].touched && f['hospital_name'].hasError('required')"
+                            class="invalid-feedback d-block">
+                            Hospital Name is required.
+                        </div>
 
                     </c-col>
 
@@ -234,8 +265,14 @@
 
                         </label>
 
-                        <input cFormControl class="form-control" formControlName="specialization"
-                            placeholder="Enter Specialization">
+                        <input cFormControl class="form-control"
+                            [class.is-invalid]="f['specialization'].touched && f['specialization'].invalid"
+                            formControlName="specialization" placeholder="Enter Specialization">
+
+                        <div *ngIf="f['specialization'].touched && f['specialization'].hasError('required')"
+                            class="invalid-feedback d-block">
+                            Specialization is required.
+                        </div>
 
                     </c-col>
 

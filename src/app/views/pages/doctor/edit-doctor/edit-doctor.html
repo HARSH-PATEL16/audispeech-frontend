@@ -72,15 +72,12 @@
                         <input cFormControl class="form-control" formControlName="name" placeholder="Enter Doctor Name">
 
 
-                        @if(f['name'].touched && f['name'].invalid){
-
-                        <div class="text-danger small mt-1">
+                        <div *ngIf="f['name'].touched && f['name'].hasError('required')"
+                            class="invalid-feedback d-block">
 
                             Doctor Name is required.
 
                         </div>
-
-                        }
 
                     </c-col>
 
@@ -100,18 +97,19 @@
                             placeholder="Enter Mobile Number">
 
 
-                        @if(
-                        f['mobile_no'].touched &&
-                        f['mobile_no'].invalid
-                        ){
+                        <div *ngIf="f['mobile_no'].touched && f['mobile_no'].hasError('required')"
+                            class="invalid-feedback d-block">
 
-                        <div class="text-danger small mt-1">
-
-                            Enter a valid 10 digit mobile number.
+                            Mobile Number is required.
 
                         </div>
 
-                        }
+                        <div *ngIf="f['mobile_no'].touched && f['mobile_no'].hasError('pattern')"
+                            class="invalid-feedback d-block">
+
+                            Enter a valid 10-digit mobile number starting with 6, 7, 8 or 9.
+
+                        </div>
 
                     </c-col>
 
@@ -130,18 +128,12 @@
                         <input cFormControl class="form-control" formControlName="email" placeholder="Email Address">
 
 
-                        @if(
-                        f['email'].touched &&
-                        f['email'].invalid
-                        ){
+                        <div *ngIf="f['email'].touched && f['email'].hasError('email')"
+                            class="invalid-feedback d-block">
 
-                        <div class="text-danger small mt-1">
-
-                            Enter a valid email address.
+                            Please enter a valid email address.
 
                         </div>
-
-                        }
 
                     </c-col>
 
@@ -241,18 +233,12 @@
                             placeholder="Enter Hospital Name">
 
 
-                        @if(
-                        f['hospital_name'].touched &&
-                        f['hospital_name'].invalid
-                        ){
-
-                        <div class="text-danger small mt-1">
+                        <div *ngIf="f['hospital_name'].touched && f['hospital_name'].hasError('required')"
+                            class="invalid-feedback d-block">
 
                             Hospital Name is required.
 
                         </div>
-
-                        }
 
                     </c-col>
 
@@ -272,18 +258,12 @@
                             placeholder="ENT, Audiologist, Speech Therapist">
 
 
-                        @if(
-                        f['specialization'].touched &&
-                        f['specialization'].invalid
-                        ){
-
-                        <div class="text-danger small mt-1">
+                        <div *ngIf="f['specialization'].touched && f['specialization'].hasError('required')"
+                            class="invalid-feedback d-block">
 
                             Specialization is required.
 
                         </div>
-
-                        }
 
                     </c-col>
 
@@ -324,17 +304,13 @@
 
                         <!-- Validation Error -->
 
-                        @if(signatureError){
-
-                        <div class="signature-error mt-2">
+                        <div *ngIf="signatureError" class="invalid-feedback d-block mt-2">
 
                             <i class="bi bi-exclamation-circle me-1"></i>
 
                             {{ signatureError }}
 
                         </div>
-
-                        }
 
 
                         <!-- ================================================= -->
@@ -556,23 +532,11 @@
             </button>
 
 
-            <button cButton color="primary" type="submit" [disabled]="doctorForm.invalid || isSubmitting">
-
-                @if(!isSubmitting){
+            <button cButton color="primary" type="submit">
 
                 <i class="bi bi-pencil-square me-2"></i>
 
                 Update Doctor
-
-                }
-                @else {
-
-                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true">
-                </span>
-
-                Updating...
-
-                }
 
             </button>
 

@@ -12,6 +12,10 @@ import {
   Router
 } from '@angular/router';
 
+import { ToastrService } from 'ngx-toastr';
+
+import { finalize } from 'rxjs/operators';
+
 import { ApiService } from '../../../../services/api-service/api.service';
 
 import { LoaderComponent } from '../../../../views/pages/loader/loader';
@@ -107,14 +111,12 @@ export class EditDoctorComponent implements OnInit {
 
   doctorForm!: FormGroup;
 
-  isSubmitting = false;
-
   loader = false;
 
 
-  /*=========================================================
-    SIGNATURE
-  =========================================================*/
+  /*=========================================================*
+   * SIGNATURE
+   *=========================================================*/
 
   signatureFile: File | null = null;
 
@@ -126,9 +128,7 @@ export class EditDoctorComponent implements OnInit {
 
   removeExistingSignature = false;
 
-
   readonly MAX_SIGNATURE_SIZE = 5 * 1024 * 1024;
-
 
   readonly ALLOWED_SIGNATURE_TYPES = [
 
@@ -139,7 +139,6 @@ export class EditDoctorComponent implements OnInit {
     'image/webp'
 
   ];
-
 
   readonly ALLOWED_SIGNATURE_EXTENSIONS = [
 
@@ -157,18 +156,27 @@ export class EditDoctorComponent implements OnInit {
   genders: Gender[] = [
 
     {
+
       id: 0,
+
       name: 'Male'
+
     },
 
     {
+
       id: 1,
+
       name: 'Female'
+
     },
 
     {
+
       id: 2,
+
       name: 'Other'
+
     }
 
   ];
@@ -188,6 +196,8 @@ export class EditDoctorComponent implements OnInit {
     private route: ActivatedRoute,
 
     private apiService: ApiService,
+
+    private toastr: ToastrService,
 
     private cdr: ChangeDetectorRef
 
@@ -219,9 +229,9 @@ export class EditDoctorComponent implements OnInit {
   }
 
 
-  /*=========================================================
-    CREATE FORM
-  =========================================================*/
+  /*=========================================================*
+   * CREATE FORM
+   *=========================================================*/
 
   createForm(): void {
 
@@ -316,15 +326,32 @@ export class EditDoctorComponent implements OnInit {
   }
 
 
-  /*=========================================================
-    LOAD STATES
-  =========================================================*/
+  /*=========================================================*
+   * LOAD STATES
+   *=========================================================*/
 
   loadStates(): void {
+
+    this.loader = true;
+
+    this.cdr.detectChanges();
+
 
     this.apiService
 
       .get('/state/lists', true)
+
+      .pipe(
+
+        finalize(() => {
+
+          this.loader = false;
+
+          this.cdr.detectChanges();
+
+        })
+
+      )
 
       .subscribe({
 
@@ -337,13 +364,22 @@ export class EditDoctorComponent implements OnInit {
         },
 
 
-        error: (err) => {
+        error: (err: any) => {
 
           console.error(
 
             'State loading error',
 
             err
+
+          );
+
+
+          this.toastr.error(
+
+            err?.error?.message ||
+
+            'Unable to load states. Please try again.'
 
           );
 
@@ -354,9 +390,9 @@ export class EditDoctorComponent implements OnInit {
   }
 
 
-  /*=========================================================
-    STATE CHANGE
-  =========================================================*/
+  /*=========================================================*
+   * STATE CHANGE
+   *=========================================================*/
 
   onStateChange(): void {
 
@@ -387,11 +423,16 @@ export class EditDoctorComponent implements OnInit {
   }
 
 
-  /*=========================================================
-    LOAD CITIES
-  =========================================================*/
+  /*=========================================================*
+   * LOAD CITIES
+   *=========================================================*/
 
   loadCities(stateId: number): void {
+
+    this.loader = true;
+
+    this.cdr.detectChanges();
+
 
     this.apiService
 
@@ -400,6 +441,18 @@ export class EditDoctorComponent implements OnInit {
         `/cities/byState?stateId=${stateId}`,
 
         true
+
+      )
+
+      .pipe(
+
+        finalize(() => {
+
+          this.loader = false;
+
+          this.cdr.detectChanges();
+
+        })
 
       )
 
@@ -414,13 +467,22 @@ export class EditDoctorComponent implements OnInit {
         },
 
 
-        error: (err) => {
+        error: (err: any) => {
 
           console.error(
 
             'City loading error',
 
             err
+
+          );
+
+
+          this.toastr.error(
+
+            err?.error?.message ||
+
+            'Unable to load cities. Please try again.'
 
           );
 
@@ -431,10 +493,10 @@ export class EditDoctorComponent implements OnInit {
   }
 
 
-  /*=========================================================
-    CITY CHANGE
-    AUTO PINCODE
-  =========================================================*/
+  /*=========================================================*
+   * CITY CHANGE
+   * AUTO PINCODE
+   *=========================================================*/
 
   onCityChange(): void {
 
@@ -461,13 +523,15 @@ export class EditDoctorComponent implements OnInit {
   }
 
 
-  /*=========================================================
-    LOAD DOCTOR DETAILS
-  =========================================================*/
+  /*=========================================================*
+   * LOAD DOCTOR DETAILS
+   *=========================================================*/
 
   loadDoctor(id: string): void {
 
     this.loader = true;
+
+    this.cdr.detectChanges();
 
 
     this.apiService
@@ -480,12 +544,21 @@ export class EditDoctorComponent implements OnInit {
 
       )
 
-      .subscribe({
+      .pipe(
 
-        next: (response: any) => {
+        finalize(() => {
 
           this.loader = false;
 
+          this.cdr.detectChanges();
+
+        })
+
+      )
+
+      .subscribe({
+
+        next: (response: any) => {
 
           if (response?.success === 1) {
 
@@ -529,7 +602,8 @@ export class EditDoctorComponent implements OnInit {
               LOAD EXISTING SIGNATURE
             ---------------------------------------------*/
 
-            const signatureUrl = doctor.signature
+            const signatureUrl = doctor.signature;
+
 
             if (signatureUrl) {
 
@@ -552,21 +626,40 @@ export class EditDoctorComponent implements OnInit {
 
           }
 
+          else {
+
+            this.toastr.error(
+
+              response?.message ||
+
+              'Unable to load doctor details.'
+
+            );
+
+          }
+
 
           this.cdr.detectChanges();
 
         },
 
 
-        error: (err) => {
-
-          this.loader = false;
+        error: (err: any) => {
 
           console.error(
 
             'Doctor details loading error',
 
             err
+
+          );
+
+
+          this.toastr.error(
+
+            err?.error?.message ||
+
+            'Unable to load doctor details. Please try again.'
 
           );
 
@@ -577,9 +670,9 @@ export class EditDoctorComponent implements OnInit {
   }
 
 
-  /*=========================================================
-    SIGNATURE FILE SELECT
-  =========================================================*/
+  /*=========================================================*
+   * SIGNATURE FILE SELECT
+   *=========================================================*/
 
   onSignatureSelected(event: Event): void {
 
@@ -751,6 +844,9 @@ export class EditDoctorComponent implements OnInit {
 
       input.value = '';
 
+
+      this.cdr.detectChanges();
+
     };
 
 
@@ -759,15 +855,16 @@ export class EditDoctorComponent implements OnInit {
   }
 
 
-  /*=========================================================
-    REMOVE SIGNATURE
-  =========================================================*/
+  /*=========================================================*
+   * REMOVE SIGNATURE
+   *=========================================================*/
 
   removeSignature(
 
     input?: HTMLInputElement
 
   ): void {
+
 
     /*---------------------------------------------
       IF NEW FILE WAS SELECTED
@@ -842,15 +939,24 @@ export class EditDoctorComponent implements OnInit {
   }
 
 
-  /*=========================================================
-    UPDATE DOCTOR
-  =========================================================*/
+  /*=========================================================*
+   * UPDATE DOCTOR
+   *=========================================================*/
 
   updateDoctor(): void {
 
     if (this.doctorForm.invalid) {
 
       this.doctorForm.markAllAsTouched();
+
+      this.toastr.error(
+        this.getFirstValidationMessage(),
+        'Validation Error'
+      );
+      
+      this.scrollToFirstInvalidControl();
+
+      this.cdr.detectChanges();
 
       return;
 
@@ -875,6 +981,14 @@ export class EditDoctorComponent implements OnInit {
 
           'Invalid signature image format.';
 
+        this.toastr.error(
+
+          this.signatureError
+
+        );
+
+        this.cdr.detectChanges();
+
         return;
 
       }
@@ -892,6 +1006,14 @@ export class EditDoctorComponent implements OnInit {
 
           'Signature image size must not exceed 5 MB.';
 
+        this.toastr.error(
+
+          this.signatureError
+
+        );
+
+        this.cdr.detectChanges();
+
         return;
 
       }
@@ -901,7 +1023,7 @@ export class EditDoctorComponent implements OnInit {
 
     this.loader = true;
 
-    this.isSubmitting = true;
+    this.cdr.detectChanges();
 
 
     /*=================================================
@@ -1008,16 +1130,32 @@ export class EditDoctorComponent implements OnInit {
 
       )
 
+      .pipe(
+
+        finalize(() => {
+
+          this.loader = false;
+
+          this.cdr.detectChanges();
+
+        })
+
+      )
+
       .subscribe({
 
         next: (response: any) => {
 
-          this.loader = false;
-
-          this.isSubmitting = false;
-
-
           if (response?.success === 1) {
+
+            this.toastr.success(
+
+              response?.message ||
+
+              'Doctor updated successfully.'
+
+            );
+
 
             this.router.navigate([
 
@@ -1029,7 +1167,7 @@ export class EditDoctorComponent implements OnInit {
 
           else {
 
-            console.error(
+            this.toastr.error(
 
               response?.message ||
 
@@ -1042,12 +1180,7 @@ export class EditDoctorComponent implements OnInit {
         },
 
 
-        error: (err) => {
-
-          this.loader = false;
-
-          this.isSubmitting = false;
-
+        error: (err: any) => {
 
           console.error(
 
@@ -1057,6 +1190,60 @@ export class EditDoctorComponent implements OnInit {
 
           );
 
+
+          /*=================================================
+            BACKEND VALIDATION ERROR
+          =================================================*/
+
+          if (err?.error?.message) {
+
+            if (
+
+              typeof err.error.message === 'string'
+
+            ) {
+
+              this.toastr.error(
+
+                err.error.message
+
+              );
+
+            }
+
+            else {
+
+              const firstKey =
+
+                Object.keys(
+
+                  err.error.message
+
+                )[0];
+
+
+              this.toastr.error(
+
+                err.error.message?.[firstKey]?.message ||
+
+                'Validation failed.'
+
+              );
+
+            }
+
+          }
+
+          else {
+
+            this.toastr.error(
+
+              'Something went wrong. Please try again.'
+
+            );
+
+          }
+
         }
 
       });
@@ -1064,9 +1251,119 @@ export class EditDoctorComponent implements OnInit {
   }
 
 
-  /*=========================================================
-    CANCEL
-  =========================================================*/
+  private getFirstValidationMessage(): string {
+
+    const fieldNames: Record<string, string> = {
+
+      name: 'Doctor Name',
+
+      mobile_no: 'Mobile Number',
+
+      email: 'Email',
+
+      gender: 'Gender',
+
+      qualification: 'Qualification',
+
+      specialization: 'Specialization',
+
+      hospital_name: 'Hospital Name',
+
+      country_id: 'Country',
+
+      state_id: 'State',
+
+      city_id: 'City',
+
+      pincode: 'Pincode',
+
+      address: 'Address',
+
+      remarks: 'Remarks',
+
+      status: 'Status'
+
+    };
+
+
+    for (const field of Object.keys(this.doctorForm.controls)) {
+
+      const control = this.doctorForm.get(field);
+
+      const name = fieldNames[field] || field;
+
+
+      if (control?.hasError('required')) {
+
+        return `${name} is required.`;
+
+      }
+
+
+      if (control?.hasError('pattern')) {
+
+        if (field === 'mobile_no') {
+
+          return 'Please enter a valid 10-digit mobile number.';
+
+        }
+
+        return `Please enter a valid ${name}.`;
+
+      }
+
+
+      if (control?.hasError('email')) {
+
+        return 'Please enter a valid email address.';
+
+      }
+
+    }
+
+
+    return 'Please check the form and correct the invalid fields.';
+
+  }
+
+  // ============================================================
+  // SCROLL TO FIRST INVALID CONTROL
+  // ============================================================
+
+  private scrollToFirstInvalidControl(): void {
+
+    setTimeout(() => {
+
+      const firstInvalid = document.querySelector(
+        'input.ng-invalid, ' +
+        'select.ng-invalid, ' +
+        'textarea.ng-invalid'
+      ) as HTMLElement;
+
+      if (!firstInvalid) {
+
+        return;
+
+      }
+
+      firstInvalid.scrollIntoView({
+
+        behavior: 'smooth',
+
+        block: 'center'
+
+      });
+
+      firstInvalid.focus();
+
+    });
+
+  }
+
+
+  /*=========================================================*
+   * CANCEL
+   *=========================================================*/
 
   cancel(): void {
 

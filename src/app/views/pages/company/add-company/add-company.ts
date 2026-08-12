@@ -262,7 +262,7 @@ export class AddCompanyComponent implements OnInit {
 
         next: (response: any) => {
 
-          this.loader = true;
+          this.loader = false;
 
 
           this.states =
@@ -578,6 +578,189 @@ export class AddCompanyComponent implements OnInit {
 
 
 
+  // ============================================================
+  // GET FIRST VALIDATION MESSAGE
+  // ============================================================
+
+  private getFirstValidationMessage(): string {
+
+    const fieldNames: Record<string, string> = {
+
+      companyName: 'Company Name',
+
+      tagLine: 'Tag Line',
+
+      contactNumber: 'Contact Number',
+
+      alternateContactNumber: 'Alternate Contact Number',
+
+      email: 'Email',
+
+      website: 'Website',
+
+      address: 'Address',
+
+      country: 'Country',
+
+      state: 'State',
+
+      city: 'City',
+
+      pincode: 'Pincode'
+
+    };
+
+
+    // Check controls in form order
+    for (
+      const field of Object.keys(
+        this.companyForm.controls
+      )
+    ) {
+
+      const control =
+        this.companyForm.get(field);
+
+      if (!control) {
+
+        continue;
+
+      }
+
+
+      const name =
+        fieldNames[field] || field;
+
+
+      // ========================================================
+      // REQUIRED
+      // ========================================================
+
+      if (control.hasError('required')) {
+
+        return `${name} is required.`;
+
+      }
+
+
+      // ========================================================
+      // MIN LENGTH
+      // ========================================================
+
+      if (control.hasError('minlength')) {
+
+        return (
+          `${name} must be at least ` +
+          `${control.errors?.['minlength']?.requiredLength} ` +
+          `characters.`
+        );
+
+      }
+
+
+      // ========================================================
+      // MAX LENGTH
+      // ========================================================
+
+      if (control.hasError('maxlength')) {
+
+        return (
+          `${name} cannot exceed ` +
+          `${control.errors?.['maxlength']?.requiredLength} ` +
+          `characters.`
+        );
+
+      }
+
+
+      // ========================================================
+      // EMAIL
+      // ========================================================
+
+      if (control.hasError('email')) {
+
+        return 'Please enter a valid email address.';
+
+      }
+
+
+      // ========================================================
+      // PATTERN
+      // ========================================================
+
+      if (control.hasError('pattern')) {
+
+        if (
+          field === 'contactNumber' ||
+          field === 'alternateContactNumber'
+        ) {
+
+          return (
+            `Please enter a valid 10-digit ` +
+            `${name.toLowerCase()}.`
+          );
+
+        }
+
+
+        if (field === 'pincode') {
+
+          return 'Please enter a valid 6-digit pincode.';
+
+        }
+
+
+        return `Please enter a valid ${name}.`;
+
+      }
+
+    }
+
+
+    return (
+      'Please check the form and correct the invalid fields.'
+    );
+
+  }
+
+
+  // ============================================================
+  // SCROLL TO FIRST INVALID CONTROL
+  // ============================================================
+
+  private scrollToFirstInvalidControl(): void {
+
+    setTimeout(() => {
+
+      const firstInvalid =
+        document.querySelector(
+          'input.ng-invalid, ' +
+          'select.ng-invalid, ' +
+          'textarea.ng-invalid'
+        ) as HTMLElement;
+
+
+      if (!firstInvalid) {
+
+        return;
+
+      }
+
+
+      firstInvalid.scrollIntoView({
+
+        behavior: 'smooth',
+
+        block: 'center'
+
+      });
+
+
+      firstInvalid.focus();
+
+    });
+
+  }
 
 
 
@@ -586,11 +769,18 @@ export class AddCompanyComponent implements OnInit {
   saveCompany(): void {
 
 
-    if (
-      this.companyForm.invalid
-    ) {
+    if (this.companyForm.invalid) {
 
       this.companyForm.markAllAsTouched();
+
+      this.toastr.error(
+        this.getFirstValidationMessage(),
+        'Validation Error'
+      );
+
+      this.scrollToFirstInvalidControl();
+
+      this.cdr.detectChanges();
 
       return;
 

@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+
 import {
   FormBuilder,
   FormGroup,
@@ -15,6 +16,8 @@ import { LoaderComponent } from '../../../../views/pages/loader/loader';
 import { CommonModule } from '@angular/common';
 
 import { ToastrService } from 'ngx-toastr';
+
+import { finalize } from 'rxjs/operators';
 
 import {
   ButtonDirective,
@@ -94,11 +97,14 @@ interface City {
 
 })
 
+
 export class AddDoctorComponent implements OnInit {
+
 
   doctorForm!: FormGroup;
 
   isSubmitting = false;
+
 
   genders: Gender[] = [
 
@@ -128,6 +134,7 @@ export class AddDoctorComponent implements OnInit {
 
   ];
 
+
   states: State[] = [];
 
   cities: City[] = [];
@@ -141,19 +148,31 @@ export class AddDoctorComponent implements OnInit {
 
   signatureError: string = '';
 
+
   readonly MAX_SIGNATURE_SIZE = 5 * 1024 * 1024;
 
+
   readonly ALLOWED_SIGNATURE_TYPES = [
+
     'image/jpeg',
+
     'image/png',
+
     'image/webp'
+
   ];
 
+
   readonly ALLOWED_SIGNATURE_EXTENSIONS = [
+
     'jpg',
+
     'jpeg',
+
     'png',
+
     'webp'
+
   ];
 
 
@@ -175,11 +194,17 @@ export class AddDoctorComponent implements OnInit {
 
   }
 
+
   ngOnInit(): void {
 
     this.loadStates();
 
   }
+
+
+  /*=========================================================*
+   * CREATE FORM
+   *=========================================================*/
 
   createForm(): void {
 
@@ -192,6 +217,7 @@ export class AddDoctorComponent implements OnInit {
         Validators.required
 
       ],
+
 
       mobile_no: [
 
@@ -207,6 +233,7 @@ export class AddDoctorComponent implements OnInit {
 
       ],
 
+
       email: [
 
         '',
@@ -215,17 +242,20 @@ export class AddDoctorComponent implements OnInit {
 
       ],
 
+
       gender: [
 
         0
 
       ],
 
+
       qualification: [
 
         ''
 
       ],
+
 
       specialization: [
 
@@ -235,6 +265,7 @@ export class AddDoctorComponent implements OnInit {
 
       ],
 
+
       hospital_name: [
 
         '',
@@ -243,11 +274,13 @@ export class AddDoctorComponent implements OnInit {
 
       ],
 
+
       country_id: [
 
         1
 
       ],
+
 
       state_id: [
 
@@ -255,11 +288,13 @@ export class AddDoctorComponent implements OnInit {
 
       ],
 
+
       city_id: [
 
         ''
 
       ],
+
 
       pincode: [
 
@@ -267,17 +302,20 @@ export class AddDoctorComponent implements OnInit {
 
       ],
 
+
       address: [
 
         ''
 
       ],
 
+
       remarks: [
 
         ''
 
       ],
+
 
       status: [
 
@@ -289,6 +327,7 @@ export class AddDoctorComponent implements OnInit {
 
   }
 
+
   get f() {
 
     return this.doctorForm.controls;
@@ -296,15 +335,17 @@ export class AddDoctorComponent implements OnInit {
   }
 
 
-  /*=========================================================
-  SIGNATURE FILE SELECTION
-=========================================================*/
+  /*=========================================================*
+   * SIGNATURE FILE SELECTION
+   *=========================================================*/
 
   onSignatureSelected(event: Event): void {
 
     this.signatureError = '';
 
+
     const input = event.target as HTMLInputElement;
+
 
     if (!input.files || input.files.length === 0) {
 
@@ -314,7 +355,9 @@ export class AddDoctorComponent implements OnInit {
 
     }
 
+
     const file = input.files[0];
+
 
     /*-------------------------------------------------------
       FILE NAME / EXTENSION
@@ -322,8 +365,11 @@ export class AddDoctorComponent implements OnInit {
 
     const fileName = file.name.toLowerCase();
 
+
     const extension = fileName
+
       .split('.')
+
       .pop() || '';
 
 
@@ -331,16 +377,34 @@ export class AddDoctorComponent implements OnInit {
       VALIDATE EXTENSION
     -------------------------------------------------------*/
 
-    if (!this.ALLOWED_SIGNATURE_EXTENSIONS.includes(extension)) {
+    if (
+
+      !this.ALLOWED_SIGNATURE_EXTENSIONS
+
+        .includes(extension)
+
+    ) {
 
       this.signatureError =
+
         'Invalid file format. Please upload JPG, JPEG, PNG or WEBP image.';
+
+
+      this.toastr.error(
+
+        this.signatureError
+
+      );
+
 
       input.value = '';
 
       this.signatureFile = null;
 
       this.signaturePreview = null;
+
+
+      this.cdr.detectChanges();
 
       return;
 
@@ -351,16 +415,34 @@ export class AddDoctorComponent implements OnInit {
       VALIDATE MIME TYPE
     -------------------------------------------------------*/
 
-    if (!this.ALLOWED_SIGNATURE_TYPES.includes(file.type)) {
+    if (
+
+      !this.ALLOWED_SIGNATURE_TYPES
+
+        .includes(file.type)
+
+    ) {
 
       this.signatureError =
+
         'Invalid image type. Please upload a valid JPG, JPEG, PNG or WEBP image.';
+
+
+      this.toastr.error(
+
+        this.signatureError
+
+      );
+
 
       input.value = '';
 
       this.signatureFile = null;
 
       this.signaturePreview = null;
+
+
+      this.cdr.detectChanges();
 
       return;
 
@@ -371,16 +453,32 @@ export class AddDoctorComponent implements OnInit {
       VALIDATE FILE SIZE
     -------------------------------------------------------*/
 
-    if (file.size > this.MAX_SIGNATURE_SIZE) {
+    if (
+
+      file.size > this.MAX_SIGNATURE_SIZE
+
+    ) {
 
       this.signatureError =
+
         'Signature image size must not exceed 5 MB.';
+
+
+      this.toastr.error(
+
+        this.signatureError
+
+      );
+
 
       input.value = '';
 
       this.signatureFile = null;
 
       this.signaturePreview = null;
+
+
+      this.cdr.detectChanges();
 
       return;
 
@@ -394,13 +492,25 @@ export class AddDoctorComponent implements OnInit {
     if (file.size === 0) {
 
       this.signatureError =
+
         'The selected file is empty or invalid.';
+
+
+      this.toastr.error(
+
+        this.signatureError
+
+      );
+
 
       input.value = '';
 
       this.signatureFile = null;
 
       this.signaturePreview = null;
+
+
+      this.cdr.detectChanges();
 
       return;
 
@@ -420,18 +530,25 @@ export class AddDoctorComponent implements OnInit {
 
     const reader = new FileReader();
 
+
     reader.onload = () => {
 
-      this.signaturePreview = reader.result as string;
+      this.signaturePreview =
+
+        reader.result as string;
+
 
       this.cdr.detectChanges();
 
     };
 
+
     reader.onerror = () => {
 
       this.signatureError =
+
         'Unable to read the selected signature image.';
+
 
       this.signatureFile = null;
 
@@ -439,18 +556,33 @@ export class AddDoctorComponent implements OnInit {
 
       input.value = '';
 
+
+      this.toastr.error(
+
+        this.signatureError
+
+      );
+
+
+      this.cdr.detectChanges();
+
     };
+
 
     reader.readAsDataURL(file);
 
   }
 
 
-  /*=========================================================
-  REMOVE SIGNATURE
-=========================================================*/
+  /*=========================================================*
+   * REMOVE SIGNATURE
+   *=========================================================*/
 
-  removeSignature(input?: HTMLInputElement): void {
+  removeSignature(
+
+    input?: HTMLInputElement
+
+  ): void {
 
     this.signatureFile = null;
 
@@ -458,45 +590,92 @@ export class AddDoctorComponent implements OnInit {
 
     this.signatureError = '';
 
+
     if (input) {
 
       input.value = '';
 
     }
 
+
     this.cdr.detectChanges();
 
   }
 
-  /*=========================================================
-  LOAD STATES
-=========================================================*/
+
+  /*=========================================================*
+   * LOAD STATES
+   *=========================================================*/
+
   loadStates(): void {
 
     this.loader = true;
 
-    this.apiService.get('/state/lists', true)
+    this.cdr.detectChanges();
+
+
+    this.apiService
+
+      .get('/state/lists', true)
+
+      .pipe(
+
+        finalize(() => {
+
+          this.loader = false;
+
+          this.cdr.detectChanges();
+
+        })
+
+      )
+
       .subscribe({
 
         next: (response: any) => {
-
-          this.loader = false;
 
           if (response?.success === 1) {
 
             this.states = response.data || [];
 
-            this.cdr.detectChanges();
+          }
+
+          else {
+
+            this.toastr.error(
+
+              response?.message ||
+
+              'Unable to load states.'
+
+            );
 
           }
 
+
+          this.cdr.detectChanges();
+
         },
 
-        error: (err) => {
 
-          this.loader = false;
+        error: (err: any) => {
 
-          console.error('State Load Error : ', err);
+          console.error(
+
+            'State Load Error : ',
+
+            err
+
+          );
+
+
+          this.toastr.error(
+
+            err?.error?.message ||
+
+            'Unable to load states. Please try again.'
+
+          );
 
         }
 
@@ -504,10 +683,18 @@ export class AddDoctorComponent implements OnInit {
 
   }
 
-  /*=========================================================
-    LOAD CITIES BY STATE
-  =========================================================*/
-  loadCities(stateId: number, selectedCity: number | null = null): void {
+
+  /*=========================================================*
+   * LOAD CITIES BY STATE
+   *=========================================================*/
+
+  loadCities(
+
+    stateId: number,
+
+    selectedCity: number | null = null
+
+  ): void {
 
     if (!stateId) {
 
@@ -517,8 +704,34 @@ export class AddDoctorComponent implements OnInit {
 
     }
 
+
+    this.loader = true;
+
+    this.cdr.detectChanges();
+
+
     this.apiService
-      .get(`/cities/byState?stateId=${stateId}`, true)
+
+      .get(
+
+        `/cities/byState?stateId=${stateId}`,
+
+        true
+
+      )
+
+      .pipe(
+
+        finalize(() => {
+
+          this.loader = false;
+
+          this.cdr.detectChanges();
+
+        })
+
+      )
+
       .subscribe({
 
         next: (response: any) => {
@@ -526,6 +739,7 @@ export class AddDoctorComponent implements OnInit {
           if (response?.success === 1) {
 
             this.cities = response.data || [];
+
 
             if (selectedCity) {
 
@@ -535,19 +749,49 @@ export class AddDoctorComponent implements OnInit {
 
               });
 
+
               this.onCityChange();
 
             }
 
-            this.cdr.detectChanges();
+          }
+
+          else {
+
+            this.toastr.error(
+
+              response?.message ||
+
+              'Unable to load cities.'
+
+            );
 
           }
 
+
+          this.cdr.detectChanges();
+
         },
 
-        error: (err) => {
 
-          console.error('City Load Error : ', err);
+        error: (err: any) => {
+
+          console.error(
+
+            'City Load Error : ',
+
+            err
+
+          );
+
+
+          this.toastr.error(
+
+            err?.error?.message ||
+
+            'Unable to load cities. Please try again.'
+
+          );
 
         }
 
@@ -555,12 +799,15 @@ export class AddDoctorComponent implements OnInit {
 
   }
 
-  /*=========================================================
-    STATE CHANGED
-  =========================================================*/
+
+  /*=========================================================*
+   * STATE CHANGED
+   *=========================================================*/
+
   onStateChange(): void {
 
     const stateId = this.doctorForm.value.state_id;
+
 
     this.doctorForm.patchValue({
 
@@ -570,7 +817,9 @@ export class AddDoctorComponent implements OnInit {
 
     });
 
+
     this.cities = [];
+
 
     if (stateId) {
 
@@ -580,14 +829,22 @@ export class AddDoctorComponent implements OnInit {
 
   }
 
-  /*=========================================================
-    CITY CHANGED
-  =========================================================*/
+
+  /*=========================================================*
+   * CITY CHANGED
+   *=========================================================*/
+
   onCityChange(): void {
 
     const cityId = this.doctorForm.value.city_id;
 
-    const city = this.cities.find(x => x.id == cityId);
+
+    const city = this.cities.find(
+
+      x => x.id == cityId
+
+    );
+
 
     this.doctorForm.patchValue({
 
@@ -597,9 +854,11 @@ export class AddDoctorComponent implements OnInit {
 
   }
 
-  /*=========================================================
-    RESET FORM
-  =========================================================*/
+
+  /*=========================================================*
+   * RESET FORM
+   *=========================================================*/
+
   resetForm(): void {
 
     this.doctorForm.reset({
@@ -612,6 +871,7 @@ export class AddDoctorComponent implements OnInit {
 
     });
 
+
     this.cities = [];
 
     this.signatureFile = null;
@@ -620,25 +880,37 @@ export class AddDoctorComponent implements OnInit {
 
     this.signatureError = '';
 
-
   }
 
-  /*=========================================================
-  SAVE DOCTOR
-=========================================================*/
-  /*=========================================================
-  SAVE DOCTOR
-=========================================================*/
+
+  /*=========================================================*
+   * SAVE DOCTOR
+   *=========================================================*/
 
   saveDoctor(): void {
+
+
+    /*-------------------------------------------------------
+      FORM VALIDATION
+    -------------------------------------------------------*/
 
     if (this.doctorForm.invalid) {
 
       this.doctorForm.markAllAsTouched();
 
+      this.toastr.error(
+        this.getFirstValidationMessage(),
+        'Validation Error'
+      );
+
+      this.scrollToFirstInvalidControl();
+
+      this.cdr.detectChanges();
+
       return;
 
     }
+
 
 
     /*-------------------------------------------------------
@@ -647,14 +919,30 @@ export class AddDoctorComponent implements OnInit {
 
     if (this.signatureFile) {
 
+
       if (
+
         !this.ALLOWED_SIGNATURE_TYPES.includes(
+
           this.signatureFile.type
+
         )
+
       ) {
 
         this.signatureError =
+
           'Invalid signature image format.';
+
+
+        this.toastr.error(
+
+          this.signatureError
+
+        );
+
+
+        this.cdr.detectChanges();
 
         return;
 
@@ -662,12 +950,26 @@ export class AddDoctorComponent implements OnInit {
 
 
       if (
+
         this.signatureFile.size >
+
         this.MAX_SIGNATURE_SIZE
+
       ) {
 
         this.signatureError =
+
           'Signature image size must not exceed 5 MB.';
+
+
+        this.toastr.error(
+
+          this.signatureError
+
+        );
+
+
+        this.cdr.detectChanges();
 
         return;
 
@@ -677,6 +979,10 @@ export class AddDoctorComponent implements OnInit {
 
 
     this.loader = true;
+
+    this.isSubmitting = true;
+
+    this.cdr.detectChanges();
 
 
     /*-------------------------------------------------------
@@ -694,14 +1000,21 @@ export class AddDoctorComponent implements OnInit {
 
       const value = this.doctorForm.value[key];
 
+
       if (
+
         value !== null &&
+
         value !== undefined
+
       ) {
 
         formData.append(
+
           key,
+
           value.toString()
+
         );
 
       }
@@ -716,9 +1029,13 @@ export class AddDoctorComponent implements OnInit {
     if (this.signatureFile) {
 
       formData.append(
+
         'signature',
+
         this.signatureFile,
+
         this.signatureFile.name
+
       );
 
     }
@@ -729,52 +1046,139 @@ export class AddDoctorComponent implements OnInit {
     -------------------------------------------------------*/
 
     this.apiService
-      .post('/doctor/add', formData, true)
+
+      .post(
+
+        '/doctor/add',
+
+        formData,
+
+        true
+
+      )
+
+      .pipe(
+
+        finalize(() => {
+
+          this.loader = false;
+
+          this.isSubmitting = false;
+
+          this.cdr.detectChanges();
+
+        })
+
+      )
+
       .subscribe({
 
         next: (response: any) => {
-
-          this.loader = false;
 
 
           if (response?.success === 1) {
 
             this.toastr.success(
+
               response.message ||
+
               'Doctor added successfully.'
+
             );
 
 
             this.router.navigate([
+
               '/doctor/list'
+
             ]);
 
-          } else {
+          }
+
+          else {
 
             this.toastr.error(
+
               response?.message ||
+
               'Unable to save doctor.'
+
             );
 
           }
+
+
+          this.cdr.detectChanges();
 
         },
 
 
         error: (err: any) => {
 
-          this.loader = false;
-
           console.error(
+
             'Doctor Save Error:',
+
             err
+
           );
 
 
-          this.toastr.error(
-            err?.error?.message ||
-            'Something went wrong.'
-          );
+          /*-------------------------------------------------
+            BACKEND ERROR MESSAGE
+          -------------------------------------------------*/
+
+          if (err?.error?.message) {
+
+            if (
+
+              typeof err.error.message === 'string'
+
+            ) {
+
+              this.toastr.error(
+
+                err.error.message
+
+              );
+
+            }
+
+            else {
+
+              const firstKey =
+
+                Object.keys(
+
+                  err.error.message
+
+                )[0];
+
+
+              this.toastr.error(
+
+                err.error.message?.[firstKey]?.message ||
+
+                'Validation failed.'
+
+              );
+
+            }
+
+          }
+
+          else {
+
+            this.toastr.error(
+
+              'Something went wrong. Please try again.'
+
+            );
+
+          }
+
+
+          this.cdr.detectChanges();
 
         }
 
@@ -782,13 +1186,131 @@ export class AddDoctorComponent implements OnInit {
 
   }
 
-  /*=========================================================
-    CANCEL
-  =========================================================*/
+
+
+  private getFirstValidationMessage(): string {
+
+    const fieldNames: Record<string, string> = {
+
+      name: 'Doctor Name',
+
+      mobile_no: 'Mobile Number',
+
+      email: 'Email',
+
+      gender: 'Gender',
+
+      qualification: 'Qualification',
+
+      specialization: 'Specialization',
+
+      hospital_name: 'Hospital Name',
+
+      country_id: 'Country',
+
+      state_id: 'State',
+
+      city_id: 'City',
+
+      pincode: 'Pincode',
+
+      address: 'Address',
+
+      remarks: 'Remarks',
+
+      status: 'Status'
+
+    };
+
+
+    for (const field of Object.keys(this.doctorForm.controls)) {
+
+      const control = this.doctorForm.get(field);
+
+      const name = fieldNames[field] || field;
+
+
+      if (control?.hasError('required')) {
+
+        return `${name} is required.`;
+
+      }
+
+
+      if (control?.hasError('pattern')) {
+
+        if (field === 'mobile_no') {
+
+          return 'Please enter a valid 10-digit mobile number.';
+
+        }
+
+        return `Please enter a valid ${name}.`;
+
+      }
+
+
+      if (control?.hasError('email')) {
+
+        return 'Please enter a valid email address.';
+
+      }
+
+    }
+
+
+    return 'Please check the form and correct the invalid fields.';
+
+  }
+
+
+  // ============================================================
+  // SCROLL TO FIRST INVALID CONTROL
+  // ============================================================
+
+  private scrollToFirstInvalidControl(): void {
+
+    setTimeout(() => {
+
+      const firstInvalid = document.querySelector(
+        'input.ng-invalid, ' +
+        'select.ng-invalid, ' +
+        'textarea.ng-invalid'
+      ) as HTMLElement;
+
+      if (!firstInvalid) {
+
+        return;
+
+      }
+
+      firstInvalid.scrollIntoView({
+
+        behavior: 'smooth',
+
+        block: 'center'
+
+      });
+
+      firstInvalid.focus();
+
+    });
+
+  }
+
+
+
+
+  /*=========================================================*
+   * CANCEL
+   *=========================================================*/
+
   cancel(): void {
 
     this.router.navigate([
+
       '/doctor/list'
+
     ]);
 
   }

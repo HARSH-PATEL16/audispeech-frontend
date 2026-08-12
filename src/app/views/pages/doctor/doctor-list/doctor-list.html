@@ -130,6 +130,14 @@
 
                             </th>
 
+                            <th class="sortable" (click)="sort('hospital_name')">
+
+                                Hospital Name
+
+                                <i class="bi bi-arrow-down-up ms-1"></i>
+
+                            </th>
+
                             <th class="sortable" (click)="sort('specialization')">
 
                                 Specialization
@@ -170,19 +178,25 @@
 
                             <td>
 
-                                {{doctor.name}}
+                                {{doctor.name || '-'}}
 
                             </td>
 
                             <td>
 
-                                {{doctor.specialization}}
+                                {{doctor.hospital_name || '-'}}
 
                             </td>
 
                             <td>
 
-                                {{doctor.mobile_no}}
+                                {{doctor.specialization || '-'}}
+
+                            </td>
+
+                            <td>
+
+                                {{doctor.mobile_no || '-'}}
 
                             </td>
 

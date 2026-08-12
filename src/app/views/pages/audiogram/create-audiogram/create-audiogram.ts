@@ -577,57 +577,127 @@ export class CreateAudiogramComponent {
 
 
   updateReading(
-
     ear: Ear,
-
     rowKey: string,
-
     frequency: number,
-
     value: string
-
   ): void {
 
-
     const reading = this.getReading(
-
       ear,
-
       rowKey,
-
       frequency
-
     );
 
-
     if (!reading) {
+      return;
+    }
+
+    // =====================================================
+    // EMPTY VALUE
+    // =====================================================
+
+    if (value === '') {
+
+      reading.dB = null;
+
+      this.readings = [
+        ...this.readings
+      ];
+
+      this.calculatePTA();
 
       return;
-
     }
 
 
+    // =====================================================
+    // CONVERT VALUE
+    // =====================================================
 
-    reading.dB = value === ''
-
-      ? null
-
-      : Number(value);
-
+    const numericValue = Number(value);
 
 
-    // Trigger chart update
+    // =====================================================
+    // INVALID NUMBER
+    // =====================================================
+
+    if (isNaN(numericValue)) {
+
+      reading.dB = null;
+
+      this.readings = [
+        ...this.readings
+      ];
+
+      return;
+    }
+
+
+    // =====================================================
+    // MAXIMUM dB VALIDATION
+    // =====================================================
+
+    if (numericValue > 130) {
+
+      this.toastr.warning('Audiogram value cannot be greater than 130 dB.');
+
+      reading.dB = 130;
+
+      this.readings = [
+        ...this.readings
+      ];
+
+      this.calculatePTA();
+
+      return;
+    }
+
+
+    // =====================================================
+    // MINIMUM dB VALIDATION
+    // =====================================================
+
+    if (numericValue < 0) {
+
+      this.toastr.warning(
+        'Audiogram value cannot be less than 0 dB.',
+        'Invalid dB Value'
+      );
+
+      reading.dB = 0;
+
+      this.readings = [
+        ...this.readings
+      ];
+
+      this.calculatePTA();
+
+      return;
+    }
+
+
+    // =====================================================
+    // VALID VALUE
+    // =====================================================
+
+    reading.dB = numericValue;
+
+
+    // =====================================================
+    // TRIGGER CHART UPDATE
+    // =====================================================
 
     this.readings = [
-
       ...this.readings
-
     ];
 
 
+    // =====================================================
+    // RECALCULATE PTA
+    // =====================================================
 
     this.calculatePTA();
-
 
   }
 
@@ -781,6 +851,30 @@ export class CreateAudiogramComponent {
 
       return;
 
+    }
+
+    // =====================================================
+    // AUDIOGRAM dB RANGE VALIDATION
+    // =====================================================
+
+    const invalidReading = this.readings.find(
+      reading =>
+        reading.dB !== null &&
+        (
+          reading.dB < 0 ||
+          reading.dB > 130
+        )
+    );
+
+
+    if (invalidReading) {
+
+      this.toastr.error(
+        'Audiogram values must be between 0 and 130 dB.',
+        'Invalid Audiogram Value'
+      );
+
+      return;
     }
 
     this.loader = true;

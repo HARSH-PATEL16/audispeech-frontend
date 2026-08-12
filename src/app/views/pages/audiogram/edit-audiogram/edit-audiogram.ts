@@ -640,129 +640,232 @@ export class EditAudiogramComponent implements OnInit {
   }
 
 
-  loadHistoryAudiogram(id: string): void {
+  // loadHistoryAudiogram(id: string): void {
 
-    this.loader = true;
-    this.apiService
-      .get(`/audiogram/history/details?historyId=${id}`, true)
-      .subscribe({
+  //   this.loader = true;
+  //   this.apiService
+  //     .get(`/audiogram/history/details?historyId=${id}`, true)
+  //     .subscribe({
 
-        next: (response: any) => {
+  //       next: (response: any) => {
 
-          this.loader = false;
+  //         this.loader = false;
 
 
-          const data = response.data;
-          // console.log('data: ', data);
+  //         const data = response.data;
+  //         // console.log('data: ', data);
 
 
-          this.audiogramId = data.audiogram_id;
+  //         this.audiogramId = data.audiogram_id;
 
 
 
-          this.audiogramForm.patchValue({
+  //         this.audiogramForm.patchValue({
 
-            patientId: data.patient_id,
+  //           patientId: data.patient_id,
 
-            doctorId: data.doctor_id,
+  //           doctorId: data.doctor_id,
 
-            otoscopyRight: data.otoscopy_right,
+  //           otoscopyRight: data.otoscopy_right,
 
-            otoscopyLeft: data.otoscopy_left,
+  //           otoscopyLeft: data.otoscopy_left,
 
 
-            rinneRight: data.tft_rinne_right,
+  //           rinneRight: data.tft_rinne_right,
 
-            rinneLeft: data.tft_rinne_left,
+  //           rinneLeft: data.tft_rinne_left,
 
-            weber: data.tft_weber,
+  //           weber: data.tft_weber,
 
 
-            ptaAverageRight: Number(data.pta_avg_right),
+  //           ptaAverageRight: Number(data.pta_avg_right),
 
-            ptaAverageLeft: Number(data.pta_avg_left),
+  //           ptaAverageLeft: Number(data.pta_avg_left),
 
 
-            reliabilityGood: data.reliability_good,
+  //           reliabilityGood: data.reliability_good,
 
-            reliabilityFair: data.reliability_fair,
+  //           reliabilityFair: data.reliability_fair,
 
-            reliabilityPoor: data.reliability_poor,
+  //           reliabilityPoor: data.reliability_poor,
 
 
-            inventis: data.inventis,
+  //           inventis: data.inventis,
 
-            interacoustic: data.interacoustic,
+  //           interacoustic: data.interacoustic,
 
 
-            interpretationRight: data.interpretation_right,
+  //           interpretationRight: data.interpretation_right,
 
-            interpretationLeft: data.interpretation_left,
+  //           interpretationLeft: data.interpretation_left,
 
 
-            recommendEnt: data.recommend_ent,
+  //           recommendEnt: data.recommend_ent,
 
-            recommendCare: data.recommend_care,
+  //           recommendCare: data.recommend_care,
 
-            recommendHat: data.recommend_hat,
+  //           recommendHat: data.recommend_hat,
 
-            recommendFollowUp: data.recommend_follow_up
+  //           recommendFollowUp: data.recommend_follow_up
 
-          });
+  //         });
 
 
 
-          this.selectedPatient = data.audiogram.patient;
+  //         this.selectedPatient = data.audiogram.patient;
 
-          this.patients = [
-            data.patient
-          ];
+  //         this.patients = [
+  //           data.patient
+  //         ];
 
 
-          this.audiogramForm.patchValue({
+  //         this.audiogramForm.patchValue({
 
-            patientId: data.audiogram.patient.id
+  //           patientId: data.audiogram.patient.id
 
-          });
+  //         });
 
-          this.readings =
-            data.readings || createEmptyReadings();
+  //         this.readings =
+  //           data.readings || createEmptyReadings();
 
 
 
-          this.showAudiogramEntry = true;
+  //         this.showAudiogramEntry = true;
 
 
 
-          if (this.isViewMode) {
+  //         if (this.isViewMode) {
 
-            this.audiogramForm.disable();
+  //           this.audiogramForm.disable();
 
-          }
+  //         }
 
 
-          this.cdr.detectChanges();
+  //         this.cdr.detectChanges();
 
 
-        },
+  //       },
 
 
-        error: (err) => {
-          this.loader = false;
-          console.error(err);
+  //       error: (err) => {
+  //         this.loader = false;
+  //         console.error(err);
 
-        }
+  //       }
 
 
-      });
+  //     });
 
 
-  }
+  // }
 
 
   // ======================================================
   // PATIENT CHANGE
   // ======================================================
+
+  loadHistoryAudiogram(id: string): void {
+    this.loader = true;
+
+    this.apiService
+      .get(`/audiogram/history/details?historyId=${id}`, true)
+      .subscribe({
+        next: (response: any) => {
+          const data = response.data;
+
+          this.audiogramId = data.audiogram_id;
+
+          // --------------------------------------------------
+          // Set patient FIRST
+          // --------------------------------------------------
+
+          const patient: Patient =
+            data.patient ||
+            data.audiogram?.patient;
+
+          this.selectedPatient = patient;
+
+          // Make sure select has the patient option
+          this.patients = patient ? [patient] : [];
+
+          // --------------------------------------------------
+          // Patch form
+          // --------------------------------------------------
+
+          this.audiogramForm.patchValue({
+            patientId: patient?.id ?? '',
+            doctorId: data.doctor_id ?? '',
+
+            otoscopyRight: data.otoscopy_right ?? '',
+            otoscopyLeft: data.otoscopy_left ?? '',
+
+            rinneRight: data.tft_rinne_right ?? '',
+            rinneLeft: data.tft_rinne_left ?? '',
+            weber: data.tft_weber ?? '',
+
+            ptaAverageRight:
+              data.pta_avg_right != null
+                ? Number(data.pta_avg_right)
+                : null,
+
+            ptaAverageLeft:
+              data.pta_avg_left != null
+                ? Number(data.pta_avg_left)
+                : null,
+
+            reliabilityGood: !!data.reliability_good,
+            reliabilityFair: !!data.reliability_fair,
+            reliabilityPoor: !!data.reliability_poor,
+
+            inventis: !!data.inventis,
+            interacoustic: !!data.interacoustic,
+
+            interpretationRight: data.interpretation_right ?? '',
+            interpretationLeft: data.interpretation_left ?? '',
+
+            recommendEnt: !!data.recommend_ent,
+            recommendCare: !!data.recommend_care,
+            recommendHat: !!data.recommend_hat,
+            recommendFollowUp: !!data.recommend_follow_up
+          });
+
+          // --------------------------------------------------
+          // Readings
+          // --------------------------------------------------
+
+          this.readings = Array.isArray(data.readings)
+            ? [...data.readings]
+            : createEmptyReadings();
+
+          // --------------------------------------------------
+          // Show content
+          // --------------------------------------------------
+
+          this.showAudiogramEntry = true;
+
+          if (this.isViewMode) {
+            this.audiogramForm.disable({ emitEvent: false });
+          }
+
+          this.loader = false;
+
+          // Force immediate Angular rendering
+          this.cdr.detectChanges();
+        },
+
+        error: (err) => {
+          this.loader = false;
+          console.error(err);
+
+          this.toastr.error(
+            err?.error?.message || 'Failed to load audiogram'
+          );
+
+          this.cdr.detectChanges();
+        }
+      });
+  }
+
 
   loadPatients(audiogramPatientId?: string): void {
     this.loader = true;
@@ -882,76 +985,141 @@ export class EditAudiogramComponent implements OnInit {
   // ======================================================
 
 
+  // ======================================================
+  // UPDATE TABLE VALUE
+  // ======================================================
+
   updateReading(
-
     ear: Ear,
-
     rowKey: string,
-
     frequency: number,
-
     value: string
-
   ): void {
 
     if (this.isViewMode) {
-
       return;
-
     }
 
 
     const reading = this.getReading(
-
       ear,
-
       rowKey,
-
       frequency
-
     );
 
 
-
     if (!reading) {
-
       return;
-
     }
 
 
+    // ======================================================
+    // EMPTY VALUE
+    // ======================================================
+
+    if (value === '') {
+
+      reading.dB = null;
+
+      this.readings = [
+        ...this.readings
+      ];
+
+      this.calculatePTA();
+
+      return;
+    }
 
 
+    // ======================================================
+    // CONVERT VALUE
+    // ======================================================
 
-    reading.dB = value === ''
-
-      ? null
-
-      : Number(value);
-
+    const numericValue = Number(value);
 
 
+    // ======================================================
+    // INVALID NUMBER
+    // ======================================================
+
+    if (isNaN(numericValue)) {
+
+      reading.dB = null;
+
+      this.readings = [
+        ...this.readings
+      ];
+
+      this.calculatePTA();
+
+      return;
+    }
 
 
-    /*
-      Important:
-      Create new array reference
-      so Angular signal input
-      refreshes chart dynamically
-    */
+    // ======================================================
+    // MAXIMUM 130 dB
+    // ======================================================
 
+    if (numericValue > 130) {
+
+      this.toastr.warning('Audiogram value cannot be greater than 130 dB.');
+
+      reading.dB = 130;
+
+      this.readings = [
+        ...this.readings
+      ];
+
+      this.calculatePTA();
+
+      return;
+    }
+
+
+    // ======================================================
+    // MINIMUM 0 dB
+    // ======================================================
+
+    if (numericValue < 0) {
+
+      this.toastr.warning(
+        'Audiogram value cannot be less than 0 dB.',
+        'Invalid dB Value'
+      );
+
+      reading.dB = 0;
+
+      this.readings = [
+        ...this.readings
+      ];
+
+      this.calculatePTA();
+
+      return;
+    }
+
+
+    // ======================================================
+    // VALID VALUE
+    // ======================================================
+
+    reading.dB = numericValue;
+
+
+    // ======================================================
+    // CREATE NEW ARRAY REFERENCE
+    // ======================================================
 
     this.readings = [
-
       ...this.readings
-
     ];
 
 
+    // ======================================================
+    // RECALCULATE PTA
+    // ======================================================
 
     this.calculatePTA();
-
-
 
   }
 
@@ -1149,6 +1317,30 @@ export class EditAudiogramComponent implements OnInit {
 
     if (this.audiogramForm.invalid) {
       this.audiogramForm.markAllAsTouched();
+      return;
+    }
+
+    // ======================================================
+    // AUDIOGRAM dB RANGE VALIDATION
+    // ======================================================
+
+    const invalidReading = this.readings.find(
+      reading =>
+        reading.dB !== null &&
+        (
+          reading.dB < 0 ||
+          reading.dB > 130
+        )
+    );
+
+
+    if (invalidReading) {
+
+      this.toastr.error(
+        'Audiogram values must be between 0 and 130 dB.',
+        'Invalid Audiogram Value'
+      );
+
       return;
     }
 

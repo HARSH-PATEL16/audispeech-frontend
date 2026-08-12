@@ -53,6 +53,24 @@
 
                         <input cFormControl class="form-control" formControlName="patientName"
                             placeholder="Enter Patient Name">
+                        <div *ngIf="f['patientName'].touched && f['patientName'].hasError('required')"
+                            class="invalid-feedback d-block">
+
+                            Patient Name is required.
+
+                        </div>
+                        <div *ngIf="f['patientName'].touched && f['patientName'].hasError('minlength')"
+                            class="invalid-feedback d-block">
+
+                            Patient Name must be at least 2 characters.
+
+                        </div>
+                        <div *ngIf="f['patientName'].touched && f['patientName'].hasError('maxlength')"
+                            class="invalid-feedback d-block">
+
+                            Patient Name must not exceed 100 characters.
+
+                        </div>
 
                     </c-col>
 
@@ -66,6 +84,18 @@
 
                         <input cFormControl maxlength="10" class="form-control" formControlName="mobileNo"
                             placeholder="Enter Mobile Number">
+                        <div *ngIf="f['mobileNo'].touched && f['mobileNo'].hasError('required')"
+                            class="invalid-feedback d-block">
+
+                            Mobile Number is required.
+
+                        </div>
+                        <div *ngIf="f['mobileNo'].touched && f['mobileNo'].hasError('pattern')"
+                            class="invalid-feedback d-block">
+
+                            Enter a valid 10-digit mobile number starting with 6, 7, 8 or 9.
+
+                        </div>
 
                     </c-col>
 
@@ -92,6 +122,12 @@
                             }
 
                         </select>
+                        <div *ngIf="f['gender'].touched && f['gender'].hasError('required')"
+                            class="invalid-feedback d-block">
+
+                            Gender is required.
+
+                        </div>
 
                     </c-col>
 
@@ -107,7 +143,8 @@
 
                         </label>
 
-                        <input type="date" class="form-control" formControlName="dob">
+                        <input type="date" class="form-control" formControlName="dob" [max]="todayDate"
+                            (change)="validateDob()">
 
                     </c-col>
 
@@ -146,6 +183,12 @@
                         </label>
 
                         <input cFormControl class="form-control" formControlName="email" placeholder="Email">
+                        <div *ngIf="f['email'].touched && f['email'].hasError('email')"
+                            class="invalid-feedback d-block">
+
+                            Please enter a valid email address.
+
+                        </div>
 
                     </c-col>
 
@@ -157,7 +200,7 @@
 
                         <label class="form-label">
 
-                            State
+                            State <span>*</span>
 
                         </label>
 
@@ -176,6 +219,12 @@
                             }
 
                         </select>
+                        <div *ngIf="f['state'].touched && f['state'].hasError('required')"
+                            class="invalid-feedback d-block">
+
+                            State is required.
+
+                        </div>
 
                     </c-col>
 
@@ -183,7 +232,7 @@
 
                         <label class="form-label">
 
-                            City
+                            City <span>*</span>
 
                         </label>
 
@@ -202,6 +251,12 @@
                             }
 
                         </select>
+                        <div *ngIf="f['city'].touched && f['city'].hasError('required')"
+                            class="invalid-feedback d-block">
+
+                            City is required.
+
+                        </div>
 
                     </c-col>
 
@@ -214,6 +269,12 @@
                         </label>
 
                         <input cFormControl class="form-control" formControlName="pincode">
+                        <div *ngIf="f['pincode'].touched && f['pincode'].hasError('pattern')"
+                            class="invalid-feedback d-block">
+
+                            Enter a valid 6-digit pincode.
+
+                        </div>
 
                     </c-col>
 
@@ -225,13 +286,25 @@
 
                         <label class="form-label">
 
-                            Address
+                            Address <span>*</span>
 
                         </label>
 
                         <textarea class="form-control" rows="3" formControlName="address">
 
                     </textarea>
+                        <div *ngIf="f['address'].touched && f['address'].hasError('required')"
+                            class="invalid-feedback d-block">
+
+                            Address is required.
+
+                        </div>
+                        <div *ngIf="f['address'].touched && f['address'].hasError('maxlength')"
+                            class="invalid-feedback d-block">
+
+                            Address must not exceed 500 characters.
+
+                        </div>
 
                     </c-col>
 
@@ -260,7 +333,14 @@
 
                         </label>
 
-                        <input type="date" class="form-control" formControlName="visitDate">
+                        <input type="date" class="form-control" formControlName="visitDate" [max]="todayDate"
+                            (change)="validateVisitDate()">
+                        <div *ngIf="f['visitDate'].touched && f['visitDate'].hasError('required')"
+                            class="invalid-feedback d-block">
+
+                            Visit Date is required.
+
+                        </div>
 
                     </c-col>
 
@@ -291,6 +371,12 @@
                             }
 
                         </select>
+                        <div *ngIf="f['referenceBy'].touched && f['referenceBy'].hasError('required')"
+                            class="invalid-feedback d-block">
+
+                            Reference Doctor is required.
+
+                        </div>
 
                     </c-col>
 
@@ -334,6 +420,12 @@
                             placeholder="Purpose of visit">
 
                 </textarea>
+                        <div *ngIf="f['purposeForVisit'].touched && f['purposeForVisit'].hasError('maxlength')"
+                            class="invalid-feedback d-block">
+
+                            Purpose of Visit must not exceed 1000 characters.
+
+                        </div>
 
                     </c-col>
 
@@ -366,6 +458,12 @@
                             placeholder="Enter chief complaint">
 
                 </textarea>
+                        <div *ngIf="f['chiefComplaints'].touched && f['chiefComplaints'].hasError('maxlength')"
+                            class="invalid-feedback d-block">
+
+                            Chief Complaint must not exceed 2000 characters.
+
+                        </div>
 
                     </c-col>
 
@@ -386,6 +484,12 @@
                             placeholder="Additional remarks">
 
                 </textarea>
+                        <div *ngIf="f['remarks'].touched && f['remarks'].hasError('maxlength')"
+                            class="invalid-feedback d-block">
+
+                            Remarks must not exceed 2000 characters.
+
+                        </div>
 
                     </c-col>
 
