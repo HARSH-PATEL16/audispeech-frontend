@@ -355,19 +355,12 @@ export class AudiogramChartComponent {
   // X POSITION
   // =====================================================
 
-
   xForFrequency(
-
     frequency: number
-
   ): number {
 
-
     const column =
-
       this.GRID_MAP.get(frequency);
-
-
 
     if (column === undefined) {
 
@@ -375,22 +368,17 @@ export class AudiogramChartComponent {
 
     }
 
-
-
+    // 12 vertical lines
+    // First line = empty
+    // Last line = empty
+    // 10 frequencies occupy lines 2–11
     const step =
-
-      this.graphWidth / 10;
-
-
+      this.graphWidth / 11;
 
     return (
-
       this.leftPadding +
-
-      (column + 0.5) * step
-
+      (column + 1) * step
     );
-
 
   }
 

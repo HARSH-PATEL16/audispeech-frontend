@@ -31,30 +31,47 @@
     <!-- VERTICAL GRID -->
     <!-- ============================= -->
 
-    <ng-container *ngFor="let f of gridFrequencies; let i=index">
+    <!-- FIRST EMPTY LINE -->
 
-        <line class="grid-line" [attr.x1]="leftPadding + (i * graphWidth / 10)" [attr.y1]="topPadding" [attr.x2]="leftPadding + (i * graphWidth / 10)"
-            [attr.y2]="topPadding+graphHeight">
+    <line class="grid-line" [attr.x1]="leftPadding" [attr.y1]="topPadding" [attr.x2]="leftPadding"
+        [attr.y2]="topPadding + graphHeight">
+    </line>
 
+
+    <!-- FREQUENCY LINES -->
+
+    <ng-container *ngFor="let f of gridFrequencies; let i = index">
+
+        <line class="grid-line" [attr.x1]="xForFrequency(f)" [attr.y1]="topPadding" [attr.x2]="xForFrequency(f)"
+            [attr.y2]="topPadding + graphHeight">
         </line>
+
 
         <!-- TOP NUMBER -->
 
         <text class="freq-label" text-anchor="middle" [attr.x]="xForFrequency(f)" y="20">
 
-            {{i+1}}
+            {{ i + 1 }}
 
         </text>
+
 
         <!-- FREQUENCY -->
 
         <text class="freq-label" text-anchor="middle" [attr.x]="xForFrequency(f)" [attr.y]="40">
 
-            {{f >= 1000 ? (f / 1000) + 'K' : f}}
+            {{ f >= 1000 ? (f / 1000) + 'K' : f }}
 
         </text>
 
     </ng-container>
+
+
+    <!-- LAST EMPTY LINE -->
+
+    <line class="grid-line" [attr.x1]="leftPadding + graphWidth" [attr.y1]="topPadding"
+        [attr.x2]="leftPadding + graphWidth" [attr.y2]="topPadding + graphHeight">
+    </line>
 
     <!-- ============================= -->
     <!-- BOTTOM LABELS -->

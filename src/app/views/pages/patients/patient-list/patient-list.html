@@ -57,11 +57,39 @@
           </c-col>
 
 
+          <!-- Reference Doctor -->
+
+          <c-col lg="2" md="6">
+
+            <label class="form-label">
+              Reference Doctor
+            </label>
+
+            <select class="form-select" [(ngModel)]="selectedDoctor" (change)="search()">
+
+              <option value="">
+                All
+              </option>
+
+              @for(doctor of referenceDoctors; track doctor.id) {
+
+              <option [value]="doctor.id">
+
+                {{ doctor.name }}
+
+              </option>
+
+              }
+
+            </select>
+
+          </c-col>
+
 
 
           <!-- Gender -->
 
-          <c-col lg="2" md="6">
+          <!-- <c-col lg="2" md="6">
 
             <label class="form-label">
               Gender
@@ -90,7 +118,7 @@
             </select>
 
 
-          </c-col>
+          </c-col> -->
 
 
 
@@ -278,7 +306,13 @@
               </th>
 
 
+              <th class="sortable" (click)="sort('reference_doctor')">
 
+                Reference Doctor
+
+                <i class="bi bi-arrow-down-up ms-1"></i>
+
+              </th>
 
 
               <th class="sortable" (click)="sort('visit_date')">
@@ -388,6 +422,12 @@
               </td>
 
 
+
+              <td>
+
+                {{ patient.reference_doctor?.name || '-' }}
+
+              </td>
 
 
 

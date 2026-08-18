@@ -50,7 +50,10 @@ interface Patient {
 
   visit_date: string;
 
-  reference_doctor: string;
+  reference_doctor: {
+    id: string;
+    name: string;
+  } | null;
 
   purpose_of_visit: string;
 
@@ -153,6 +156,13 @@ export class PatientListComponent implements OnInit {
 
   pagedPatients: Patient[] = [];
 
+  selectedDoctor = '';
+
+  referenceDoctors: {
+    id: string;
+    name: string;
+  }[] = [];
+
 
 
   pageSize = 10;
@@ -195,7 +205,6 @@ export class PatientListComponent implements OnInit {
 
     this.loader = true;
 
-
     this.apiService.get('/patient/lists', true)
 
       .subscribe({
@@ -204,9 +213,57 @@ export class PatientListComponent implements OnInit {
 
           this.loader = false;
 
-
           this.patients = response?.data || [];
+
           console.log('this.patients: ', this.patients);
+
+
+          // =====================================================
+          // CREATE UNIQUE REFERENCE DOCTOR LIST
+          // =====================================================
+
+          const doctorMap = new Map<
+            string,
+            {
+              id: string;
+              name: string;
+            }
+          >();
+
+
+          this.patients.forEach(patient => {
+
+            if (
+              patient.reference_doctor?.id &&
+              patient.reference_doctor?.name
+            ) {
+
+              doctorMap.set(
+
+                patient.reference_doctor.id,
+
+                {
+                  id: patient.reference_doctor.id,
+                  name: patient.reference_doctor.name
+                }
+
+              );
+
+            }
+
+          });
+
+
+          this.referenceDoctors = Array.from(
+
+            doctorMap.values()
+
+          ).sort((a, b) =>
+
+            a.name.localeCompare(b.name)
+
+          );
+
 
           this.filteredPatients = [
 
@@ -217,12 +274,9 @@ export class PatientListComponent implements OnInit {
 
           this.currentPage = 1;
 
-
           this.updatePagination();
 
-
           this.cdr.detectChanges();
-
 
         },
 
@@ -246,12 +300,9 @@ export class PatientListComponent implements OnInit {
 
           );
 
-
         }
 
-
       });
-
 
   }
 
@@ -259,25 +310,12 @@ export class PatientListComponent implements OnInit {
 
   search(): void {
 
-
     const search = this.searchText
-
       .trim()
-
       .toLowerCase();
 
 
-
     this.filteredPatients = this.patients.filter(patient => {
-
-
-
-      const gender = this.getGender(
-
-        patient.gender
-
-      );
-
 
 
       const status = this.getStatus(
@@ -287,7 +325,6 @@ export class PatientListComponent implements OnInit {
       );
 
 
-
       const visitDate = patient.visit_date
 
         ? patient.visit_date.substring(0, 10)
@@ -295,12 +332,13 @@ export class PatientListComponent implements OnInit {
         : '';
 
 
+      // =====================================================
+      // SEARCH
+      // =====================================================
 
       const matchesSearch =
 
-
         !search ||
-
 
         patient.name
 
@@ -308,11 +346,9 @@ export class PatientListComponent implements OnInit {
 
           .includes(search) ||
 
-
         patient.mobile_no
 
           .includes(search) ||
-
 
         patient.email
 
@@ -321,52 +357,55 @@ export class PatientListComponent implements OnInit {
           .includes(search);
 
 
+      // =====================================================
+      // REFERENCE DOCTOR
+      // =====================================================
 
-      const matchesGender =
+      const matchesDoctor =
+
+        !this.selectedDoctor ||
+
+        patient.reference_doctor?.id === this.selectedDoctor;
 
 
-        !this.selectedGender ||
-
-
-        gender === this.selectedGender;
-
-
+      // =====================================================
+      // STATUS
+      // =====================================================
 
       const matchesStatus =
 
-
         !this.selectedStatus ||
-
 
         status === this.selectedStatus;
 
 
+      // =====================================================
+      // FROM DATE
+      // =====================================================
 
       const matchesFromDate =
 
-
         !this.fromDate ||
-
 
         visitDate >= this.fromDate;
 
 
+      // =====================================================
+      // TO DATE
+      // =====================================================
 
       const matchesToDate =
 
-
         !this.toDate ||
 
-
         visitDate <= this.toDate;
-
 
 
       return (
 
         matchesSearch &&
 
-        matchesGender &&
+        matchesDoctor &&
 
         matchesStatus &&
 
@@ -376,16 +415,12 @@ export class PatientListComponent implements OnInit {
 
       );
 
-
     });
-
 
 
     this.currentPage = 1;
 
-
     this.updatePagination();
-
 
   }
 
@@ -397,6 +432,8 @@ export class PatientListComponent implements OnInit {
     this.searchText = '';
 
     this.selectedGender = '';
+
+    this.selectedDoctor = '';
 
     this.selectedStatus = '';
 
@@ -424,94 +461,97 @@ export class PatientListComponent implements OnInit {
 
   sort(column: keyof Patient): void {
 
-
     if (this.sortColumn === column) {
 
-
       this.sortDirection =
-
         this.sortDirection === 'asc'
-
           ? 'desc'
-
           : 'asc';
-
 
     } else {
 
-
       this.sortColumn = column;
 
-
       this.sortDirection = 'asc';
-
 
     }
 
 
+    this.filteredPatients.sort((a, b) => {
 
-    this.filteredPatients.sort((a: any, b: any) => {
-
-
-      let valueA = a[column];
-
-      let valueB = b[column];
+      let valueA: any;
+      let valueB: any;
 
 
+      // =====================================================
+      // REFERENCE DOCTOR
+      // =====================================================
 
-      if (typeof valueA === 'string') {
+      if (column === 'reference_doctor') {
 
-        valueA = valueA.toLowerCase();
+        valueA =
+          a.reference_doctor?.name?.toLowerCase() || '';
+
+        valueB =
+          b.reference_doctor?.name?.toLowerCase() || '';
+
+      }
+
+      // =====================================================
+      // OTHER COLUMNS
+      // =====================================================
+
+      else {
+
+        valueA = a[column];
+
+        valueB = b[column];
+
+
+        if (typeof valueA === 'string') {
+
+          valueA = valueA.toLowerCase();
+
+        }
+
+
+        if (typeof valueB === 'string') {
+
+          valueB = valueB.toLowerCase();
+
+        }
 
       }
 
 
-
-      if (typeof valueB === 'string') {
-
-        valueB = valueB.toLowerCase();
-
-      }
-
-
+      // =====================================================
+      // SORT
+      // =====================================================
 
       if (valueA < valueB) {
 
-
         return this.sortDirection === 'asc'
-
           ? -1
-
           : 1;
 
-
       }
-
 
 
       if (valueA > valueB) {
 
-
         return this.sortDirection === 'asc'
-
           ? 1
-
           : -1;
-
 
       }
 
 
-
       return 0;
-
 
     });
 
 
-
     this.updatePagination();
-
 
   }
 
