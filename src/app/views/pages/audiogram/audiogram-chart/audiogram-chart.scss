@@ -1,9 +1,9 @@
 :host {
-    display: block;
-    width: 100%;
-    height: 100%;
-    background: #fff;
-    font-family: Arial, Helvetica, sans-serif;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* ================================
@@ -11,10 +11,10 @@
 ================================ */
 
 .audiogram-svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-    background: #fff;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #fff;
 }
 
 /* ================================
@@ -22,9 +22,9 @@
 ================================ */
 
 .outer-border {
-    fill: #fff;
-    stroke: #4A90E2;
-    stroke-width: 2;
+  fill: #fff;
+  stroke: #4a90e2;
+  stroke-width: 2;
 }
 
 /* ================================
@@ -32,14 +32,14 @@
 ================================ */
 
 .grid-line {
-    stroke: #9CC3FF;
-    stroke-width: 1;
-    shape-rendering: crispEdges;
+  stroke: #9cc3ff;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
 }
 
 .major-grid {
-    stroke: #4A90E2;
-    stroke-width: 1.6;
+  stroke: #4a90e2;
+  stroke-width: 1.6;
 }
 
 /* ================================
@@ -47,17 +47,17 @@
 ================================ */
 
 .axis-label {
-    font-size: 14px;
-    font-weight: 700;
-    fill: #000;
-    user-select: none;
+  font-size: 14px;
+  font-weight: 700;
+  fill: #000;
+  user-select: none;
 }
 
 .freq-label {
-    font-size: 14px;
-    font-weight: 700;
-    fill: #000;
-    user-select: none;
+  font-size: 14px;
+  font-weight: 700;
+  fill: #000;
+  user-select: none;
 }
 
 /* ================================
@@ -65,9 +65,9 @@
 ================================ */
 
 polyline {
-    fill: none;
-    stroke-linejoin: round;
-    stroke-linecap: round;
+  fill: none;
+  stroke-linejoin: round;
+  stroke-linecap: round;
 }
 
 /* ================================
@@ -79,13 +79,13 @@ rect,
 polygon,
 line,
 polyline {
-    vector-effect: non-scaling-stroke;
+  vector-effect: non-scaling-stroke;
 }
 
 circle,
 rect,
 polygon {
-    fill: white;
+  fill: white;
 }
 
 /* ================================
@@ -93,8 +93,8 @@ polygon {
 ================================ */
 
 .nr-arrow {
-    stroke-width: 2.5;
-    fill: none;
+  stroke-width: 2.5;
+  fill: none;
 }
 
 /* ================================
@@ -102,7 +102,7 @@ polygon {
 ================================ */
 
 text {
-    font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* ================================
@@ -110,28 +110,24 @@ text {
 ================================ */
 
 svg {
-    shape-rendering: geometricPrecision;
-    text-rendering: geometricPrecision;
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
 }
 
 /* ================================
    RESPONSIVE
 ================================ */
 
-@media (max-width:1200px) {
-
-    .axis-label,
-    .freq-label {
-        font-size: 12px;
-    }
-
+@media (max-width: 1200px) {
+  .axis-label,
+  .freq-label {
+    font-size: 12px;
+  }
 }
 
-@media (max-width:768px) {
-
-    .axis-label,
-    .freq-label {
-        font-size: 11px;
-    }
-
+@media (max-width: 768px) {
+  .axis-label,
+  .freq-label {
+    font-size: 11px;
+  }
 }

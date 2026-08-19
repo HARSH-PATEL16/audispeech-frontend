@@ -11,12 +11,9 @@ import { CommonModule } from '@angular/common';
 // MERGED AUDIOGRAM MODEL
 // =====================================================
 
-
 type Ear = 'left' | 'right';
 
-
 type Conduction = 'AC' | 'BC';
-
 
 
 interface AudiogramReading {
@@ -38,7 +35,6 @@ interface AudiogramReading {
 }
 
 
-
 const FREQUENCIES = [
 
   250,
@@ -54,7 +50,6 @@ const FREQUENCIES = [
   8000
 
 ] as const;
-
 
 
 const BOTTOM_LABELS = [
@@ -80,7 +75,6 @@ const BOTTOM_LABELS = [
   }
 
 ];
-
 
 
 const DB_VALUES = [
@@ -116,20 +110,13 @@ const DB_VALUES = [
 ];
 
 
-
 const EAR_COLOR = {
-
 
   left: '#0070C0',
 
-
   right: '#FF0000'
 
-
 } as const;
-
-
-
 
 
 type SymbolType =
@@ -151,65 +138,42 @@ type SymbolType =
   | 'bracket-right';
 
 
-
-
-
 interface PlotPoint {
-
 
   x: number;
 
-
   y: number;
-
 
   color: string;
 
-
   ear: Ear;
-
 
   symbol: SymbolType;
 
-
   masked: boolean;
-
 
   noResponse: boolean;
 
-
   conduction: Conduction;
-
 
   frequency: number;
 
-
   dB: number;
 
-
 }
-
 
 
 interface ConnectionLine {
 
-
   color: string;
-
 
   dashed: boolean;
 
-
   rowKey: string;
-
 
   points: string;
 
-
 }
-
-
-
 
 
 @Component({
@@ -239,39 +203,28 @@ export class AudiogramChartComponent {
 
   readonly frequencies = FREQUENCIES;
 
-
   readonly dbValues = DB_VALUES;
-
 
   readonly bottomLabels = BOTTOM_LABELS;
 
-
   readonly EAR_COLOR = EAR_COLOR;
-
 
 
   // =====================================================
   // DIMENSIONS
   // =====================================================
 
-
   readonly chartWidth = 760;
-
 
   readonly chartHeight = 820;
 
-
   readonly leftPadding = 55;
-
 
   readonly rightPadding = 30;
 
-
   readonly topPadding = 55;
 
-
   readonly bottomPadding = 85;
-
 
 
   readonly graphWidth =
@@ -283,7 +236,6 @@ export class AudiogramChartComponent {
     this.rightPadding;
 
 
-
   readonly graphHeight =
 
     this.chartHeight -
@@ -291,9 +243,6 @@ export class AudiogramChartComponent {
     this.topPadding -
 
     this.bottomPadding;
-
-
-
 
 
   readonly gridFrequencies = [
@@ -321,8 +270,6 @@ export class AudiogramChartComponent {
   ];
 
 
-
-
   private readonly GRID_MAP = new Map<number, number>([
 
     [250, 0],
@@ -348,9 +295,6 @@ export class AudiogramChartComponent {
   ]);
 
 
-
-
-
   // =====================================================
   // X POSITION
   // =====================================================
@@ -368,12 +312,15 @@ export class AudiogramChartComponent {
 
     }
 
+
     // 12 vertical lines
     // First line = empty
     // Last line = empty
     // 10 frequencies occupy lines 2–11
+
     const step =
       this.graphWidth / 11;
+
 
     return (
       this.leftPadding +
@@ -383,23 +330,21 @@ export class AudiogramChartComponent {
   }
 
 
-
-
-
   // =====================================================
   // Y POSITION
   // =====================================================
-
 
   yForDb(
     value: number
   ): number {
 
     // Never allow chart values outside 0–130 dB
+
     const safeValue = Math.max(
       0,
       Math.min(130, value)
     );
+
 
     return (
       this.topPadding +
@@ -411,10 +356,10 @@ export class AudiogramChartComponent {
 
   }
 
+
   // =====================================================
   // SYMBOL SELECTION
   // =====================================================
-
 
   private symbolFor(
 
@@ -423,12 +368,10 @@ export class AudiogramChartComponent {
   ): SymbolType {
 
 
-
     if (reading.conduction === 'AC') {
 
 
       if (reading.ear === 'right') {
-
 
         return reading.masked
 
@@ -436,9 +379,7 @@ export class AudiogramChartComponent {
 
           : 'circle';
 
-
       }
-
 
 
       return reading.masked
@@ -447,16 +388,12 @@ export class AudiogramChartComponent {
 
         : 'cross';
 
-
     }
-
 
 
     // BC
 
-
     if (reading.ear === 'right') {
-
 
       return reading.masked
 
@@ -464,9 +401,7 @@ export class AudiogramChartComponent {
 
         : 'lt';
 
-
     }
-
 
 
     return reading.masked
@@ -475,20 +410,14 @@ export class AudiogramChartComponent {
 
       : 'gt';
 
-
   }
-
-
-
 
 
   // =====================================================
   // POINTS
   // =====================================================
 
-
   points = computed<PlotPoint[]>(() => {
-
 
     return this.readings()
 
@@ -502,7 +431,6 @@ export class AudiogramChartComponent {
 
       .map(reading => ({
 
-
         x:
 
           this.xForFrequency(
@@ -510,7 +438,6 @@ export class AudiogramChartComponent {
             reading.frequency
 
           ),
-
 
 
         y:
@@ -522,17 +449,14 @@ export class AudiogramChartComponent {
           ),
 
 
-
         color:
 
           EAR_COLOR[reading.ear],
 
 
-
         ear:
 
           reading.ear,
-
 
 
         symbol:
@@ -544,11 +468,9 @@ export class AudiogramChartComponent {
           ),
 
 
-
         masked:
 
           reading.masked,
-
 
 
         noResponse:
@@ -556,11 +478,9 @@ export class AudiogramChartComponent {
           reading.noResponse,
 
 
-
         conduction:
 
           reading.conduction,
-
 
 
         frequency:
@@ -568,75 +488,50 @@ export class AudiogramChartComponent {
           reading.frequency,
 
 
-
         dB:
 
           reading.dB as number
 
-
-
       }));
 
-
   });
-
-
-
 
 
   // =====================================================
   // AIR CONDUCTION LINES
   // =====================================================
 
-
   airLines = computed<ConnectionLine[]>(() => {
-
 
     const lines: ConnectionLine[] = [];
 
 
-
-
     const rows = [
-
 
       'ac',
 
-
       'ac_mask',
-
 
       'ac_without_mask'
 
-
     ];
-
-
 
 
     (['left', 'right'] as Ear[])
 
       .forEach(ear => {
 
-
-
         rows.forEach(row => {
-
-
 
           const points = this.readings()
 
             .filter(reading =>
 
-
               reading.ear === ear &&
-
 
               reading.rowKey === row &&
 
-
               reading.dB !== null
-
 
             )
 
@@ -651,8 +546,6 @@ export class AudiogramChartComponent {
             );
 
 
-
-
           if (points.length < 2) {
 
             return;
@@ -660,10 +553,7 @@ export class AudiogramChartComponent {
           }
 
 
-
-
           lines.push({
-
 
             color:
 
@@ -674,13 +564,10 @@ export class AudiogramChartComponent {
                 : EAR_COLOR[ear],
 
 
-
             dashed: false,
 
 
-
             rowKey: row,
-
 
 
             points:
@@ -689,60 +576,39 @@ export class AudiogramChartComponent {
 
                 .map(point =>
 
-
                   `${this.xForFrequency(
 
                     point.frequency
 
-                  )
-
-                  },${this.yForDb(
+                  )},${this.yForDb(
 
                     point.dB!
 
-                  )
-
-                  }`
+                  )}`
 
                 )
 
                 .join(' ')
 
-
-
           });
 
-
-
         });
-
-
 
       });
 
 
-
-
     return lines;
 
-
   });
-
-
-
 
 
   // =====================================================
   // BONE CONDUCTION LINES
   // =====================================================
 
-
   boneLines = computed<ConnectionLine[]>(() => {
 
-
     const lines: ConnectionLine[] = [];
-
-
 
 
     const rows = [
@@ -754,36 +620,21 @@ export class AudiogramChartComponent {
     ];
 
 
-
-
-
     (['left', 'right'] as Ear[])
 
       .forEach(ear => {
 
-
-
         rows.forEach(row => {
-
-
 
           const points = this.readings()
 
             .filter(reading =>
 
-
-
               reading.ear === ear &&
-
-
 
               reading.rowKey === row &&
 
-
-
               reading.dB !== null
-
-
 
             )
 
@@ -798,8 +649,6 @@ export class AudiogramChartComponent {
             );
 
 
-
-
           if (points.length < 2) {
 
             return;
@@ -807,28 +656,17 @@ export class AudiogramChartComponent {
           }
 
 
-
-
-
           lines.push({
-
-
 
             color:
 
               EAR_COLOR[ear],
 
 
-
-
             dashed: true,
 
 
-
-
             rowKey: row,
-
-
 
 
             points:
@@ -837,46 +675,29 @@ export class AudiogramChartComponent {
 
                 .map(point =>
 
-
                   `${this.xForFrequency(
 
                     point.frequency
 
-                  )
-
-                  },${this.yForDb(
+                  )},${this.yForDb(
 
                     point.dB!
 
-                  )
-
-                  }`
+                  )}`
 
                 )
 
                 .join(' ')
 
-
-
           });
 
-
-
-
         });
-
-
 
       });
 
 
-
-
     return lines;
 
-
   });
-
-
 
 }
