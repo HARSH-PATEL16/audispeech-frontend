@@ -1,0 +1,1272 @@
+/* =============================================================
+   AUDISPEECH 404 PAGE
+   Professional Healthcare SaaS
+============================================================= */
+
+/* =============================================================
+   PAGE
+============================================================= */
+
+.not-found-page {
+  width: 100%;
+
+  height: 100dvh;
+
+  min-height: 500px;
+
+  overflow: hidden;
+
+  position: relative;
+
+  background: #f8fafc;
+
+  color: #1e2a44;
+}
+
+/* =============================================================
+   BACKGROUND GRID
+============================================================= */
+
+.background-grid {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.5;
+
+  background-image:
+    linear-gradient(rgba(30, 42, 68, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 42, 68, 0.025) 1px, transparent 1px);
+
+  background-size: 42px 42px;
+}
+
+/* =============================================================
+   BACKGROUND GLOW
+============================================================= */
+
+.background-glow {
+  position: absolute;
+
+  width: 500px;
+
+  height: 500px;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  filter: blur(90px);
+
+  opacity: 0.07;
+}
+
+.glow-one {
+  top: -300px;
+
+  left: -180px;
+
+  background: #5b5ceb;
+}
+
+.glow-two {
+  right: -300px;
+
+  bottom: -320px;
+
+  background: #5b5ceb;
+}
+
+/* =============================================================
+   MAIN WRAPPER
+============================================================= */
+
+.not-found-wrapper {
+  width: min(1240px, calc(100% - 80px));
+
+  height: 100%;
+
+  margin: 0 auto;
+
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+/* =============================================================
+   HEADER
+============================================================= */
+
+.page-header {
+  height: 100px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+}
+
+/* =============================================================
+   AUDISPEECH BRAND
+============================================================= */
+
+.brand-name {
+  display: inline-block;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: clamp(36px, 4vw, 58px);
+
+  line-height: 1;
+
+  font-weight: 500;
+
+  letter-spacing: -3px;
+
+  white-space: nowrap;
+
+  user-select: none;
+
+  margin-top: 150px;
+}
+
+.brand-audi {
+  color: #14264d;
+}
+
+.brand-speech {
+  color: #5145c7;
+}
+
+/* =============================================================
+   MAIN CONTENT
+============================================================= */
+
+.not-found-main {
+  flex: 1;
+
+  min-height: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(300px, 0.82fr)
+    minmax(480px, 1.18fr);
+
+  align-items: center;
+
+  gap: clamp(45px, 7vw, 100px);
+}
+
+/* =============================================================
+   LEFT CONTENT
+============================================================= */
+
+.error-content {
+  min-width: 0;
+}
+
+.error-label {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 7px 11px;
+
+  border-radius: 5px;
+
+  background: rgba(81, 69, 199, 0.07);
+
+  border: 1px solid rgba(81, 69, 199, 0.14);
+
+  color: #5145c7;
+
+  font-size: 10px;
+
+  line-height: 1;
+
+  font-weight: 700;
+
+  letter-spacing: 1.3px;
+}
+
+.error-dot {
+  width: 6px;
+
+  height: 6px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #5145c7;
+}
+
+/* =============================================================
+   HEADING
+============================================================= */
+
+.error-content h1 {
+  margin: 20px 0 15px;
+
+  color: #1e2a44;
+
+  font-size: clamp(48px, 5vw, 72px);
+
+  line-height: 0.98;
+
+  letter-spacing: -3.5px;
+
+  font-weight: 800;
+}
+
+.error-content h1 span {
+  display: block;
+
+  color: #5145c7;
+}
+
+/* =============================================================
+   DESCRIPTION
+============================================================= */
+
+.error-description {
+  max-width: 470px;
+
+  margin: 0;
+
+  color: #697586;
+
+  font-size: 15px;
+
+  line-height: 1.65;
+}
+
+/* =============================================================
+   DASHBOARD BUTTON
+============================================================= */
+
+.dashboard-button {
+  height: 46px;
+
+  margin-top: 27px;
+
+  padding: 0 20px;
+
+  border-radius: 7px;
+
+  background: #5145c7;
+
+  border-color: #5145c7;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  box-shadow: 0 8px 20px rgba(81, 69, 199, 0.18);
+}
+
+.dashboard-button:hover {
+  background: #463bb2;
+
+  border-color: #463bb2;
+}
+
+.home-icon {
+  width: 15px;
+
+  margin-right: 8px;
+}
+
+/* =============================================================
+   HELP TEXT
+============================================================= */
+
+.help-text {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 32px;
+
+  color: #9aa3b2;
+
+  font-size: 10px;
+}
+
+.help-line {
+  width: 28px;
+
+  height: 1px;
+
+  flex-shrink: 0;
+
+  background: #d8dde6;
+}
+
+/* =============================================================
+   VISUAL SECTION
+============================================================= */
+
+.visual-section {
+  min-width: 0;
+
+  min-height: 0;
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+/* =============================================================
+   AUDIOGRAM CARD
+============================================================= */
+
+.audiogram-card {
+  width: min(100%, 650px);
+
+  padding: 20px;
+
+  position: relative;
+
+  z-index: 3;
+
+  border: 1px solid #e2e7ef;
+
+  border-radius: 13px;
+
+  background: rgba(255, 255, 255, 0.9);
+
+  box-shadow: 0 22px 60px rgba(30, 42, 68, 0.08);
+
+  backdrop-filter: blur(12px);
+}
+
+/* =============================================================
+   CARD HEADER
+============================================================= */
+
+.card-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 16px;
+}
+
+.card-heading {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.card-overline {
+  color: #8c96a7;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.3px;
+}
+
+.card-title {
+  color: #1e2a44;
+
+  font-size: 14px;
+
+  font-weight: 700;
+}
+
+.system-status {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #8b95a6;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.9px;
+}
+
+.status-indicator {
+  width: 6px;
+
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #27ae60;
+}
+
+/* =============================================================
+   CHART
+============================================================= */
+
+.chart-container {
+  height: clamp(220px, 32vh, 310px);
+
+  position: relative;
+
+  overflow: hidden;
+
+  border: 1px solid #edf0f4;
+
+  border-radius: 7px;
+
+  background: #fbfcfe;
+}
+
+/* =============================================================
+   GRID
+============================================================= */
+
+.chart-grid {
+  position: absolute;
+
+  background: rgba(30, 42, 68, 0.055);
+}
+
+.chart-grid.horizontal {
+  left: 0;
+
+  right: 0;
+
+  height: 1px;
+}
+
+.h1 {
+  top: 20%;
+}
+
+.h2 {
+  top: 40%;
+}
+
+.h3 {
+  top: 60%;
+}
+
+.h4 {
+  top: 80%;
+}
+
+.chart-grid.vertical {
+  top: 0;
+
+  bottom: 0;
+
+  width: 1px;
+}
+
+.v1 {
+  left: 16.66%;
+}
+
+.v2 {
+  left: 33.33%;
+}
+
+.v3 {
+  left: 50%;
+}
+
+.v4 {
+  left: 66.66%;
+}
+
+.v5 {
+  left: 83.33%;
+}
+
+/* =============================================================
+   REFERENCE LINE
+============================================================= */
+
+.reference-line {
+  position: absolute;
+
+  top: 50%;
+
+  left: 0;
+
+  right: 0;
+
+  height: 1px;
+
+  background: rgba(81, 69, 199, 0.16);
+}
+
+/* =============================================================
+   AUDIOGRAM SVG
+============================================================= */
+
+.audiogram-svg {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+
+  height: 100%;
+}
+
+.audiogram-path {
+  fill: none;
+
+  stroke: #5145c7;
+
+  stroke-width: 3;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+
+  stroke-dasharray: 1000;
+
+  stroke-dashoffset: 1000;
+
+  animation: draw-audiogram 1.8s ease-out forwards;
+}
+
+.audiogram-svg circle {
+  fill: #5145c7;
+
+  opacity: 0;
+
+  animation: show-points 0.3s ease-out forwards;
+}
+
+.audiogram-svg circle:nth-of-type(1) {
+  animation-delay: 0.25s;
+}
+
+.audiogram-svg circle:nth-of-type(2) {
+  animation-delay: 0.4s;
+}
+
+.audiogram-svg circle:nth-of-type(3) {
+  animation-delay: 0.55s;
+}
+
+.audiogram-svg circle:nth-of-type(4) {
+  animation-delay: 0.7s;
+}
+
+.audiogram-svg circle:nth-of-type(5) {
+  animation-delay: 0.85s;
+}
+
+.audiogram-svg circle:nth-of-type(6) {
+  animation-delay: 1s;
+}
+
+.audiogram-svg circle:nth-of-type(7) {
+  animation-delay: 1.15s;
+}
+
+.audiogram-svg circle:nth-of-type(8) {
+  animation-delay: 1.3s;
+}
+
+@keyframes draw-audiogram {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes show-points {
+  to {
+    opacity: 1;
+  }
+}
+
+/* =============================================================
+   AXIS LABEL
+============================================================= */
+
+.axis-label {
+  position: absolute;
+
+  top: 8px;
+
+  left: 10px;
+
+  color: #a0a8b5;
+
+  font-size: 8px;
+
+  font-weight: 600;
+}
+
+/* =============================================================
+   404 CENTER
+============================================================= */
+
+.chart-404 {
+  position: absolute;
+
+  top: 50%;
+
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 3px;
+
+  padding: 9px 16px;
+
+  border: 1px solid rgba(81, 69, 199, 0.13);
+
+  border-radius: 7px;
+
+  background: rgba(255, 255, 255, 0.95);
+
+  box-shadow: 0 8px 25px rgba(30, 42, 68, 0.07);
+
+  font-size: 38px;
+
+  line-height: 1;
+
+  font-weight: 800;
+
+  letter-spacing: -3px;
+
+  color: #1e2a44;
+}
+
+.chart-404 span {
+  color: #5145c7;
+}
+
+.chart-404 strong {
+  font-weight: 800;
+
+  color: #1e2a44;
+}
+
+/* =============================================================
+   FREQUENCY LABELS
+============================================================= */
+
+.frequency-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 8px 1px 0;
+
+  color: #929bab;
+
+  font-size: 8px;
+
+  font-weight: 600;
+}
+
+/* =============================================================
+   CHART FOOTER
+============================================================= */
+
+.chart-footer {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  margin-top: 14px;
+
+  color: #a0a8b5;
+
+  font-size: 7px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.7px;
+}
+
+.signal-status {
+  margin-left: auto;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+}
+
+.signal-status i {
+  width: 5px;
+
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #e45858;
+}
+
+/* =============================================================
+   BACKGROUND 404
+============================================================= */
+
+.background-404 {
+  position: absolute;
+
+  right: -30px;
+
+  bottom: -65px;
+
+  z-index: 1;
+
+  color: rgba(81, 69, 199, 0.035);
+
+  font-size: clamp(180px, 20vw, 300px);
+
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: -20px;
+
+  user-select: none;
+}
+
+/* =============================================================
+   FOOTER
+============================================================= */
+
+.page-footer {
+  height: 54px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  border-top: 1px solid #e6eaf0;
+
+  color: #929baa;
+
+  font-size: 9px;
+}
+
+.footer-brand {
+  color: #1e2a44;
+
+  font-weight: 700;
+}
+
+.footer-separator {
+  width: 1px;
+
+  height: 11px;
+
+  background: #d7dce5;
+}
+
+.footer-spacer {
+  flex: 1;
+}
+
+/* =============================================================
+   TABLET
+============================================================= */
+
+@media (max-width: 1050px) {
+  .not-found-wrapper {
+    width: calc(100% - 50px);
+  }
+
+  .not-found-main {
+    grid-template-columns:
+      0.85fr
+      1.15fr;
+
+    gap: 35px;
+  }
+
+  .error-content h1 {
+    font-size: 54px;
+  }
+
+  .audiogram-card {
+    padding: 16px;
+  }
+
+  .chart-container {
+    height: 240px;
+  }
+}
+
+/* =============================================================
+   SMALL TABLET
+============================================================= */
+
+@media (max-width: 820px) {
+  .not-found-wrapper {
+    width: calc(100% - 36px);
+  }
+
+  .page-header {
+    height: 70px;
+  }
+
+  .brand-name {
+    font-size: 42px;
+
+    letter-spacing: -2.2px;
+  }
+
+  .not-found-main {
+    grid-template-columns:
+      0.85fr
+      1.15fr;
+
+    gap: 25px;
+  }
+
+  .error-content h1 {
+    font-size: 45px;
+
+    letter-spacing: -2.5px;
+  }
+
+  .error-description {
+    font-size: 13px;
+
+    line-height: 1.55;
+  }
+
+  .help-text {
+    display: none;
+  }
+
+  .chart-container {
+    height: 210px;
+  }
+
+  .chart-404 {
+    font-size: 31px;
+  }
+
+  .chart-footer {
+    display: none;
+  }
+}
+
+/* =============================================================
+   MOBILE
+============================================================= */
+
+@media (max-width: 650px) {
+  .not-found-page {
+    min-height: 500px;
+  }
+
+  .not-found-wrapper {
+    width: calc(100% - 28px);
+  }
+
+  /* Header */
+
+  .page-header {
+    height: 65px;
+
+    justify-content: center;
+  }
+
+  .brand-name {
+    font-size: 34px;
+
+    letter-spacing: -1.8px;
+  }
+
+  /* Main */
+
+  .not-found-main {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    padding: 8px 0 12px;
+  }
+
+  /* Left */
+
+  .error-content {
+    flex-shrink: 0;
+
+    text-align: center;
+  }
+
+  .error-label {
+    justify-content: center;
+
+    padding: 6px 10px;
+  }
+
+  .error-content h1 {
+    margin: 11px 0 8px;
+
+    font-size: 40px;
+
+    letter-spacing: -2px;
+  }
+
+  .error-description {
+    max-width: 390px;
+
+    margin: 0 auto;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+  }
+
+  /* Button */
+
+  .dashboard-button {
+    height: 42px;
+
+    margin-top: 16px;
+
+    padding: 0 18px;
+
+    font-size: 12px;
+  }
+
+  /* Remove unnecessary mobile text */
+
+  .help-text {
+    display: none;
+  }
+
+  /* Visual */
+
+  .visual-section {
+    width: 100%;
+
+    min-height: 0;
+
+    flex: 0 1 auto;
+  }
+
+  .audiogram-card {
+    width: 100%;
+
+    padding: 12px;
+  }
+
+  .card-header {
+    margin-bottom: 9px;
+  }
+
+  .card-overline {
+    font-size: 7px;
+  }
+
+  .card-title {
+    font-size: 12px;
+  }
+
+  .system-status {
+    font-size: 7px;
+  }
+
+  .chart-container {
+    height: clamp(140px, 23vh, 185px);
+  }
+
+  .frequency-row {
+    padding-top: 5px;
+
+    font-size: 7px;
+  }
+
+  .chart-404 {
+    font-size: 25px;
+
+    padding: 6px 11px;
+  }
+
+  .axis-label {
+    font-size: 7px;
+  }
+
+  .chart-footer {
+    display: none;
+  }
+
+  .background-404 {
+    display: none;
+  }
+
+  /* Footer */
+
+  .page-footer {
+    height: 42px;
+
+    flex-shrink: 0;
+
+    font-size: 8px;
+  }
+
+  .footer-description {
+    display: none;
+  }
+
+  .footer-separator {
+    display: none;
+  }
+}
+
+/* =============================================================
+   VERY SMALL MOBILE
+============================================================= */
+
+@media (max-width: 380px) {
+  .page-header {
+    height: 55px;
+  }
+
+  .brand-name {
+    font-size: 30px;
+
+    letter-spacing: -1.5px;
+  }
+
+  .not-found-main {
+    gap: 13px;
+  }
+
+  .error-content h1 {
+    margin: 8px 0 6px;
+
+    font-size: 34px;
+  }
+
+  .error-description {
+    font-size: 11px;
+  }
+
+  .dashboard-button {
+    height: 37px;
+
+    margin-top: 12px;
+
+    font-size: 11px;
+  }
+
+  .audiogram-card {
+    padding: 9px;
+  }
+
+  .chart-container {
+    height: 130px;
+  }
+
+  .card-header {
+    margin-bottom: 7px;
+  }
+
+  .chart-404 {
+    font-size: 21px;
+
+    padding: 5px 9px;
+  }
+
+  .frequency-row {
+    font-size: 6px;
+  }
+
+  .page-footer {
+    height: 35px;
+
+    font-size: 7px;
+  }
+}
+
+/* =============================================================
+   LANDSCAPE MOBILE
+============================================================= */
+
+@media (max-width: 850px) and (orientation: landscape) {
+  .not-found-page {
+    min-height: 400px;
+  }
+
+  .not-found-wrapper {
+    width: calc(100% - 30px);
+  }
+
+  .page-header {
+    height: 50px;
+  }
+
+  .brand-name {
+    font-size: 30px;
+  }
+
+  .not-found-main {
+    display: grid;
+
+    grid-template-columns:
+      0.8fr
+      1.2fr;
+
+    gap: 25px;
+
+    padding: 5px 0 8px;
+  }
+
+  .error-content {
+    text-align: left;
+  }
+
+  .error-label {
+    justify-content: flex-start;
+  }
+
+  .error-content h1 {
+    margin: 8px 0;
+
+    font-size: 32px;
+  }
+
+  .error-description {
+    font-size: 10px;
+
+    line-height: 1.4;
+  }
+
+  .dashboard-button {
+    height: 34px;
+
+    margin-top: 10px;
+
+    font-size: 10px;
+  }
+
+  .visual-section {
+    min-height: 0;
+  }
+
+  .audiogram-card {
+    padding: 10px;
+  }
+
+  .chart-container {
+    height: 135px;
+  }
+
+  .chart-404 {
+    font-size: 22px;
+  }
+
+  .chart-footer {
+    display: none;
+  }
+
+  .page-footer {
+    height: 34px;
+  }
+}
+
+/* =============================================================
+   DARK MODE
+============================================================= */
+
+.dark {
+  .not-found-page {
+    background: #111827;
+
+    color: #f3f5f8;
+  }
+
+  .brand-audi {
+    color: #e7ebf3;
+  }
+
+  .error-content h1 {
+    color: #f3f5f8;
+  }
+
+  .error-description {
+    color: #9ba6b7;
+  }
+
+  .audiogram-card {
+    background: rgba(30, 36, 50, 0.88);
+
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .chart-container {
+    background: rgba(20, 26, 38, 0.75);
+
+    border-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .card-title {
+    color: #f3f5f8;
+  }
+
+  .chart-404 {
+    background: rgba(30, 36, 50, 0.96);
+
+    border-color: rgba(255, 255, 255, 0.08);
+
+    color: #f3f5f8;
+  }
+
+  .footer-brand {
+    color: #e7ebf3;
+  }
+
+  .page-footer {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .background-grid {
+    opacity: 0.2;
+
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  }
+}

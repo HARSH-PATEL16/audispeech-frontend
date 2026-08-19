@@ -1,0 +1,131 @@
+<div class="custom-sidebar">
+
+    <!-- =====================================================
+       SIDEBAR HEADER
+  ===================================================== -->
+
+    <div class="sidebar-header">
+
+        <a routerLink="/" class="logo-container">
+
+            <img src="assets/images/audi-speech-banner-bg.png" alt="AudiSpeech" class="sidebar-logo" />
+
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+       MENU
+  ===================================================== -->
+
+    <div class="sidebar-menu">
+        <!-- ===================================================
+         MENU ITEMS
+    =================================================== -->
+
+        <div class="menu-item-wrapper" *ngFor="let item of menuItems">
+
+
+            <!-- =================================================
+           SIMPLE MENU ITEM
+      ================================================= -->
+
+            <a *ngIf="!item.children?.length" [routerLink]="item.url" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" class="menu-item">
+
+                <span class="menu-icon">
+
+                    <i [class]="item.icon"></i>
+
+                </span>
+
+                <span class="menu-label">
+                    {{ item.name }}
+                </span>
+
+            </a>
+
+
+            <!-- =================================================
+           PARENT MENU ITEM
+      ================================================= -->
+
+            <button *ngIf="item.children?.length" type="button" class="menu-item menu-parent"
+                [class.expanded]="item.expanded" [class.parent-active]="hasActiveChild(item)"
+                (click)="toggleMenu(item)">
+
+                <span class="menu-icon">
+
+                    <i [class]="item.icon"></i>
+
+                </span>
+
+
+                <span class="menu-label">
+                    {{ item.name }}
+                </span>
+
+
+                <span class="menu-arrow">
+
+                    <i class="fa-solid" [class.fa-chevron-down]="item.expanded"
+                        [class.fa-chevron-right]="!item.expanded"></i>
+
+                </span>
+
+            </button>
+
+
+            <!-- =================================================
+           CHILDREN
+      ================================================= -->
+
+            <div *ngIf="item.children?.length && item.expanded" class="submenu">
+
+                <a *ngFor="let child of item.children" [routerLink]="child.url" routerLinkActive="active"
+                    class="submenu-item">
+
+                    <span class="submenu-line"></span>
+
+                    <span class="submenu-icon">
+
+                        <i [class]="child.icon"></i>
+
+                    </span>
+
+                    <span class="submenu-label">
+
+                        {{ child.name }}
+
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+       SIDEBAR FOOTER
+  ===================================================== -->
+
+    <div class="sidebar-footer">
+
+        <div class="system-first-name">
+            Audi
+        </div>
+        <div class="system-second-name">
+            Speech
+        </div>
+
+        <div class="system-version">
+            Speech & Hearing Management
+        </div>
+
+    </div>
+
+</div>

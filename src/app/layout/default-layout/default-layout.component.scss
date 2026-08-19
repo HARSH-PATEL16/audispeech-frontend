@@ -1,41 +1,600 @@
-:host::ng-deep {
-  .ng-scrollbar {
-    --scrollbar-padding: 1px;
-    --scrollbar-size: 5px;
-    --scrollbar-thumb-color: var(--cui-gray-500, #aab3c5);
-    --scrollbar-thumb-hover-color: var(--cui-gray-400, #cfd4de);
-    --scrollbar-hover-size: calc(var(--scrollbar-size) * 1.5);
-    --scrollbar-border-radius: 5px;
-  }
+:host {
+  display: block;
 
-  .ng-scroll-content {
-    display: flex;
-    min-height: 100%;
-  }
-
-  //.sidebar-nav {
-  //  scrollbar-color: var(--cui-gray-500, #444) transparent;
-  //}
+  width: 100%;
+  height: 100%;
 }
 
-.sidebar-brand {
+/* =========================================================
+   CUSTOM SIDEBAR
+========================================================= */
+
+.custom-sidebar {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #344054;
+
+  color: #fff;
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   SIDEBAR HEADER
+========================================================= */
+
+.sidebar-header {
+  height: 86px;
+  min-height: 86px;
+
   display: flex !important;
+
   align-items: center;
   justify-content: center;
+
   gap: 8px;
+
+  padding: 8px 18px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #eaecf0;
+
+  flex-shrink: 0;
 }
 
-// ng-scrollbar css variables
-//.cui-scrollbar {
-//  --scrollbar-border-radius: 7px;
-//  --scrollbar-padding: 1px;
-//  --scrollbar-viewport-margin: 0;
-//  --scrollbar-track-color: transparent;
-//  --scrollbar-wrapper-color: transparent;
-//  --scrollbar-thumb-color: rgba(0, 0, 0, 0.2);
-//  --scrollbar-thumb-hover-color: var(--scrollbar-thumb-color);
-//  --scrollbar-size: 5px;
-//  --scrollbar-hover-size: var(--scrollbar-size);
-//  --scrollbar-thumb-transition: height ease-out 150ms, width ease-out 150ms;
-//  --scrollbar-track-transition: height ease-out 150ms, width ease-out 150ms;
-//}
+/* =========================================================
+   LOGO CONTAINER
+========================================================= */
+
+.logo-container {
+  width: 100%;
+  height: 100%;
+
+  display: flex !important;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.sidebar-logo {
+  height: 70px;
+  width: auto;
+
+  max-width: 190px;
+
+  display: block;
+
+  object-fit: contain;
+}
+
+/* =========================================================
+   SIDEBAR MENU SCROLL AREA
+========================================================= */
+
+.sidebar-menu {
+  flex: 1;
+
+  min-height: 0;
+
+  width: 100%;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 18px 12px;
+
+  box-sizing: border-box;
+
+  /* =======================================================
+     SCROLLBAR
+  ======================================================== */
+
+  scrollbar-width: thin;
+
+  scrollbar-color: var(--cui-gray-500, #aab3c5) transparent;
+}
+
+/* =========================================================
+   WEBKIT SCROLLBAR
+========================================================= */
+
+.sidebar-menu::-webkit-scrollbar {
+  width: 5px;
+
+  height: 5px;
+}
+
+.sidebar-menu::-webkit-scrollbar-track {
+  background: transparent;
+
+  border-radius: 5px;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb {
+  background: var(--cui-gray-500, #aab3c5);
+
+  border-radius: 5px;
+
+  transition:
+    background-color 150ms ease,
+    width 150ms ease;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb:hover {
+  background: var(--cui-gray-400, #cfd4de);
+}
+
+.sidebar-menu::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* =========================================================
+   MENU SECTION TITLE
+========================================================= */
+
+.menu-section-title {
+  padding: 0 12px 10px 12px;
+
+  color: #98a2b3;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  line-height: 1.4;
+
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   MENU ITEM WRAPPER
+========================================================= */
+
+.menu-item-wrapper {
+  width: 100%;
+
+  margin-bottom: 4px;
+}
+
+/* =========================================================
+   BASE MENU ITEM
+========================================================= */
+
+.menu-item {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 46px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 10px 12px;
+
+  margin: 0;
+
+  border: none;
+
+  border-radius: 9px;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #475467;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  line-height: 1.3;
+
+  text-decoration: none;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+/* =========================================================
+   MENU ITEM HOVER
+========================================================= */
+
+.menu-item:hover {
+  background: #f2f4f7;
+
+  color: #1d2939;
+}
+
+/* =========================================================
+   MENU ITEM FOCUS
+========================================================= */
+
+.menu-item:focus-visible {
+  outline: 2px solid #98b5ff;
+
+  outline-offset: -2px;
+}
+
+/* =========================================================
+   MENU ICON
+========================================================= */
+
+.menu-icon {
+  width: 22px;
+  min-width: 22px;
+
+  height: 22px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: inherit;
+
+  font-size: 16px;
+
+  line-height: 1;
+}
+
+/* =========================================================
+   MENU LABEL
+========================================================= */
+
+.menu-label {
+  flex: 1;
+
+  min-width: 0;
+
+  text-align: left;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+/* =========================================================
+   ACTIVE MENU ITEM
+========================================================= */
+
+.menu-item.active {
+  background: #eef4ff;
+
+  color: #2563eb;
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   ACTIVE MENU LEFT INDICATOR
+========================================================= */
+
+.menu-item.active::before {
+  content: "";
+
+  position: absolute;
+
+  top: 8px;
+  bottom: 8px;
+
+  left: 0;
+
+  width: 3px;
+
+  border-radius: 0 4px 4px 0;
+
+  background: #2563eb;
+}
+
+/* =========================================================
+   PARENT MENU
+========================================================= */
+
+.menu-parent {
+  appearance: none;
+
+  -webkit-appearance: none;
+
+  border: none;
+
+  font-family: inherit;
+
+  text-align: left;
+}
+
+/* =========================================================
+   ACTIVE PARENT
+========================================================= */
+
+.menu-parent.parent-active {
+  background: #f5f8ff;
+
+  color: #2563eb;
+}
+
+/* =========================================================
+   EXPANDED PARENT
+========================================================= */
+
+.menu-parent.expanded {
+  color: #2563eb;
+}
+
+/* =========================================================
+   MENU ARROW
+========================================================= */
+
+.menu-arrow {
+  width: 18px;
+  min-width: 18px;
+
+  height: 18px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #98a2b3;
+
+  font-size: 9px;
+
+  line-height: 1;
+
+  transition:
+    transform 0.18s ease,
+    color 0.18s ease;
+}
+
+.menu-parent:hover .menu-arrow {
+  color: #667085;
+}
+
+/* =========================================================
+   SUBMENU
+========================================================= */
+
+.submenu {
+  position: relative;
+
+  width: auto;
+
+  margin: 3px 0 7px 22px;
+
+  padding: 2px 0 2px 12px;
+
+  border-left: 1px solid #e4e7ec;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   SUBMENU ITEM
+========================================================= */
+
+.submenu-item {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 40px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 8px 10px;
+
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: #667085;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  line-height: 1.3;
+
+  text-decoration: none;
+
+  box-sizing: border-box;
+
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease;
+}
+
+/* =========================================================
+   SUBMENU HOVER
+========================================================= */
+
+.submenu-item:hover {
+  background: #f9fafb;
+
+  color: #344054;
+}
+
+/* =========================================================
+   SUBMENU ICON
+========================================================= */
+
+.submenu-icon {
+  width: 18px;
+  min-width: 18px;
+
+  height: 18px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: inherit;
+
+  font-size: 12px;
+
+  line-height: 1;
+}
+
+/* =========================================================
+   SUBMENU LABEL
+========================================================= */
+
+.submenu-label {
+  flex: 1;
+
+  min-width: 0;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+/* =========================================================
+   ACTIVE SUBMENU
+========================================================= */
+
+.submenu-item.active {
+  background: #eef4ff;
+
+  color: #2563eb;
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   ACTIVE SUBMENU INDICATOR
+========================================================= */
+
+.submenu-item.active::before {
+  content: "";
+
+  position: absolute;
+
+  left: -13px;
+
+  top: 9px;
+
+  width: 3px;
+
+  height: 22px;
+
+  border-radius: 0 4px 4px 0;
+
+  background: #2563eb;
+}
+
+/* =========================================================
+   SIDEBAR FOOTER
+========================================================= */
+
+.sidebar-footer {
+  width: 100%;
+
+  flex-shrink: 0;
+
+  padding: 13px 18px;
+
+  background: #ffffff;
+
+  border-top: 1px solid #eaecf0;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   SYSTEM NAME
+========================================================= */
+
+.system-name {
+  color: #344054;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   SYSTEM VERSION
+========================================================= */
+
+.system-version {
+  margin-top: 3px;
+
+  color: #98a2b3;
+
+  font-size: 10px;
+
+  font-weight: 400;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 575.98px) {
+  .sidebar-header {
+    height: 76px;
+
+    min-height: 76px;
+
+    padding: 6px 14px;
+  }
+
+  .sidebar-logo {
+    height: 62px;
+
+    max-width: 165px;
+  }
+
+  .sidebar-menu {
+    padding: 14px 10px;
+  }
+
+  .menu-item {
+    min-height: 44px;
+  }
+}

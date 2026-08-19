@@ -1,51 +1,127 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { NgScrollbar } from 'ngx-scrollbar';
+import { CommonModule } from '@angular/common';
 
-import { IconDirective } from '@coreui/icons-angular';
+import {
+  Component
+} from '@angular/core';
+
+import {
+  RouterLink,
+  RouterOutlet
+} from '@angular/router';
+
 import {
   ContainerComponent,
   ShadowOnScrollDirective,
-  SidebarBrandComponent,
-  SidebarComponent,
-  SidebarFooterComponent,
-  SidebarHeaderComponent,
-  SidebarNavComponent,
-  SidebarToggleDirective,
-  SidebarTogglerDirective
+  SidebarComponent
 } from '@coreui/angular';
 
-import { DefaultFooterComponent, DefaultHeaderComponent } from './';
-import { navItems } from './_nav';
+import {
+  DefaultFooterComponent,
+  DefaultHeaderComponent
+} from './';
 
-function isOverflown(element: HTMLElement) {
-  return (
-    element.scrollHeight > element.clientHeight ||
-    element.scrollWidth > element.clientWidth
-  );
-}
+import {
+  CustomSidebarComponent
+} from './custom-sidebar/custom-sidebar';
+
 
 @Component({
   selector: 'app-dashboard',
+
   templateUrl: './default-layout.component.html',
+
   styleUrls: ['./default-layout.component.scss'],
+
+  standalone: true,
+
   imports: [
-    SidebarComponent,
-    SidebarHeaderComponent,
-    SidebarBrandComponent,
-    SidebarNavComponent,
-    // SidebarFooterComponent,
-    // SidebarToggleDirective,
-    // SidebarTogglerDirective,
-    ContainerComponent,
-    DefaultFooterComponent,
-    DefaultHeaderComponent,
-    NgScrollbar,
+
+    /* =====================================================
+       ANGULAR
+    ===================================================== */
+
+    CommonModule,
+
     RouterOutlet,
-    RouterLink,
-    ShadowOnScrollDirective
+
+
+    /* =====================================================
+       COREUI
+    ===================================================== */
+
+    ContainerComponent,
+
+    SidebarComponent,
+
+    ShadowOnScrollDirective,
+
+
+    /* =====================================================
+       HEADER / FOOTER
+    ===================================================== */
+
+    DefaultHeaderComponent,
+
+    DefaultFooterComponent,
+
+
+    /* =====================================================
+       CUSTOM SIDEBAR
+    ===================================================== */
+
+    CustomSidebarComponent
+
   ]
 })
+
+
 export class DefaultLayoutComponent {
-  public navItems = [...navItems];
+
+
+  /* =====================================================
+     SIDEBAR STATE
+  ===================================================== */
+
+  sidebarVisible = true;
+
+
+  /* =====================================================
+     CONSTRUCTOR
+  ===================================================== */
+
+  constructor() { }
+
+
+  /* =====================================================
+     TOGGLE SIDEBAR
+  ===================================================== */
+
+  toggleSidebar(): void {
+
+    this.sidebarVisible = !this.sidebarVisible;
+
+  }
+
+
+  /* =====================================================
+     OPEN SIDEBAR
+  ===================================================== */
+
+  openSidebar(): void {
+
+    this.sidebarVisible = true;
+
+  }
+
+
+  /* =====================================================
+     CLOSE SIDEBAR
+  ===================================================== */
+
+  closeSidebar(): void {
+
+    this.sidebarVisible = false;
+
+  }
+
 }

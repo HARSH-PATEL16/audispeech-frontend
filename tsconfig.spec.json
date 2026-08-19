@@ -1,23 +1,29 @@
-/* To learn more about TypeScript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+/*
+ * To learn more about TypeScript configuration file:
+ * https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
+ *
+ * To learn more about Angular compiler options:
+ * https://angular.dev/reference/configs/angular-compiler-options
+ */
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
+    "rootDir": "./src",
     "types": [
       "@angular/localize",
       "vitest/globals",
       "@vitest/browser-playwright"
     ],
     "paths": {
-      "@docs-components/*": ["./src/components/*"]
+      "@docs-components/*": [
+        "./src/components/*"
+      ]
     }
   },
-  "files": [
-//    "src/test.ts",
-  ],
+  "files": [],
   "include": [
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
-, "src/app/views/pages/patients/add-patient/add-patient.spec.ts", "src/app/views/pages/company/edit-company/edit-company.spec.ts", "src/app/views/pages/loader/loader.spec.ts"  ]
+  ]
 }
